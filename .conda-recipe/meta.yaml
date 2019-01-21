@@ -1,4 +1,4 @@
-{% set name = "terrainbento" %}
+{% set name = "umami" %}
 {% set data = load_setup_py_data() %}
 
 package:
@@ -27,12 +27,12 @@ requirements:
 
 test:
   requires:
-    - terrainbento
+    - umami
     - pytest
     - pytest-cov
     - pytest-runner
   commands:
-      - pytest --pyargs terrainbento --doctest-modules -o doctest_optionflags="NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE"
+      - pytest --pyargs umami --doctest-modules -o doctest_optionflags="NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE"
   source_files:
       - tests/data/*
 

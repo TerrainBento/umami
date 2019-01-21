@@ -51,14 +51,14 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 terrainbento --exclude=examples
+	flake8 umami --exclude=examples
 	flake8 tests
 
 pretty: ## reformat files to make them look pretty
-	find terrainbento -name '*.py' | xargs isort
+	find umami -name '*.py' | xargs isort
 	find tests -name '*.py' | xargs isort
-	black setup.py terrainbento tests --line-length=79
-	docformatter --in-place terrainbento/*/*.py
+	black setup.py umami tests --line-length=79
+	docformatter --in-place umami/*.py
 
 test: ## run tests quickly with the default Python
 	pytest -n4

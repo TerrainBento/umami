@@ -4,11 +4,11 @@ from setuptools import setup, find_packages
 import versioneer
 
 setup(
-    name="terrainbento",
+    name="umami",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    description="TerrainBento suite of landscape evolution models",
-    url="https://github.com/TerrainBento/terrainbento/",
+    description="umami landscape metrics",
+    url="https://github.com/TerrainBento/umami/",
     author="The TerrainBento Team",
     author_email="barnhark@colorado.edu",
     license="MIT",

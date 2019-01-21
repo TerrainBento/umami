@@ -60,7 +60,7 @@ install:
   - cmd: conda info -a && conda list
   - cmd: conda config --add channels landlab
   - cmd: conda build -q .conda-recipe --old-build-string
-  - cmd: conda install -q terrainbento --use-local
+  - cmd: conda install -q umami --use-local
 
 build: false
 
