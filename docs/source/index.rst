@@ -3,7 +3,7 @@ Welcome to umami's documentation!
 =================================
 
 
-Umami has py:class:`Residual` and py:class:`Metric`.
+Umami has :py:class:`Residual` and :py:class:`Metric`.
 
 
 .. toctree::
