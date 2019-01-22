@@ -1,38 +1,51 @@
-
-""""""
+"""The umami Metric class calculates metrics on terrain."""
 from landlab import RasterModelGrid
 from landlab.components import ChiFinder, FlowAccumulator
 
 
 class Metric(object):
-    """"""
+    """Create a Metric class based on a Landlab grid.
+
+    Examples
+    --------
+
+    """
 
     _required_fields = ["topographic__elevation"]
+    _all_metrics = []
 
     def __init__(
         grid,
         chi_kwargs=None,
+        flow_accumulator_kwargs=None,
         chi_distribution_xedges=None,
         chi_distribution_yedges=None,
         area_percentiles=[10, 30, 50, 70, 90],
         elevation_percentiles=[10, 30, 50, 70, 90],
+        metrics=None
     ):
-        """"""
-        chi_kwargs = chi_kwargs or {}
+        """
+        Parameters
+        ----------
+        """
+        # determine which metrics are desired.
+        metrics = metrics or self._all_metrics
 
+        # get the correct kwargs
+        chi_kwargs = chi_kwargs or {}
+        flow_accumulator_kwargs = flow_accumulator_kwargs or {"depression_finder":"DepressionFinderAndRouter"}
+        # save a reference to the grid.
         self.grid = grid
 
-        # route flow.
-        self.fa = FlowAccumulator(
-            self.grid, depression_finder="DepressionFinderAndRouter"
-        )
-
+        # route flow on the grid. Use steepest and DepressionFinderAndRouter as
+        # defaults.
+        self.fa = FlowAccumulator(self.grid, **flow_accumulator_kwargs)
         self.fa.run_one_step()
 
         # Instantiate a ChiFinder for chi-index
         self.chi_finder = ChiFinder(self.grid, **chi_kwargs)
 
-        # calc slopes
+        # Calc slopes
         self._calc_slope()
 
         # calc chi intercepts
@@ -44,6 +57,7 @@ class Metric(object):
         self.slope = self.grid.at_node["topographic__steepest_slope"]
         self.chi = self.grid.at_node["channel__chi_index"]
 
+        # set the chi-distribution x and y edges.
         self._xedges = chi_distribution_xedges or np.arrange(
             self.z.min(), self.z.max(), 10
         )
@@ -51,6 +65,7 @@ class Metric(object):
             self.chi.min(), self.chi.max(), 10
         )
 
+        # calculate desired percentiles in elevation and area.
         for pct in elevation_percentiles:
             name = "elevation_percentiles_" + str(pct)
             self._attrs[name] = self._calc_elevation_percentile(percentile=pct)
@@ -59,6 +74,9 @@ class Metric(object):
             name = "area_percentiles_" + str(pct)
             self._attrs[name] = self._calc_area_percentile(percentile=pct)
 
+    @property
+    def longest_channel_slope_area(self):
+        """ """
     @property
     def hypsometric_integral(self):
         """Hypsometric integral."""

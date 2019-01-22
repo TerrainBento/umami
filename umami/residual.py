@@ -9,6 +9,8 @@ class Residual(object):
 
     _all_metrics = []
 
+    _simple_difference = [] # those metrics that can take a simple difference.
+
     def __init__(
         data,
         model,
@@ -31,10 +33,22 @@ class Residual(object):
         self._chi_percentiles = chi_percentiles
         self._elev_percentiles = elevation_percentiles
 
+
+    def chi_cat_differences(self):
+        """ """
+        pass
+
+    def chi_elev_distribution(self):
+        """ """
+        pass
+
+    def longest_channel_slope_area(self):
+        pass
+
     def _chi_cat_categories(self):
         """ """
         # first bin by chi, then within chi, bin by elevation
-        is_core = np.zeros_like(self.data.z)
+        is_core = np.zeros_like(self.data.z, dtype=bool)
         is_core[self.data.grid.core_nodes] = True
 
         # calc the percentiles of the chi distribution
