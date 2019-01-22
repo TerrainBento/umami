@@ -7,8 +7,9 @@ Umami has py:class:`Residual` and py:class:`Metric`.
 
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+
+    umami.residual
+    umami.metric
 
 
 Indices and tables

@@ -86,9 +86,7 @@ sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 import umami
 
 # The short X.Y version.
-version = umami.__version__
-# The full version, including alpha/beta/rc tags.
-release = umami.__version__
+version = "0.1" # umami.__version__
 
 from datetime import date
 

@@ -1,0 +1,10 @@
+
+umami/__pycache__/
+
+umami\.egg-info/
+
+docs/build/html/
+
+docs/build/doctrees/
+
+__pycache__/
