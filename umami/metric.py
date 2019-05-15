@@ -6,34 +6,97 @@ from landlab.components import ChiFinder, FlowAccumulator
 class Metric(object):
     """Create a Metric class based on a Landlab grid.
 
+
+    longest_channel_slope_area
+
     Examples
     --------
+
+    >>> from six import StringIO
+    >>> input=StringIO('''
+    ... grid: # create grid
+    ... flow_accumulator_kwargs:
+    ...     kwd: val
+    ... chi_kwargs:
+    ...     kwd: val
+    ... metrics:
+    ...     - hypsometric_integral
+    ...     - mean_elevation
+    ...     - variance_elevation
+    ...     - mean_slope
+    ...     - variance_slope
+    ...     - chi_intercept
+    ...     - chi_gradient
+    ...     - elev_percentile:
+    ...         - 10
+    ...         - 50
+    ...         - 90
+    ...     - area_percentile:
+    ...         - 10
+    ...         - 50
+    ...         - 90
+    ...     - source_nodes:
+    ...         - 1
+    ...         - 2
+    ...         - 3
+    ...     - chi_elev_distribution:
+    ...         chi_percentile_edges:
+    ...             - 0
+    ...             - 5
+    ...             - 20
+    ...             - 40
+    ...             - 100
+    ...         elev_percentile_edges:
+    ...             - 0
+    ...             - 25
+    ...             - 50
+    ...             - 75
+    ...             - 100
+    ...     - chi_elev_categories:
+    ...         chi_percentile_edges:
+    ...             - 0
+    ...             - 5
+    ...             - 20
+    ...             - 40
+    ...             - 100
+    ...         elev_percentile_edges:
+    ...             - 0
+    ...             - 25
+    ...             - 50
+    ...             - 75
+    ...             - 100'''
 
     """
 
     _required_fields = ["topographic__elevation"]
-    _all_metrics = []
+    _default_metrics = []
 
     def __init__(
         grid,
         chi_kwargs=None,
         flow_accumulator_kwargs=None,
-        chi_distribution_xedges=None,
-        chi_distribution_yedges=None,
-        area_percentiles=[10, 30, 50, 70, 90],
-        elevation_percentiles=[10, 30, 50, 70, 90],
         metrics=None
     ):
         """
         Parameters
         ----------
+
+
+
         """
+
+        # chi_distribution_xedges=None,
+        # chi_distribution_yedges=None,
+        # area_percentiles=[10, 30, 50, 70, 90],
+        # elevation_percentiles=[10, 30, 50, 70, 90],
+
         # determine which metrics are desired.
         metrics = metrics or self._all_metrics
 
         # get the correct kwargs
         chi_kwargs = chi_kwargs or {}
-        flow_accumulator_kwargs = flow_accumulator_kwargs or {"depression_finder":"DepressionFinderAndRouter"}
+        flow_accumulator_kwargs = flow_accumulator_kwargs or {}
+
         # save a reference to the grid.
         self.grid = grid
 
@@ -77,6 +140,7 @@ class Metric(object):
     @property
     def longest_channel_slope_area(self):
         """ """
+
     @property
     def hypsometric_integral(self):
         """Hypsometric integral."""
