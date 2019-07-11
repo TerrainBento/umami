@@ -2,12 +2,9 @@
 from landlab import RasterModelGrid
 from landlab.components import ChiFinder, FlowAccumulator
 
-
+import umami.calculations as calcs # google "register as plugins" and consider alowing these to be plugins instead of  fuunctions only in this module.
 class Metric(object):
     """Create a Metric class based on a Landlab grid.
-
-
-    longest_channel_slope_area
 
     Examples
     --------
@@ -19,57 +16,95 @@ class Metric(object):
     ...     kwd: val
     ... chi_kwargs:
     ...     kwd: val
-    ... metrics:
-    ...     - hypsometric_integral
-    ...     - mean_elevation
-    ...     - variance_elevation
-    ...     - mean_slope
-    ...     - variance_slope
-    ...     - chi_intercept
-    ...     - chi_gradient
-    ...     - elev_percentile:
-    ...         - 10
-    ...         - 50
-    ...         - 90
-    ...     - area_percentile:
-    ...         - 10
-    ...         - 50
-    ...         - 90
-    ...     - source_nodes:
-    ...         - 1
-    ...         - 2
-    ...         - 3
-    ...     - chi_elev_distribution:
-    ...         chi_percentile_edges:
-    ...             - 0
-    ...             - 5
-    ...             - 20
-    ...             - 40
-    ...             - 100
-    ...         elev_percentile_edges:
-    ...             - 0
-    ...             - 25
-    ...             - 50
-    ...             - 75
-    ...             - 100
-    ...     - chi_elev_categories:
-    ...         chi_percentile_edges:
-    ...             - 0
-    ...             - 5
-    ...             - 20
-    ...             - 40
-    ...             - 100
-    ...         elev_percentile_edges:
-    ...             - 0
-    ...             - 25
-    ...             - 50
-    ...             - 75
-    ...             - 100'''
+
+
+    ... metrics: # read in as ordered dictionary
+    ...     hi:
+                _func: hypsometric_integral
+    ...     me:
+                _func: aggregate
+                method: mean
+                field:  topographic__elevation
+    ...     ve:
+                _func: variance
+                field: topographic__elevation
+    ...     ms:
+                _func: mean
+                field:  topographic__steepest_slope
+    ...     vs:
+                _func: variance
+                field: topographic__steepest_slope
+    ...     ci:
+    ...         _func: chi_intercept
+    ...     cg:
+    ...         _func: chi_gradient
+    ...     ep10:
+                _func: percentile:
+...             field: topographic__elevation
+...             percentile: 10
+
+            basin_1_average:
+                _func : watershed_average
+                field: cumulative_elevation
+                outlet_id: 12234
+
+    ...     ep20: percentile: percentile: 20
+    ...     ep30: percentile: percentile: 30
+    ...     ep50: percentile: percentile: 50
+    ...     ap10: percentile: percentile: 10
+    ...     ap20: percentile: percentile: 20
+    ...     ap30: percentile: percentile: 30
+    ...     ap50: percentile: percentile: 50
+    ...     sn1: source_nodes: number_of_nodes: 1
+    ...     sn2: source_nodes: number_of_nodes: 2
+    ...     sn3: source_nodes: number_of_nodes: 3
+    ...     sn4: source_nodes: number_of_nodes: 4
+    ...     chi_misfit:
+    ...         chi_elev_distribution:
+    ...             chi_percentile_edges:
+    ...                 - 0
+    ...                 - 5
+    ...                 - 20
+    ...                 - 40
+    ...                 - 100
+    ...             elev_percentile_edges:
+    ...                 - 0
+    ...                 - 25
+    ...                 - 50
+    ...                 - 75
+    ...                 - 100
+    ...     ch_{chi}_elev_{elev}:
+    ...         chi_elev_categories:
+    ...             chi_percentile_edges:
+    ...                 - 0
+    ...                 - 5
+    ...                 - 20
+    ...                 - 40
+    ...                 - 100
+    ...             elev_percentile_edges:
+    ...                 - 0
+    ...                 - 25
+    ...                 - 50
+    ...                 - 75
+    ...                 - 100
+    ... '''
 
     """
 
     _required_fields = ["topographic__elevation"]
     _default_metrics = []
+
+    @class_method
+    def from_dict():
+        """
+        """
+        pass
+
+    @class_method
+    def from_file():
+        """
+        """
+        pass
 
     def __init__(
         grid,
@@ -82,20 +117,22 @@ class Metric(object):
         ----------
 
 
-
         """
-
         # chi_distribution_xedges=None,
         # chi_distribution_yedges=None,
         # area_percentiles=[10, 30, 50, 70, 90],
         # elevation_percentiles=[10, 30, 50, 70, 90],
 
         # determine which metrics are desired.
-        metrics = metrics or self._all_metrics
+        self._metrics = metrics or self._all_metrics
 
         # get the correct kwargs
         chi_kwargs = chi_kwargs or {}
         flow_accumulator_kwargs = flow_accumulator_kwargs or {}
+
+        # verify that apppropriate fields are present.
+        if "topographic__elevation" not in  grid.at_node:
+            raise ValueError()
 
         # save a reference to the grid.
         self.grid = grid
@@ -128,18 +165,18 @@ class Metric(object):
             self.chi.min(), self.chi.max(), 10
         )
 
-        # calculate desired percentiles in elevation and area.
-        for pct in elevation_percentiles:
-            name = "elevation_percentiles_" + str(pct)
-            self._attrs[name] = self._calc_elevation_percentile(percentile=pct)
 
-        for pct in area_percentiles:
-            name = "area_percentiles_" + str(pct)
-            self._attrs[name] = self._calc_area_percentile(percentile=pct)
+    def calculate_metrics():
+        """  """
+        self.metric_order = []
+        self.metrics = {}
 
-    @property
-    def longest_channel_slope_area(self):
-        """ """
+        for metric in self._metrics:
+
+            self.metric_order.append(name)
+            # get fuunction, apply  with inspect.
+            # save value.
+
 
     @property
     def hypsometric_integral(self):
@@ -222,12 +259,10 @@ class Metric(object):
         self.chi_finder.calc_chi()
         (self._chi_gradient, self._chi_intercept) = self.calc_chi_index()
 
-    @property
     def chi_intercept(self):
         """"""
         return self._chi_intercept
 
-    @property
     def chi_gradient(self):
         """"""
         return self._chi_gradient
@@ -243,7 +278,7 @@ class Metric(object):
         """"""
         return self._density_chi
 
-    def _calc_number_source_nodes(self, factor=1.0):
+    def source_nodes(self, factor=1.0):
         """calc and return number of nodes below a given threshold.
 
         Parameters
@@ -259,30 +294,10 @@ class Metric(object):
 
         return source_nodes
 
-    @property
-    def one_cell_nodes(self):
-        """"""
-        return self._calc_number_source_nodes(factor=1.0)
-
-    @property
-    def two_cell_nodes(self):
-        """"""
-        return self._calc_number_source_nodes(factor=2.0)
-
-    @property
-    def three_cell_nodes(self):
-        """"""
-        return self._calc_number_source_nodes(factor=3.0)
-
-    @property
-    def four_cell_nodes(self):
-        """"""
-        return self._calc_number_source_nodes(factor=4.0)
-
-    def _calc_area_percentile(self, percentile=50):
+    def area_percentile(self, percentile=50):
         """"""
         return np.percentile(self.area[self.grid.core_nodes], percentile)
 
-    def _calc_elevation_percentile(self, percentile=50):
+    def elevation_percentile(self, percentile=50):
         """"""
         return np.percentile(self.z[self.grid.core_nodes], percentile)
