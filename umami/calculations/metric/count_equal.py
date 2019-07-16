@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def count_equal(grid, field, value):
     """
     """

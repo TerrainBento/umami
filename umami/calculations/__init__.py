@@ -24,5 +24,5 @@ __all__ = [
     "discretized_misfit",
     "joint_density_misfit",
     "ks_test",
-    "ks_width_function"
+    "ks_width_function",
 ]

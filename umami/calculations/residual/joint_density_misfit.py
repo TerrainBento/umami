@@ -8,7 +8,7 @@ def joint_density_misfit(
 ):
     """
     """
-    
+
     f1 = grid.at_node[field_1]
     f2 = grid.at_node[field_2]
 

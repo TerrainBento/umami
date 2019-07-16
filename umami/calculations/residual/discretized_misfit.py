@@ -1,9 +1,32 @@
-def discretized_misfit(data_grid, model_grid, misfit_field, field_1, field_2, field_1_percentile_edges, field_2_percentile_edges):
+def discretized_misfit(
+    data_grid,
+    model_grid,
+    misfit_field,
+    field_1,
+    field_2,
+    field_1_percentile_edges,
+    field_2_percentile_edges,
+):
     """
     """
-    category = _get_category_labels(data_grid, misfit_field, field_1, field_2, field_1_percentile_edges, field_2_percentile_edges)
+    category = _get_category_labels(
+        data_grid,
+        misfit_field,
+        field_1,
+        field_2,
+        field_1_percentile_edges,
+        field_2_percentile_edges,
+    )
 
-def _get_category_labels(grid, misfit_field, field_1, field_2, field_1_percentile_edges, field_2_percentile_edges):
+
+def _get_category_labels(
+    grid,
+    misfit_field,
+    field_1,
+    field_2,
+    field_1_percentile_edges,
+    field_2_percentile_edges,
+):
 
     vals = grid.at_node[misfit_field]
     f1 = grid.at_node[field_1]
@@ -27,9 +50,7 @@ def _get_category_labels(grid, misfit_field, field_1, field_2, field_1_percentil
         f1_max = f1_edges[i + 1]
 
         if i != len(f1_edges) - 2:
-            f1_sel = (
-                (field_1 >= f1_min) & (field_1 < f1_max) & (is_core)
-            )
+            f1_sel = (field_1 >= f1_min) & (field_1 < f1_max) & (is_core)
         else:
             f1_sel = (field_1 >= f1_min) & (is_core)
 
