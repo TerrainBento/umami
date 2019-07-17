@@ -1,17 +1,15 @@
 import numpy as np
 
-
 def _aggregate(vals, method, **kwds):
     # inspect numpy namespace:
     function = np.__dict__[method]
 
     # calc value
-    try:
-        out = function(vals, **kwds)
-        assert isinstance(out, scalar)
-    except:
+    out = function(vals, **kwds)
+    if np.isscalar(out):
+        return out
+    else:
         raise ValueError()
-    return out
 
 
 def aggregate(grid, field, method, **kwds):

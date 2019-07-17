@@ -1,5 +1,6 @@
 """The umami Metric class calculates metrics on terrain."""
 from collections import OrderedDict
+from copy import deepcopy
 from io import StringIO
 
 import yaml
@@ -7,6 +8,7 @@ import yaml
 import umami.calculations.metric as calcs
 from landlab import RasterModelGrid
 from landlab.components import ChiFinder, FlowAccumulator
+from landlab.utils.flow__distance import calculate_flow__distance
 
 # google "register as plugins" and consider alowing these to be plugins
 # instead of fuunctions only in this module.
@@ -24,121 +26,28 @@ def _read_input(file):
 class Metric(object):
     """Create a Metric class based on a Landlab grid.
 
-    Examples
-    --------
 
-    >>> from io import StringIO
-    >>> from landlab import RasterModelGrid
-    >>> from landlab.components import FlowAccumulator, ChiFinder
-    >>> from umami import Metric
-
-    >>> grid = RasterModelGrid((10, 10))
-    >>> z = grid.add_zeros("node", "topographic__elevation")
-    >>> z += grid.x_of_node + grid.y_of_node
-    >>> fa = FlowAccumulator(grid)
-    >>> fa.run_one_step()
-    >>> cf = ChiFinder(grid)
-    >>> cf.calculate_chi()
-
-    >>> file_like=StringIO('''
-    ... hi:
-    ...     _func: hypsometric_integral
-    ... me:
-    ...     _func: aggregate
-    ...     method: mean
-    ...     field: topographic__elevation
-    ... ve:
-    ...     _func: variance
-    ...     field: topographic__elevation
-    ... ms:
-    ...     _func: mean
-    ...     field: topographic__steepest_slope
-    ... vs:
-    ...     _func: variance
-    ...     field: topographic__steepest_slope
-    ... ci:
-    ...     _func: chi_intercept
-    ... cg:
-    ...     _func: chi_gradient
-    ... ep10:
-    ...     _func: percentile
-    ...     field: topographic__elevation
-    ...     percentile: 10
-    ... wshd_mean:
-    ...     _func : watershed_aggregation
-    ...     field: cumulative_elevation
-    ...     method: mean
-    ...     outlet_id: 2
-    ... sn1:
-    ...     _func: count_equal
-    ...     field: drainage_area
-    ...     value: 1
-    ... jdm:
-    ...     field_1 : channel__chi_index
-    ...     field_2 : topographic__elevation
-    ...     field_1_percentile_edges:
-    ...         - 0
-    ...         - 5
-    ...         - 20
-    ...         - 40
-    ...         - 100
-    ...     field_2_percentile_edges:
-    ...         - 0
-    ...         - 25
-    ...         - 50
-    ...         - 75
-    ...         - 100
-    ... dm:
-    ...     misfit_field: topographic__elevation
-    ...     field_1 : channel__chi_index
-    ...     field_2 : topographic__elevation
-    ...     field_1_percentile_edges:
-    ...         - 0
-    ...         - 5
-    ...         - 20
-    ...         - 40
-    ...         - 100
-    ...     field_2_percentile_edges:
-    ...         - 0
-    ...         - 25
-    ...         - 50
-    ...         - 75
-    ...         - 100
-    ... ''')
-    >>> metric = Metric(grid)
-    >>> metric.add_metrics_from_file(file_like)
-    >>> metric.names
-    odict_keys(['hi', 'me', 've', 'ms', 'vs', 'ci', 'cg', 'ep10', 'wshd_mean', 'sn1', 'jdm', 'dm'])
     """
 
-    _required_fields = [
-        "topographic__elevation",
-        "channel__chi_index",
-        "flow__link_to_receiver_node",
-        "drainage_area",
-        "flow__upstream_node_order",
-    ]
+    # only build fields if they are required...
+    _required_fields = ["topographic__elevation"]
+
+# ,
+# "channel__chi_index",
+# "flow__link_to_receiver_node",
+# "drainage_area",
+# "flow__upstream_node_order",
+#flow__distance
+    _required_fields_by_func = {}
 
     _default_metrics = OrderedDict()
 
     @classmethod
     def from_dict(params):
         """"""
-        # TODO ordered dictionary
-
         # create grid
         grid = create_grid(params.pop("grid"))
 
-        # run FlowAccumulator
-        fa = FlowAccumulator(
-            self.grid, **params.pop("flow_accumulator_kwds", {})
-        )
-        self.fa.run_one_step()
-
-        # Run ChiFinder
-        self.chi_finder = ChiFinder(self.grid, **params.pop("chi_kwds", {}))
-
-        # remaining params has metrics.
         return cls(grid, **params)
 
     @classmethod
@@ -147,32 +56,135 @@ class Metric(object):
         params = _read_input(file)
         return cls.from_dict(params)
 
-    def __init__(self, grid, metrics=None):
+    def __init__(self, grid, flow_accumulator_kwds=None, chi_finder_kwds=None, metrics=None):
         """
         Parameters
         ----------
+        grid
+        flow_accumulator_kwds
+        chi_finder_kwds
+        metrics
 
+        Attributes
+        ----------
+        grid
+        names
+        values
+
+        Functions
+        ---------
+        add_metrics_from_dict
+        add_metrics_from_file
+        calculate_metrics
+        write_metrics_to_file
+
+        Examples
+        --------
+
+        >>> from io import StringIO
+        >>> from landlab import RasterModelGrid
+        >>> from landlab.components import FlowAccumulator, ChiFinder
+        >>> from umami import Metric
+
+        >>> grid = RasterModelGrid((100, 100))
+        >>> z = grid.add_zeros("node", "topographic__elevation")
+        >>> z += grid.x_of_node + grid.y_of_node
+
+        >>> file_like=StringIO('''
+        ... me:
+        ...     _func: aggregate
+        ...     method: mean
+        ...     field: topographic__elevation
+        ... ep10:
+        ...     _func: aggregate
+        ...     method: percentile
+        ...     field: topographic__elevation
+        ...     q: 10
+        ... watershed_aggregation:
+        ...     _func: watershed_aggregation
+        ...     field: topographic__elevation
+        ...     method: mean
+        ...     outlet_id: 2
+        ... sn1:
+        ...     _func: count_equal
+        ...     field: drainage_area
+        ...     value: 1
+        ... ''')
+        >>> metric = Metric(grid)
+        >>> metric.add_metrics_from_file(file_like)
+        >>> metric.names
+        odict_keys(['me', 'ep10', 'watershed_aggregation', 'sn1'])
+        >>> metric.calculate_metrics()
+        >>> metric.values
+        [99.0, 45.0, 51.0, 98]
         """
-        # determine which metrics are desired.
-        self._validate_metrics(metrics)
-        self._metrics = metrics or self._default_metrics
-
         # verify that apppropriate fields are present.
         for field in self._required_fields:
             if field not in grid.at_node:
                 msg = ""
                 raise ValueError(msg)
 
-        # look at field required by metrics. test if they are all present.
-
-        # look at all _funcs, ensure that they are valid for
-
         # save a reference to the grid.
-        self.grid = grid
+        self._grid = grid
+
+        # run FlowAccumulator
+        kwds = flow_accumulator_kwds or {}
+        self._fa = FlowAccumulator( grid, **kwds)
+        self._fa.run_one_step()
+
+        # Run ChiFinder
+        kwds = flow_accumulator_kwds or {}
+        self._cf = ChiFinder(grid, **kwds)
+
+        # run distance upstream.
+        _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
+
+        # determine which metrics are desired.
+        self._metrics = metrics or self._default_metrics
+        self._validate_metrics(self._metrics)
+
+    @property
+    def grid(self):
+        """ """
+        return self._grid
+
+    @property
+    def names(self):
+        """
+        """
+        return self._metrics.keys()
+
+    @property
+    def values(self):
+        """
+        """
+        return [self._metric_values[key] for key in self._metrics.keys()]
 
     def _validate_metrics(self, metrics):
         """"""
-        pass
+        # look at field required by metrics. test if they are all present.
+        field_locs = ["field_1", "field_2", "field"]
+
+        # look at all _funcs, ensure that they are valid
+        for key in metrics:
+            info = metrics[key]
+
+            # Function is defined
+            if "_func" not in info:
+                msg = ""
+                raise ValueError(msg)
+
+            # Function is supported
+            if info["_func"] not in calcs.__dict__:
+                msg = ""
+                raise ValueError(msg)
+
+            # Fields required by function are present.
+            for fl in field_locs:
+                if fl in info:
+                    if info[fl] not in self._grid["node"]:
+                        msg = ""
+                        raise ValueError(msg)
 
     def add_metrics_from_file(self, file):
         """"""
@@ -185,16 +197,24 @@ class Metric(object):
         for key in params:
             self._metrics[key] = params[key]
 
-    @property
-    def names(self):
-        return self._metrics.keys()
-
-    def calculate_metrics():
+    def calculate_metrics(self):
         """"""
-        self.metric_order = []
-        self.metrics = {}
+        self._metric_values = OrderedDict()
 
-        for metric in self._metrics:
-            self.metric_order.append(name)
-            # get _function, apply  with inspect.
-            # save value.
+        for key in self._metrics.keys():
+            info = deepcopy(self._metrics[key])
+            _func = info.pop("_func")
+            function = calcs.__dict__[_func]
+
+            if _func in ("chi_gradient", "chi_intercept"):
+                self._metric_values[key] = function(self._cf)
+            else:
+                self._metric_values[key] = function(self._grid, **info)
+
+    def write_metrics_to_file(self, path):
+        """
+
+        Styles: Yaml, Dakota
+
+        """
+        pass
