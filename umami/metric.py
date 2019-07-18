@@ -29,20 +29,10 @@ class Metric(object):
 
     """
 
-    # only build fields if they are required...
     _required_fields = ["topographic__elevation"]
-
-# ,
-# "channel__chi_index",
-# "flow__link_to_receiver_node",
-# "drainage_area",
-# "flow__upstream_node_order",
-#flow__distance
 
     _required_fields_by_func = {"hypsometric_integral": ("flow__receiver_node", "flow__upstream_node_order"),
                                 "watershed_aggregation": ("flow__receiver_node", "flow__upstream_node_order")}
-
-    _default_metrics = OrderedDict()
 
     @classmethod
     def from_dict(params):
