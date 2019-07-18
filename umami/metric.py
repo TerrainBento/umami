@@ -142,7 +142,7 @@ class Metric(object):
         _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
 
         # determine which metrics are desired.
-        self._metrics = metrics or self._default_metrics
+        self._metrics = OrderedDict(metrics or {})
         self._validate_metrics(self._metrics)
 
     @property
@@ -203,9 +203,10 @@ class Metric(object):
 
     def add_metrics_from_dict(self, params):
         """"""
-        self._validate_metrics(params)
-        for key in params:
-            self._metrics[key] = params[key]
+        new_metrics = OrderedDict(params)
+        self._validate_metrics(new_metrics)
+        for key in new_metrics:
+            self._metrics[key] = new_metrics[key]
 
     def calculate_metrics(self):
         """"""
