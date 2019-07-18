@@ -38,7 +38,9 @@ class Metric(object):
 # "drainage_area",
 # "flow__upstream_node_order",
 #flow__distance
-    _required_fields_by_func = {}
+
+    _required_fields_by_func = {"hypsometric_integral": ("flow__receiver_node", "flow__upstream_node_order"),
+                                "watershed_aggregation": ("flow__receiver_node", "flow__upstream_node_order")}
 
     _default_metrics = OrderedDict()
 
@@ -83,10 +85,9 @@ class Metric(object):
 
         >>> from io import StringIO
         >>> from landlab import RasterModelGrid
-        >>> from landlab.components import FlowAccumulator, ChiFinder
         >>> from umami import Metric
 
-        >>> grid = RasterModelGrid((100, 100))
+        >>> grid = RasterModelGrid((10, 10))
         >>> z = grid.add_zeros("node", "topographic__elevation")
         >>> z += grid.x_of_node + grid.y_of_node
 
@@ -104,19 +105,20 @@ class Metric(object):
         ...     _func: watershed_aggregation
         ...     field: topographic__elevation
         ...     method: mean
-        ...     outlet_id: 2
+        ...     outlet_id: 1
         ... sn1:
         ...     _func: count_equal
         ...     field: drainage_area
         ...     value: 1
         ... ''')
+
         >>> metric = Metric(grid)
         >>> metric.add_metrics_from_file(file_like)
         >>> metric.names
         odict_keys(['me', 'ep10', 'watershed_aggregation', 'sn1'])
         >>> metric.calculate_metrics()
         >>> metric.values
-        [99.0, 45.0, 51.0, 98]
+        [9.0, 5.0, 5.0, 8]
         """
         # verify that apppropriate fields are present.
         for field in self._required_fields:
@@ -175,14 +177,22 @@ class Metric(object):
                 raise ValueError(msg)
 
             # Function is supported
-            if info["_func"] not in calcs.__dict__:
+            func = info["_func"]
+            if func not in calcs.__dict__:
                 msg = ""
                 raise ValueError(msg)
 
             # Fields required by function are present.
+            if func in self._required_fields_by_func:
+                fields = self._required_fields_by_func[func]
+                for field in fields:
+                    if field not in self._grid.at_node:
+                        msg = ""
+                        raise ValueError(msg)
+
             for fl in field_locs:
                 if fl in info:
-                    if info[fl] not in self._grid["node"]:
+                    if info[fl] not in self._grid.at_node:
                         msg = ""
                         raise ValueError(msg)
 
