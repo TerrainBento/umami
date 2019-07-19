@@ -1,7 +1,6 @@
 """The umami Metric class calculates metrics on terrain."""
 from collections import OrderedDict
 from copy import deepcopy
-from io import StringIO
 
 from landlab import RasterModelGrid
 from landlab.components import ChiFinder, FlowAccumulator
@@ -81,7 +80,7 @@ class Metric(object):
         ...     method: percentile
         ...     field: topographic__elevation
         ...     q: 10
-        ... watershed_aggregation:
+        ... oid1_mean:
         ...     _func: watershed_aggregation
         ...     field: topographic__elevation
         ...     method: mean
@@ -95,7 +94,7 @@ class Metric(object):
         >>> metric = Metric(grid)
         >>> metric.add_metrics_from_file(file_like)
         >>> metric.names
-        odict_keys(['me', 'ep10', 'watershed_aggregation', 'sn1'])
+        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
         >>> metric.calculate_metrics()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
@@ -115,9 +114,10 @@ class Metric(object):
         self._fa.run_one_step()
 
         # Run ChiFinder
-        kwds = flow_accumulator_kwds or {}
+        kwds = chi_finder_kwds or {}
         self._cf = ChiFinder(grid, **kwds)
-
+        self._cf.calculate_chi()
+        
         # run distance upstream.
         _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
 
