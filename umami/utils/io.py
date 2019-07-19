@@ -1,6 +1,7 @@
 
 import yaml
 from collections import OrderedDict
+from io import StringIO
 
 
 def _read_input(file):
