@@ -3,24 +3,15 @@ from collections import OrderedDict
 from copy import deepcopy
 from io import StringIO
 
-import yaml
-
-import umami.calculations.metric as calcs
 from landlab import RasterModelGrid
 from landlab.components import ChiFinder, FlowAccumulator
 from landlab.utils.flow__distance import calculate_flow__distance
 
+import umami.calculations.metric as calcs
+from umami.utils.io import _read_input
+
 # google "register as plugins" and consider alowing these to be plugins
 # instead of fuunctions only in this module.
-
-
-def _read_input(file):
-    if isinstance(file, (str, StringIO)):
-        stream = file
-    else:
-        with open(file, "r") as f:
-            stream = f.readlines()
-    return OrderedDict(yaml.safe_load(stream))
 
 
 class Metric(object):
@@ -39,7 +30,6 @@ class Metric(object):
         """"""
         # create grid
         grid = create_grid(params.pop("grid"))
-
         return cls(grid, **params)
 
     @classmethod
