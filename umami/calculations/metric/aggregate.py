@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def _aggregate(vals, method, **kwds):
     # inspect numpy namespace:
     function = np.__dict__[method]
@@ -9,7 +10,8 @@ def _aggregate(vals, method, **kwds):
     if np.isscalar(out):
         return out
     else:
-        raise ValueError()
+        msg = ""
+        raise ValueError("")
 
 
 def aggregate(grid, field, method, **kwds):

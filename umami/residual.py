@@ -21,6 +21,6 @@ class Residual(object):
 
         # validate
 
-        # calculate 
+        # calculate
         self.data = Metric(data)
         self.model = Metric(model, **kwargs)

@@ -1,54 +1,176 @@
-"""The umami Metric class calculates metrics on terrain."""
+"""The ``umami.Metric`` class calculates metrics on a Landlab model grid."""
 from collections import OrderedDict
 from copy import deepcopy
 
-from landlab import RasterModelGrid
-from landlab.components import ChiFinder, FlowAccumulator
-from landlab.utils.flow__distance import calculate_flow__distance
+import yaml
 
 import umami.calculations.metric as calcs
-from umami.utils.io import _read_input
-
-# google "register as plugins" and consider alowing these to be plugins
-# instead of fuunctions only in this module.
+from landlab import RasterModelGrid, create_grid
+from landlab.components import ChiFinder, FlowAccumulator
+from landlab.utils.flow__distance import calculate_flow__distance
+from umami.utils.io import _read_input, _write_output
 
 
 class Metric(object):
-    """Create a Metric class based on a Landlab grid.
-
-
-    """
+    """Create a ``Metric`` class based on a Landlab grid."""
 
     _required_fields = ["topographic__elevation"]
 
-    _required_fields_by_func = {"hypsometric_integral": ("flow__receiver_node", "flow__upstream_node_order"),
-                                "watershed_aggregation": ("flow__receiver_node", "flow__upstream_node_order")}
-
     @classmethod
-    def from_dict(params):
-        """"""
+    def from_dict(cls, params):
+        """Create an umami ``Metric`` from a dictionary.
+
+        Parameters
+        ----------
+        params : dict or OrderedDict
+            This dict must contain a key *grid*, the values of which will be
+            passed to the `Landlab` function ``create_grid`` to create the
+            model grid. It will be convereted to an OrderedDict before metrics
+            are added so as to preserve metric order.
+
+        Examples
+        --------
+        >>> from io import StringIO
+        >>> from umami import Metric
+
+        >>> params = {
+        ...     "grid": {
+        ...         "RasterModelGrid": [
+        ...             [10, 10],
+        ...             {
+        ...                 "fields": {
+        ...                     "node": {
+        ...                         "topographic__elevation": {
+        ...                             "plane": [
+        ...                                 {"point": [0, 0, 0]},
+        ...                                 {"normal": [-1, -1, 1]},
+        ...                             ]
+        ...                         }
+        ...                     }
+        ...                 }
+        ...             },
+        ...         ]
+        ...     },
+        ...     "metrics": {
+        ...         "me": {
+        ...             "_func": "aggregate",
+        ...             "method": "mean",
+        ...             "field": "topographic__elevation",
+        ...         },
+        ...         "ep10": {
+        ...             "_func": "aggregate",
+        ...             "method": "percentile",
+        ...             "field": "topographic__elevation",
+        ...             "q": 10,
+        ...         },
+        ...         "oid1_mean": {
+        ...             "_func": "watershed_aggregation",
+        ...             "field": "topographic__elevation",
+        ...             "method": "mean",
+        ...             "outlet_id": 1,
+        ...         },
+        ...         "sn1": {
+        ...             "_func": "count_equal",
+        ...             "field": "drainage_area",
+        ...             "value": 1,
+        ...         },
+        ...     },
+        ... }
+
+        >>> metric = Metric.from_dict(params)
+        >>> metric.names
+        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        >>> metric.calculate_metrics()
+        >>> metric.values
+        [9.0, 5.0, 5.0, 8]
+        """
         # create grid
         grid = create_grid(params.pop("grid"))
         return cls(grid, **params)
 
     @classmethod
-    def from_file(file):
-        """"""
-        params = _read_input(file)
+    def from_file(cls, file_like):
+        """Create an umami ``Metric`` from a file-like object.
+
+        Parameters
+        ----------
+        file_like : file path, str, or stream
+            File will be parsed by ``yaml.safe_load`` and converted to an
+            ``OrderedDict``.
+
+        Returns
+        -------
+        umami.Metric
+
+        Examples
+        --------
+        >>> from io import StringIO
+        >>> from umami import Metric
+
+        >>> file_like=StringIO('''
+        ... grid:
+        ...     RasterModelGrid:
+        ...         - [10, 10]
+        ...         - fields:
+        ...               node:
+        ...                   topographic__elevation:
+        ...                       plane:
+        ...                           - point: [0, 0, 0]
+        ...                           - normal: [-1, -1, 1]
+        ... metrics:
+        ...     me:
+        ...         _func: aggregate
+        ...         method: mean
+        ...         field: topographic__elevation
+        ...     ep10:
+        ...         _func: aggregate
+        ...         method: percentile
+        ...         field: topographic__elevation
+        ...         q: 10
+        ...     oid1_mean:
+        ...         _func: watershed_aggregation
+        ...         field: topographic__elevation
+        ...         method: mean
+        ...         outlet_id: 1
+        ...     sn1:
+        ...         _func: count_equal
+        ...         field: drainage_area
+        ...         value: 1
+        ... ''')
+
+        >>> metric = Metric.from_file(file_like)
+        >>> metric.names
+        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        >>> metric.calculate_metrics()
+        >>> metric.values
+        [9.0, 5.0, 5.0, 8]
+        """
+        params = _read_input(file_like)
         return cls.from_dict(params)
 
-    def __init__(self, grid, flow_accumulator_kwds=None, chi_finder_kwds=None, metrics=None):
+    def __init__(
+        self,
+        grid,
+        flow_accumulator_kwds=None,
+        chi_finder_kwds=None,
+        metrics=None,
+    ):
         """
         Parameters
         ----------
-        grid
-        flow_accumulator_kwds
-        chi_finder_kwds
-        metrics
+        grid : Landlab model grid
+        flow_accumulator_kwds : dict
+            Parameters to pass to the Landlab ``FlowAccumulator`` to specify
+            flow direction and accumulation.
+        chi_finder_kwds : dict
+            Parameters to pass to the Landlab ``ChiFinder`` to specify optional
+            arguments.    `
+        metrics : dict
+            A dictionary of desired metrics to calculate. See examples for
+            required format.
 
         Attributes
         ----------
-        grid
         names
         values
 
@@ -61,7 +183,6 @@ class Metric(object):
 
         Examples
         --------
-
         >>> from io import StringIO
         >>> from landlab import RasterModelGrid
         >>> from umami import Metric
@@ -110,14 +231,14 @@ class Metric(object):
 
         # run FlowAccumulator
         kwds = flow_accumulator_kwds or {}
-        self._fa = FlowAccumulator( grid, **kwds)
+        self._fa = FlowAccumulator(grid, **kwds)
         self._fa.run_one_step()
 
         # Run ChiFinder
         kwds = chi_finder_kwds or {}
         self._cf = ChiFinder(grid, **kwds)
         self._cf.calculate_chi()
-        
+
         # run distance upstream.
         _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
 
@@ -126,20 +247,13 @@ class Metric(object):
         self._validate_metrics(self._metrics)
 
     @property
-    def grid(self):
-        """ """
-        return self._grid
-
-    @property
     def names(self):
-        """
-        """
+        """"""
         return self._metrics.keys()
 
     @property
     def values(self):
-        """
-        """
+        """"""
         return [self._metric_values[key] for key in self._metrics.keys()]
 
     def _validate_metrics(self, metrics):
@@ -162,14 +276,6 @@ class Metric(object):
                 msg = ""
                 raise ValueError(msg)
 
-            # Fields required by function are present.
-            if func in self._required_fields_by_func:
-                fields = self._required_fields_by_func[func]
-                for field in fields:
-                    if field not in self._grid.at_node:
-                        msg = ""
-                        raise ValueError(msg)
-
             for fl in field_locs:
                 if fl in info:
                     if info[fl] not in self._grid.at_node:
@@ -177,19 +283,41 @@ class Metric(object):
                         raise ValueError(msg)
 
     def add_metrics_from_file(self, file):
-        """"""
+        """Add metrics to an ``umami.Metric`` from a file.
+
+        Parameters
+        ----------
+        file_like : file path, str, or stream
+            File will be parsed by ``yaml.safe_load`` and converted to an
+            ``OrderedDict``.
+        """
         params = _read_input(file)
         self.add_metrics_from_dict(params)
 
     def add_metrics_from_dict(self, params):
-        """"""
+        """Add metrics to an ``umami.Metric`` from a dictionary.
+
+        Adding metrics through this method does not overwrite already existing
+        metrics. New metrics are appended to the existing metric list.
+
+        Parameters
+        ----------
+        params : dict or OrderedDict
+            Keys are metric names and values are a dictionary describing
+            the creation of the metric. It will be convereted to an OrderedDict
+            before metrics are added so as to preserve metric order.
+        """
         new_metrics = OrderedDict(params)
         self._validate_metrics(new_metrics)
         for key in new_metrics:
             self._metrics[key] = new_metrics[key]
 
     def calculate_metrics(self):
-        """"""
+        """Calculate metric values.
+
+        Calculated metric values are stored in the attribute
+        ``Metric.values``.
+        """
         self._metric_values = OrderedDict()
 
         for key in self._metrics.keys():
@@ -202,10 +330,73 @@ class Metric(object):
             else:
                 self._metric_values[key] = function(self._grid, **info)
 
-    def write_metrics_to_file(self, path):
-        """
+    def write_metrics_to_file(self, path, style):
+        """Write metrics to a file.
 
-        Styles: Yaml, Dakota
+        Parameters
+        ----------
+        path :
+        style : str
+            yaml, dakota
 
+        Examples
+        --------
+        >>> from io import StringIO
+        >>> from landlab import RasterModelGrid
+        >>> from umami import Metric
+
+        >>> grid = RasterModelGrid((10, 10))
+        >>> z = grid.add_zeros("node", "topographic__elevation")
+        >>> z += grid.x_of_node + grid.y_of_node
+
+        >>> file_like=StringIO('''
+        ... me:
+        ...     _func: aggregate
+        ...     method: mean
+        ...     field: topographic__elevation
+        ... ep10:
+        ...     _func: aggregate
+        ...     method: percentile
+        ...     field: topographic__elevation
+        ...     q: 10
+        ... oid1_mean:
+        ...     _func: watershed_aggregation
+        ...     field: topographic__elevation
+        ...     method: mean
+        ...     outlet_id: 1
+        ... sn1:
+        ...     _func: count_equal
+        ...     field: drainage_area
+        ...     value: 1
+        ... ''')
+
+        >>> metric = Metric(grid)
+        >>> metric.add_metrics_from_file(file_like)
+        >>> metric.calculate_metrics()
+
+        >>> out = StringIO()
+        >>> metric.write_metrics_to_file(out, style="dakota")
+        >>> out.getvalue()
+        '9.0 # me\\n5.0 # ep10\\n5.0 # oid1_mean\\n8 # sn1'
+
+        >>> out = StringIO()
+        >>> metric.write_metrics_to_file(out, style="yaml")
+        >>> out.getvalue()
+        'me: 9.0\\nep10: 5.0\\noid1_mean: 5.0\\nsn1: 8'
         """
-        pass
+        if style == "dakota":
+            stream = "\n".join(
+                [
+                    str(val) + " # " + str(key)
+                    for key, val in self._metric_values.items()
+                ]
+            )
+        if style == "yaml":
+            stream = "\n".join(
+                [
+                    str(key) + ": " + str(val)
+                    for key, val in self._metric_values.items()
+                ]
+            )
+
+        _write_output(path, stream)
