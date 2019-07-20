@@ -1,12 +1,12 @@
 """The ``umami.Metric`` class calculates metrics on a Landlab model grid."""
 from collections import OrderedDict
 from copy import deepcopy
+
 import numpy as np
 import yaml
 
 import umami.calculations.metric as calcs
 from landlab import RasterModelGrid, create_grid
-from landlab.utils.flow__distance import calculate_flow__distance
 from umami.utils.create_landlab_components import _create_landlab_components
 from umami.utils.io import _read_input, _write_output
 from umami.utils.validate import _validate_fields, _validate_func
@@ -238,9 +238,6 @@ class Metric(object):
             chi_finder_kwds=chi_finder_kwds,
             flow_accumulator_kwds=flow_accumulator_kwds,
         )
-
-        # run distance upstream.
-        _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
 
         # determine which metrics are desired.
         self._metrics = OrderedDict(metrics or {})

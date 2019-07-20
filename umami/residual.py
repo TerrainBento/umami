@@ -26,8 +26,8 @@ class Residual(object):
 
     def __init__(
         self,
-        data,
         model,
+        data,
         flow_accumulator_kwds=None,
         chi_finder_kwds=None,
         residuals=None,
@@ -104,7 +104,7 @@ class Residual(object):
         >>> residual.calculate_residuals()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
-        ...     np.array([  0.467,   0.151,  -3.313,  18.   ]))
+        ...     np.array([ -0.467,  -0.151,   3.313, -18.   ]))
         """
         # assert that the model grids have the same x_of_node and y_of_node.
         assert_array_equal(data.x_of_node, model.x_of_node)
@@ -242,7 +242,7 @@ class Residual(object):
         >>> residual.calculate_residuals()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
-        ...     np.array([ -0.158,  -0.67 ,  -4.138,  20.   ]))
+        ...     np.array([  0.158,   0.67 ,   4.138, -20.   ]))
         """
         model = create_grid(params.pop("model"))
         data = create_grid(params.pop("data"))
@@ -320,7 +320,7 @@ class Residual(object):
         >>> residual.calculate_residuals()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
-        ...     np.array([ -0.191,  -0.426,  -3.252,  20.   ]))
+        ...     np.array([  0.191,   0.426,   3.252, -20.   ]))
         """
         params = _read_input(file_like)
         return cls.from_dict(params)
@@ -413,10 +413,7 @@ class Residual(object):
             else:
 
                 function = residual_calcs.__dict__[_func]
-
-                resid = function(self._model_grid, **info) - function(
-                    self._data_grid, **info
-                )
+                resid = function(self._model_grid, self._data_grid, **info)
 
             self._residual_values[key] = resid
 
@@ -478,11 +475,11 @@ class Residual(object):
         >>> out = StringIO()
         >>> residual.write_residuals_to_file(out, style="dakota", decimals=3)
         >>> out.getvalue()
-        '-17.533 # me\\n-9.909 # ep10\\n-9.813 # oid1_mean\\n41 # sn1'
+        '17.533 # me\\n9.909 # ep10\\n9.813 # oid1_mean\\n-41 # sn1'
         >>> out = StringIO()
         >>> residual.write_residuals_to_file(out, style="yaml", decimals=3)
         >>> out.getvalue()
-        'me: -17.533\\nep10: -9.909\\noid1_mean: -9.813\\nsn1: 41'
+        'me: 17.533\\nep10: 9.909\\noid1_mean: 9.813\\nsn1: -41'
         """
         if style == "dakota":
             stream = "\n".join(

@@ -1,4 +1,5 @@
 from landlab.components import ChiFinder, FlowAccumulator
+from landlab.utils.flow__distance import calculate_flow__distance
 
 
 def _create_landlab_components(
@@ -14,5 +15,8 @@ def _create_landlab_components(
     kwds = chi_finder_kwds or {}
     cf = ChiFinder(grid, **kwds)
     cf.calculate_chi()
+
+    # run distance upstream.
+    _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
 
     return fa, cf

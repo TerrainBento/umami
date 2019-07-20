@@ -12,7 +12,12 @@ from .metric import (
     hypsometric_integral,
     watershed_aggregation,
 )
-from .residual import discretized_misfit, joint_density_misfit, ks_test
+from .residual import (
+    discretized_misfit,
+    joint_density_misfit,
+    kstest,
+    kstest_watershed,
+)
 
 __all__ = [
     "aggregate",
@@ -23,6 +28,6 @@ __all__ = [
     "watershed_aggregation",
     "discretized_misfit",
     "joint_density_misfit",
-    "ks_test",
-    "ks_width_function",
+    "kstest",
+    "kstest_watershed",
 ]
