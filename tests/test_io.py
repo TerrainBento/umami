@@ -1,6 +1,6 @@
 import pytest
-from numpy.testing import assert_array_equal
 import yaml
+from numpy.testing import assert_array_equal
 
 from umami import Metric
 
@@ -28,7 +28,7 @@ def test_write_file(tmpdir, test_read_file):
 
         with open(fout, "r") as f:
             out = yaml.safe_load(f)
-            
+
     correct = {"me": 9.0, "ep10": 5.0, "oid1_mean": 5.0, "sn1": 8}
 
     for key, val in correct.items():

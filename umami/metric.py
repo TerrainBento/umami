@@ -1,14 +1,17 @@
 """The ``umami.Metric`` class calculates metrics on a Landlab model grid."""
 from collections import OrderedDict
 from copy import deepcopy
-
+import numpy as np
 import yaml
 
 import umami.calculations.metric as calcs
 from landlab import RasterModelGrid, create_grid
-from landlab.components import ChiFinder, FlowAccumulator
 from landlab.utils.flow__distance import calculate_flow__distance
+from umami.utils.create_landlab_components import _create_landlab_components
 from umami.utils.io import _read_input, _write_output
+from umami.utils.validate import _validate_fields, _validate_func
+
+_VALID_FUNCS = calcs.__dict__
 
 
 class Metric(object):
@@ -94,7 +97,7 @@ class Metric(object):
 
         Parameters
         ----------
-        file_like : file path, str, or stream
+        file_like : file path or StringIO
             File will be parsed by ``yaml.safe_load`` and converted to an
             ``OrderedDict``.
 
@@ -229,15 +232,12 @@ class Metric(object):
         # save a reference to the grid.
         self._grid = grid
 
-        # run FlowAccumulator
-        kwds = flow_accumulator_kwds or {}
-        self._fa = FlowAccumulator(grid, **kwds)
-        self._fa.run_one_step()
-
-        # Run ChiFinder
-        kwds = chi_finder_kwds or {}
-        self._cf = ChiFinder(grid, **kwds)
-        self._cf.calculate_chi()
+        # run FlowAccumulator and ChiFinder
+        self._fa, self._cf = _create_landlab_components(
+            self._grid,
+            chi_finder_kwds=chi_finder_kwds,
+            flow_accumulator_kwds=flow_accumulator_kwds,
+        )
 
         # run distance upstream.
         _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
@@ -264,30 +264,15 @@ class Metric(object):
         # look at all _funcs, ensure that they are valid
         for key in metrics:
             info = metrics[key]
-
-            # Function is defined
-            if "_func" not in info:
-                msg = ""
-                raise ValueError(msg)
-
-            # Function is supported
-            func = info["_func"]
-            if func not in calcs.__dict__:
-                msg = ""
-                raise ValueError(msg)
-
-            for fl in field_locs:
-                if fl in info:
-                    if info[fl] not in self._grid.at_node:
-                        msg = ""
-                        raise ValueError(msg)
+            _validate_func(info, _VALID_FUNCS)
+            _validate_fields(self._grid, info)
 
     def add_metrics_from_file(self, file):
         """Add metrics to an ``umami.Metric`` from a file.
 
         Parameters
         ----------
-        file_like : file path, str, or stream
+        file_like : file path or StringIO
             File will be parsed by ``yaml.safe_load`` and converted to an
             ``OrderedDict``.
         """
@@ -330,7 +315,7 @@ class Metric(object):
             else:
                 self._metric_values[key] = function(self._grid, **info)
 
-    def write_metrics_to_file(self, path, style):
+    def write_metrics_to_file(self, path, style, decimals=3):
         """Write metrics to a file.
 
         Parameters
@@ -338,6 +323,8 @@ class Metric(object):
         path :
         style : str
             yaml, dakota
+        decimals: int
+            Number of decimals to round output to.
 
         Examples
         --------
@@ -387,14 +374,14 @@ class Metric(object):
         if style == "dakota":
             stream = "\n".join(
                 [
-                    str(val) + " # " + str(key)
+                    str(np.round(val, decimals=decimals)) + " # " + str(key)
                     for key, val in self._metric_values.items()
                 ]
             )
         if style == "yaml":
             stream = "\n".join(
                 [
-                    str(key) + ": " + str(val)
+                    str(key) + ": " + str(np.round(val, decimals=decimals))
                     for key, val in self._metric_values.items()
                 ]
             )
