@@ -8,3 +8,7 @@ docs/build/html/
 docs/build/doctrees/
 
 __pycache__/
+
+\.coverage
+
+\.DS_Store
