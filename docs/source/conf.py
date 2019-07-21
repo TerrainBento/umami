@@ -44,8 +44,10 @@ class MockTest(MagicMock):
 MOCK_MODULES = [
     "landlab",
     "landlab.io",
+    "landlab.utils",
     "landlab.io.netcdf",
     "landlab.components",
+    'landlab.utils.flow__distance',
     "landlab.graph",
     "Component",
     "FlowAccumulator",
@@ -141,8 +143,8 @@ master_doc = "index"
 
 # General information about the project.
 project = "umami"
-copyright = str(date.today().year) + u", The TerrainBento Team"
-author = "The TerrainBento Team"
+copyright = str(date.today().year) + u", Katy Barnhart"
+author = "Katy Barnhart"
 
 # The version info for the project you"re documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -242,7 +244,7 @@ latex_documents = [
         master_doc,
         "umami.tex",
         "Umami Documentation",
-        "The TerranBento Team",
+        "Katy Barnhart",
         "manual",
     )
 ]

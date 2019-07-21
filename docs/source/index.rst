@@ -12,6 +12,11 @@ Umami has :py:class:`Residual` and :py:class:`Metric`.
     umami.metric
 
 
+.. toctree::
+
+    umami.calculations
+
+
 Indices and tables
 ==================
 

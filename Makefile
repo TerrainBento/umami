@@ -68,9 +68,9 @@ coverage: ## check code coverage quickly with the default Python
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/landlab.rst
+	rm -f docs/umami.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ pymt_landlab
+	sphinx-apidoc -o docs/ umami
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
