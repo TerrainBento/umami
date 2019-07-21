@@ -35,7 +35,8 @@ class Residual(object):
         """
         Parameters
         ----------
-        grid : Landlab model grid
+        model : Landlab model grid
+        data : Landlab model grid
         flow_accumulator_kwds : dict
             Parameters to pass to the Landlab ``FlowAccumulator`` to specify
             flow direction and accumulation.
@@ -109,6 +110,7 @@ class Residual(object):
         # assert that the model grids have the same x_of_node and y_of_node.
         assert_array_equal(data.x_of_node, model.x_of_node)
         assert_array_equal(data.y_of_node, model.y_of_node)
+        assert_array_equal(data.core_nodes, model.core_nodes)
 
         self._data_grid = data
         self._model_grid = model

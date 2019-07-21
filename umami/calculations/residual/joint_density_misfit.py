@@ -1,31 +1,123 @@
+import numpy as np
+
+
 def joint_density_misfit(
-    data_grid,
     model_grid,
+    data_grid,
     field_1,
     field_2,
     field_1_percentile_edges,
     field_2_percentile_edges,
 ):
+    """Calculate the joint-density misfit on a landlab grid field.
+
+    density bounds calculated with the data grid.
+
+    Parameters
+    ----------
+    model_grid
+    data_grid
+    field_1
+    field_2
+    field_1_percentile_edges
+    field_2_percentile_edges
+
+    Returns
+    -------
+    out : float
+        The misfit
+
+    Examples
+    --------
+    First an example that only uses the ``joint_density_misfit`` function.
+
+    >>> import numpy as np
+    >>> from landlab import RasterModelGrid
+    >>> from landlab.components import FlowAccumulator
+    >>> from umami.calculations import joint_density_misfit
+    >>> np.random.seed(42)
+
+    >>> model = RasterModelGrid((10, 10))
+    >>> z_model = model.add_zeros("node", "topographic__elevation")
+    >>> z_model += model.x_of_node + model.y_of_node
+
+    >>> data = RasterModelGrid((10, 10))
+    >>> z_data = data.add_zeros("node", "topographic__elevation")
+    >>> z_data +=  data.x_of_node + data.y_of_node
+    >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
+
+    >>> data_fa = FlowAccumulator(data)
+    >>> data_fa.run_one_step()
+
+    >>> model_fa = FlowAccumulator(model)
+    >>> model_fa.run_one_step()
+
+    >>> np.isclose(
+    ...     joint_density_misfit(
+    ...         model,
+    ...         data,
+    ...         "topographic__elevation",
+    ...         "drainage_area",
+    ...         [0, 25, 50, 75, 100],
+    ...         [0, 20, 40, 60, 80, 100]),
+    ...         0.056599, atol=1e-03)
+    True
+
+    Next, the same calculations are shown as part of an umami ``Residual``.
+
+    >>> from io import StringIO
+    >>> from umami import Residual
+    >>> file_like=StringIO('''
+    ... jdm:
+    ...     _func: joint_density_misfit
+    ...     field_1: topographic__elevation
+    ...     field_2: drainage_area
+    ...     field_1_percentile_edges:
+    ...         - 0
+    ...         - 25
+    ...         - 50
+    ...         - 75
+    ...         - 100
+    ...     field_2_percentile_edges:
+    ...         - 0
+    ...         - 20
+    ...         - 40
+    ...         - 60
+    ...         - 80
+    ...         - 100
+    ... ''')
+    >>> residual = Residual(model, data)
+    >>> residual.add_residuals_from_file(file_like)
+    >>> residual.names
+    odict_keys(['jdm'])
+    >>> residual.calculate_residuals()
+    >>> np.round(residual.values, decimals=3)
+    array([ 0.057])
     """
-    """
 
-    f1 = grid.at_node[field_1]
-    f2 = grid.at_node[field_2]
+    f1_data = data_grid.at_node[field_1][data_grid.core_nodes]
+    f2_data = data_grid.at_node[field_2][data_grid.core_nodes]
 
-    # first bin by field 1, then within field_1, bin by field_2
-    is_core = np.zeros_like(f1, dtype=bool)
-    is_core[grid.core_nodes] = True
+    f1_model = model_grid.at_node[field_1][model_grid.core_nodes]
+    f2_model = model_grid.at_node[field_2][model_grid.core_nodes]
 
-    # calc the percentiles of the field 1 distribution
-    f1_edges = np.percentile(f1[is_core], field_1_percentile_edges)
+    # calc the percentiles of each_distribution.
+    f1_edges = np.percentile(f1_data, field_1_percentile_edges)
+    f2_edges = np.percentile(f2_data, field_2_percentile_edges)
 
-    def _calc_channel_chi_distribution(self):
-        """"""
-        # calc on DEM
-        self._density_chi, xedges, yedges = np.histogram2d(
-            self.z, self.chi, bins=(self._xedges, self._yedges), normed=True
-        )
+    # calculate the densities for model and data
+    data_count, _, _ = np.histogram2d(
+        f1_data, f2_data, bins=(f1_edges, f2_edges), density=False
+    )
 
-    def density_chi(self):
-        """"""
-        return self._density_chi
+    model_count, _, _ = np.histogram2d(
+        f1_model, f2_model, bins=(f1_edges, f2_edges), density=False
+    )
+
+    data_density = data_count / data_count.sum()
+    model_density = model_count / model_count.sum()
+
+    sq_resid = np.power(model_density - data_density, 2.0)
+    misfit = np.sqrt(np.mean(sq_resid))
+
+    return misfit

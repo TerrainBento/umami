@@ -5,7 +5,7 @@ from landlab.utils import get_watershed_mask
 
 
 def kstest(model_grid, data_grid, field):
-    """Calculate an Kolmogorov-Smirnov test a landlab grid field.
+    """Calculate an Kolmogorov-Smirnov test for a landlab grid field.
 
     ``kstest`` calculates the Kolmogorov-Smirnov test for goodness of fit
     using the function ``ks_2samp`` from ``scipy.stats``.
@@ -68,7 +68,7 @@ def kstest(model_grid, data_grid, field):
 
 
 def kstest_watershed(model_grid, data_grid, field, outlet_id):
-    """Calculate an Kolmogorov-Smirnov test of a watershed's.
+    """Calculate an Kolmogorov-Smirnov test for a watershed.
 
     ``kstest_watershed`` calculates the Kolmogorov-Smirnov test for
     goodness of fit using the function ``ks_2samp`` from ``scipy.stats``.
