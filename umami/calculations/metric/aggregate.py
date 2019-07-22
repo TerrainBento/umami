@@ -10,8 +10,8 @@ def _aggregate(vals, method, **kwds):
     if np.isscalar(out):
         return out
     else:
-        msg = ""
-        raise ValueError("")
+        msg = "umami: Aggregation did not yield a scalar."
+        raise ValueError(msg)
 
 
 def aggregate(grid, field, method, **kwds):

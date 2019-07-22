@@ -118,7 +118,9 @@ class Residual(object):
         # verify that apppropriate fields are present.
         for field in self._required_fields:
             if (field not in model.at_node) or (field not in data.at_node):
-                msg = ""
+                msg = "umami: Required field: {field} is missing.".format(
+                    field=field
+                )
                 raise ValueError(msg)
 
         # run FlowAccumulator and ChiFinder

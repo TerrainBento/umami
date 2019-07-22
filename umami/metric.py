@@ -226,7 +226,9 @@ class Metric(object):
         # verify that apppropriate fields are present.
         for field in self._required_fields:
             if field not in grid.at_node:
-                msg = ""
+                msg = "umami: Required field: {field} is missing.".format(
+                    field=field
+                )
                 raise ValueError(msg)
 
         # save a reference to the grid.

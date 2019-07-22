@@ -5,7 +5,7 @@ from landlab.components import ChiFinder
 
 def _validate_chi_finder(chi_finder):
     if not isinstance(chi_finder, ChiFinder):
-        msg = ""
+        msg = "umami: A valid instance of a ChiFinder is required."
         raise ValueError(msg)
 
 
