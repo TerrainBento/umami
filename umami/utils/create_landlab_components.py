@@ -13,7 +13,7 @@ def _create_landlab_components(
 
     # Run ChiFinder
     kwds = chi_finder_kwds or {}
-    cf = ChiFinder(grid, **kwds)
+    cf = ChiFinder(grid, noclobber=False, **kwds)
     cf.calculate_chi()
 
     # run distance upstream.
