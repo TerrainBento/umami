@@ -30,16 +30,13 @@ def kstest(model_grid, data_grid, field):
     >>> from landlab import RasterModelGrid
     >>> from umami.calculations import kstest
     >>> np.random.seed(42)
-
     >>> model = RasterModelGrid((10, 10))
     >>> z_model = model.add_zeros("node", "topographic__elevation")
     >>> z_model += model.x_of_node + model.y_of_node
-
     >>> data = RasterModelGrid((10, 10))
     >>> z_data = data.add_zeros("node", "topographic__elevation")
     >>> z_data +=  data.x_of_node + data.y_of_node
     >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
-
     >>> np.round(kstest(model, data, "topographic__elevation"), decimals=3)
     0.125
 
@@ -100,22 +97,17 @@ def kstest_watershed(model_grid, data_grid, field, outlet_id):
     >>> from landlab.components import FlowAccumulator
     >>> from umami.calculations import kstest_watershed
     >>> np.random.seed(42)
-
     >>> model = RasterModelGrid((10, 10))
     >>> z_model = model.add_zeros("node", "topographic__elevation")
     >>> z_model += model.x_of_node + model.y_of_node
-
     >>> data = RasterModelGrid((10, 10))
     >>> z_data = data.add_zeros("node", "topographic__elevation")
     >>> z_data +=  data.x_of_node + data.y_of_node
     >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
-
     >>> data_fa = FlowAccumulator(data)
     >>> data_fa.run_one_step()
-
     >>> model_fa = FlowAccumulator(model)
     >>> model_fa.run_one_step()
-
     >>> np.round(
     ...     kstest_watershed(
     ...         model,

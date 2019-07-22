@@ -438,19 +438,14 @@ class Residual(object):
         >>> from io import StringIO
         >>> from landlab import RasterModelGrid
         >>> from umami import Residual
-
         >>> np.random.seed(42)
-
         >>> model = RasterModelGrid((10, 10))
         >>> z_model = model.add_zeros("node", "topographic__elevation")
         >>> z_model += model.x_of_node + model.y_of_node
-
         >>> data = RasterModelGrid((10, 10))
         >>> z_data = data.add_zeros("node", "topographic__elevation")
         >>> z_model += data.x_of_node + data.y_of_node
         >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
-
-
         >>> file_like=StringIO('''
         ... me:
         ...     _func: aggregate
@@ -471,19 +466,35 @@ class Residual(object):
         ...     field: drainage_area
         ...     value: 1
         ... ''')
-
         >>> residual = Residual(model, data)
         >>> residual.add_residuals_from_file(file_like)
         >>> residual.calculate_residuals()
 
+        First we ouput in *dakota* style, in which each metric is listed on
+        its own line with its name as a comment.
+
         >>> out = StringIO()
         >>> residual.write_residuals_to_file(out, style="dakota", decimals=3)
-        >>> out.getvalue()
-        '17.533 # me\\n9.909 # ep10\\n9.813 # oid1_mean\\n-41 # sn1'
+        >>> file_contents = out.getvalue().splitlines()
+        >>> for line in file_contents:
+        ...     print(line.strip())
+        17.533 # me
+        9.909 # ep10
+        9.813 # oid1_mean
+        -41 # sn1
+
+        Next we output in *yaml* style, in which each metric is serialized in
+        YAML format.
+
         >>> out = StringIO()
         >>> residual.write_residuals_to_file(out, style="yaml", decimals=3)
-        >>> out.getvalue()
-        'me: 17.533\\nep10: 9.909\\noid1_mean: 9.813\\nsn1: -41'
+        >>> file_contents = out.getvalue().splitlines()
+        >>> for line in file_contents:
+        ...     print(line.strip())
+        me: 17.533
+        ep10: 9.909
+        oid1_mean: 9.813
+        sn1: -41
         """
         if style == "dakota":
             stream = "\n".join(

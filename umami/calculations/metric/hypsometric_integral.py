@@ -34,7 +34,6 @@ def hypsometric_integral(grid, outlet_id):
     >>> from landlab import RasterModelGrid
     >>> from landlab.components import FlowAccumulator
     >>> from umami.calculations import hypsometric_integral
-
     >>> grid = RasterModelGrid((10, 10))
     >>> z = grid.add_zeros("node", "topographic__elevation")
     >>> z += grid.x_of_node + grid.y_of_node

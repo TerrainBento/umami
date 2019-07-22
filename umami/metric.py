@@ -35,7 +35,6 @@ class Metric(object):
         --------
         >>> from io import StringIO
         >>> from umami import Metric
-
         >>> params = {
         ...     "grid": {
         ...         "RasterModelGrid": [
@@ -79,7 +78,6 @@ class Metric(object):
         ...         },
         ...     },
         ... }
-
         >>> metric = Metric.from_dict(params)
         >>> metric.names
         odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
@@ -109,7 +107,6 @@ class Metric(object):
         --------
         >>> from io import StringIO
         >>> from umami import Metric
-
         >>> file_like=StringIO('''
         ... grid:
         ...     RasterModelGrid:
@@ -140,7 +137,6 @@ class Metric(object):
         ...         field: drainage_area
         ...         value: 1
         ... ''')
-
         >>> metric = Metric.from_file(file_like)
         >>> metric.names
         odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
@@ -189,11 +185,9 @@ class Metric(object):
         >>> from io import StringIO
         >>> from landlab import RasterModelGrid
         >>> from umami import Metric
-
         >>> grid = RasterModelGrid((10, 10))
         >>> z = grid.add_zeros("node", "topographic__elevation")
         >>> z += grid.x_of_node + grid.y_of_node
-
         >>> file_like=StringIO('''
         ... me:
         ...     _func: aggregate
@@ -214,7 +208,6 @@ class Metric(object):
         ...     field: drainage_area
         ...     value: 1
         ... ''')
-
         >>> metric = Metric(grid)
         >>> metric.add_metrics_from_file(file_like)
         >>> metric.names
@@ -247,16 +240,15 @@ class Metric(object):
 
     @property
     def names(self):
-        """"""
+        """Names of metrics in metric order."""
         return self._metrics.keys()
 
     @property
     def values(self):
-        """"""
+        """Metric values in metric order."""
         return [self._metric_values[key] for key in self._metrics.keys()]
 
     def _validate_metrics(self, metrics):
-        """"""
         # look at all _funcs, ensure that they are valid
         for key in metrics:
             info = metrics[key]
@@ -327,11 +319,9 @@ class Metric(object):
         >>> from io import StringIO
         >>> from landlab import RasterModelGrid
         >>> from umami import Metric
-
         >>> grid = RasterModelGrid((10, 10))
         >>> z = grid.add_zeros("node", "topographic__elevation")
         >>> z += grid.x_of_node + grid.y_of_node
-
         >>> file_like=StringIO('''
         ... me:
         ...     _func: aggregate
@@ -353,19 +343,34 @@ class Metric(object):
         ...     value: 1
         ... ''')
 
+        First we ouput in *dakota* style, in which each metric is listed on
+        its own line with its name as a comment.
+
         >>> metric = Metric(grid)
         >>> metric.add_metrics_from_file(file_like)
         >>> metric.calculate_metrics()
-
         >>> out = StringIO()
         >>> metric.write_metrics_to_file(out, style="dakota")
-        >>> out.getvalue()
-        '9.0 # me\\n5.0 # ep10\\n5.0 # oid1_mean\\n8 # sn1'
+        >>> file_contents = out.getvalue().splitlines()
+        >>> for line in file_contents:
+        ...     print(line.strip())
+        9.0 # me
+        5.0 # ep10
+        5.0 # oid1_mean
+        8 # sn1
+
+        Next we output in *yaml* style, in which each metric is serialized in
+        YAML format.
 
         >>> out = StringIO()
         >>> metric.write_metrics_to_file(out, style="yaml")
-        >>> out.getvalue()
-        'me: 9.0\\nep10: 5.0\\noid1_mean: 5.0\\nsn1: 8'
+        >>> file_contents = out.getvalue().splitlines()
+        >>> for line in file_contents:
+        ...     print(line.strip())
+        me: 9.0
+        ep10: 5.0
+        oid1_mean: 5.0
+        sn1: 8
         """
         if style == "dakota":
             stream = "\n".join(

@@ -36,22 +36,17 @@ def joint_density_misfit(
     >>> from landlab.components import FlowAccumulator
     >>> from umami.calculations import joint_density_misfit
     >>> np.random.seed(42)
-
     >>> model = RasterModelGrid((10, 10))
     >>> z_model = model.add_zeros("node", "topographic__elevation")
     >>> z_model += model.x_of_node + model.y_of_node
-
     >>> data = RasterModelGrid((10, 10))
     >>> z_data = data.add_zeros("node", "topographic__elevation")
     >>> z_data +=  data.x_of_node + data.y_of_node
     >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
-
     >>> data_fa = FlowAccumulator(data)
     >>> data_fa.run_one_step()
-
     >>> model_fa = FlowAccumulator(model)
     >>> model_fa.run_one_step()
-
     >>> np.isclose(
     ...     joint_density_misfit(
     ...         model,
