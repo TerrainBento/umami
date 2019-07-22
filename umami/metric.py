@@ -257,9 +257,6 @@ class Metric(object):
 
     def _validate_metrics(self, metrics):
         """"""
-        # look at field required by metrics. test if they are all present.
-        field_locs = ["field_1", "field_2", "field"]
-
         # look at all _funcs, ensure that they are valid
         for key in metrics:
             info = metrics[key]

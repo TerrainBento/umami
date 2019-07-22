@@ -5,7 +5,6 @@ from landlab.utils.flow__distance import calculate_flow__distance
 def _create_landlab_components(
     grid, chi_finder_kwds=None, flow_accumulator_kwds=None
 ):
-
     # run FlowAccumulator
     kwds = flow_accumulator_kwds or {}
     fa = FlowAccumulator(grid, **kwds)

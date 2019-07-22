@@ -9,7 +9,7 @@ def hypsometric_integral(grid, outlet_id):
     The hypsometric integral :math:`I` is defined as
 
     .. math::
-    
+
         I = \frac{\frac{1}{N} \sum_i^{N} \left( z - \min{\left(z\right) \right)}
             {\max{\left(z\right)} - \min{\left(z\right)}
 
