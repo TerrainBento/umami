@@ -4,14 +4,15 @@ from landlab.utils import get_watershed_mask
 
 
 def hypsometric_integral(grid, outlet_id):
-    r"""Calculate the hypsometric integral for the model grid.
+    """Calculate the hypsometric integral for the model grid.
 
     The hypsometric integral :math:`I` is defined as
 
     .. math::
 
-        I = \frac{\frac{1}{N} \sum_i^{N} \left( z - \min{\left(z\right) \right)}
-            {\max{\left(z\right)} - \min{\left(z\right)}
+        I = \\frac{\\frac{1}{N} \\sum_{i=0}^{N}
+        \\left( z - \\min \\left( z\\right) \\right)}
+        {\\max \\left(z\\right) - \\min \\left( z \\right)}
 
     Where :math:`z` is the set of elevation values, and :math:`N` is the number
     of elevation values.

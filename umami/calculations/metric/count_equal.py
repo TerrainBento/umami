@@ -32,7 +32,6 @@ def count_equal(grid, field, value):
     >>> z += grid.x_of_node + grid.y_of_node
     >>> fa = FlowAccumulator(grid)
     >>> fa.run_one_step()
-
     >>> count_equal(grid, "topographic__elevation", 4)
     3
     >>> count_equal(grid, "drainage_area", 1)

@@ -272,9 +272,7 @@ class Residual(object):
         >>> import numpy as np
         >>> from io import StringIO
         >>> from umami import Residual
-
         >>> np.random.seed(42)
-
         >>> file_like=StringIO('''
         ... model:
         ...     RasterModelGrid:
