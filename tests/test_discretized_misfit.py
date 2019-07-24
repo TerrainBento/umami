@@ -38,7 +38,8 @@ def test_no_misfit(category_grid):
         [0, 25, 50, 75, 100],
     )
 
-    assert isinstance(out, OrderedDict) == True
+    assert isinstance(out, OrderedDict) is True
+
     assert len(out) == 16
     for key in out:
         np.testing.assert_array_equal(out[key], 0.0)
@@ -64,7 +65,7 @@ def test_known_misfit(category_grid):
     )
 
     core_vals = (vals.reshape((6, 6))[1:-1, 1:-1]).flatten()
-    assert isinstance(out, OrderedDict) == True
+    assert isinstance(out, OrderedDict) is True
     assert len(out) == 16
     for ix, key in enumerate(out):
         np.testing.assert_array_equal(out[key], core_vals[ix])

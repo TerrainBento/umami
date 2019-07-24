@@ -335,13 +335,13 @@ class Residual(object):
             if info["_func"] != "discretized_misfit":
                 self._names.append(key)
             else:
-                n_f1_levels = np.size(info["field_1_percentile_edges"])-1
-                n_f2_levels = np.size(info["field_2_percentile_edges"])-1
+                n_f1_levels = np.size(info["field_1_percentile_edges"]) - 1
+                n_f2_levels = np.size(info["field_2_percentile_edges"]) - 1
                 label = info["name"]
 
                 for f1l in range(n_f1_levels):
                     for f2l in range(n_f2_levels):
-                        n = label.format(field_1_level = f1l, field_2_level=f2l)
+                        n = label.format(field_1_level=f1l, field_2_level=f2l)
                         self._names.append(n)
 
         return self._names
@@ -349,7 +349,7 @@ class Residual(object):
     @property
     def values(self):
         """"""
-        #TODO update this for discretized_misfit
+        # TODO update this for discretized_misfit
         return [self._residual_values[key] for key in self.names]
 
     def _distinguish_metric_from_resid(self):

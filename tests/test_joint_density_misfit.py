@@ -21,4 +21,4 @@ def test_perfect_misfit(category_grid):
         [0, 25, 50, 75, 100],
     )
 
-    np.testing.assert_array_equal(out, 1/16)
+    np.testing.assert_array_equal(out, 1 / 16)

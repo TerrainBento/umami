@@ -129,7 +129,7 @@ def discretized_misfit(
     out = OrderedDict()
     for c in range(0, np.max(category)):
         f1l, f2l = np.unravel_index(c, (n_f1_levels, n_f2_levels))
-        n = name.format(field_1_level = f1l, field_2_level=f2l)
+        n = name.format(field_1_level=f1l, field_2_level=f2l)
 
         loc = category == (c + 1)
         sq_resids = np.power(difference[loc], 2.0)
@@ -186,6 +186,6 @@ def _get_category_labels(
             if len(sel_nodes) > 0:
                 category[sel_nodes] = val
 
-            val += 1 # increment no matter what for consistency of naming.
+            val += 1  # increment no matter what for consistency of naming.
 
     return category
