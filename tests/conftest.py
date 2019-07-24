@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 from landlab import RasterModelGrid
@@ -39,3 +40,28 @@ def input_yaml():
       value: 1
     """
     return file_like
+
+
+@pytest.fixture()
+def category_grid():
+    grid = RasterModelGrid((6, 6))
+    f1 = np.vstack(
+        (
+            1 * np.ones((2, 6)),
+            2 * np.ones((1, 6)),
+            3 * np.ones((1, 6)),
+            4 * np.ones((2, 6)),
+        )
+    )
+
+    f2 = f1 + np.hstack(
+        (
+            1 * np.ones((6, 2)),
+            2 * np.ones((6, 1)),
+            3 * np.ones((6, 1)),
+            4 * np.ones((6, 2)),
+        )
+    )
+    _ = grid.add_field("node", "f1", f1)
+    _ = grid.add_field("node", "f2", f2)
+    return grid
