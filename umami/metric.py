@@ -80,7 +80,7 @@ class Metric(object):
         ... }
         >>> metric = Metric.from_dict(params)
         >>> metric.names
-        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> metric.calculate_metrics()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
@@ -139,7 +139,7 @@ class Metric(object):
         ... ''')
         >>> metric = Metric.from_file(file_like)
         >>> metric.names
-        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> metric.calculate_metrics()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
@@ -211,7 +211,7 @@ class Metric(object):
         >>> metric = Metric(grid)
         >>> metric.add_metrics_from_file(file_like)
         >>> metric.names
-        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> metric.calculate_metrics()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
@@ -241,7 +241,8 @@ class Metric(object):
     @property
     def names(self):
         """Names of metrics in metric order."""
-        return self._metrics.keys()
+        self._names = [key for key in self._metrics]
+        return self._names
 
     @property
     def values(self):

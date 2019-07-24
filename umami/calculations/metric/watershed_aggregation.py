@@ -76,7 +76,7 @@ def watershed_aggregation(grid, field, outlet_id, method, **kwds):
     >>> metric = Metric(grid)
     >>> metric.add_metrics_from_file(file_like)
     >>> metric.names
-    odict_keys(['oid1_mean', 'oid1_10thptile'])
+    ['oid1_mean', 'oid1_10thptile']
     >>> metric.calculate_metrics()
     >>> metric.values
     [5.0, 1.8]

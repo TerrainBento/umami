@@ -6,6 +6,7 @@ import numpy as np
 def discretized_misfit(
     model_grid,
     data_grid,
+    name,
     misfit_field,
     field_1,
     field_2,
@@ -16,14 +17,15 @@ def discretized_misfit(
 
     density bounds calculated with the data grid.
 
-# TODO:
-ALSO FIX how these get named.
+    # TODO:
+    ALSO FIX how these get named.
 
 
     Parameters
     ----------
     model_grid
     data_grid
+    name
     misfit_field
     field_1
     field_2
@@ -32,7 +34,7 @@ ALSO FIX how these get named.
 
     Returns
     -------
-
+    OrderedDict
 
     Examples
     --------
@@ -43,10 +45,10 @@ ALSO FIX how these get named.
     >>> from landlab.components import FlowAccumulator
     >>> from umami.calculations import discretized_misfit
     >>> np.random.seed(42)
-    >>> model = RasterModelGrid((10, 10))
+    >>> model = RasterModelGrid((50, 50))
     >>> z_model = model.add_zeros("node", "topographic__elevation")
     >>> z_model += model.x_of_node + model.y_of_node
-    >>> data = RasterModelGrid((10, 10))
+    >>> data = RasterModelGrid((50, 50))
     >>> z_data = data.add_zeros("node", "topographic__elevation")
     >>> z_data +=  data.x_of_node + data.y_of_node
     >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
@@ -55,15 +57,23 @@ ALSO FIX how these get named.
     >>> model_fa = FlowAccumulator(model)
     >>> model_fa.run_one_step()
 
-    >>> discretized_misfit(
+    >>> out = discretized_misfit(
     ...     model,
     ...     data,
-    ...     "topographic__elevation",
+    ...     "da_{field_1_level}_z_{field_2_level}",
     ...     "topographic__elevation",
     ...     "drainage_area",
+    ...     "topographic__elevation",
     ...     [0, 50, 100],
-    ...     [0, 60, 100]) # doctest: +NORMALIZE_WHITESPACE
-    OrderedDict([(1, 0.62484442945735952), (2, 0.36312657124652792), (3, 0.68799485640003777), (4, 0.34310738236667288)])
+    ...     [0, 30, 60, 100])
+    >>> for key, value in out.items():
+    ...     print(key, np.round(value, decimals=3))
+    da_0_z_0 0.713
+    da_0_z_1 0.711
+    da_0_z_2 0.712
+    da_1_z_0 0.414
+    da_1_z_1 0.441
+    da_1_z_2 0.432
 
     Next, the same calculations are shown as part of an umami ``Residual``.
 
@@ -72,25 +82,33 @@ ALSO FIX how these get named.
     >>> file_like=StringIO('''
     ... dm:
     ...     _func: discretized_misfit
+    ...     name: da_{field_1_level}_z_{field_2_level}
     ...     misfit_field: topographic__elevation
-    ...     field_1: topographic__elevation
-    ...     field_2: drainage_area
+    ...     field_1: drainage_area
+    ...     field_2: topographic__elevation
     ...     field_1_percentile_edges:
     ...         - 0
     ...         - 50
     ...         - 100
     ...     field_2_percentile_edges:
     ...         - 0
+    ...         - 30
     ...         - 60
     ...         - 100
     ... ''')
     >>> residual = Residual(model, data)
     >>> residual.add_residuals_from_file(file_like)
     >>> residual.names
-    odict_keys(['dm'])
+    ['da_0_z_0', 'da_0_z_1', 'da_0_z_2', 'da_1_z_0', 'da_1_z_1', 'da_1_z_2']
     >>> residual.calculate_residuals()
-    >>> residual.values
-    [OrderedDict([(1, 0.62484442945735952), (2, 0.36312657124652792), (3, 0.68799485640003777), (4, 0.34310738236667288)])]
+    >>> for key, value in zip(residual.names, residual.values):
+    ...     print(key, np.round(value, decimals=3))
+    da_0_z_0 0.713
+    da_0_z_1 0.711
+    da_0_z_2 0.712
+    da_1_z_0 0.414
+    da_1_z_1 0.441
+    da_1_z_2 0.432
     """
 
     category = _get_category_labels(
@@ -105,12 +123,18 @@ ALSO FIX how these get named.
         model_grid.at_node[misfit_field] - data_grid.at_node[misfit_field]
     )
 
-    out = OrderedDict()
-    for c in range(1, np.max(category) + 1):
+    n_f1_levels = np.size(field_1_percentile_edges) - 1
+    n_f2_levels = np.size(field_2_percentile_edges) - 1
 
-        sq_resids = np.power(difference[category == c], 2.0)
+    out = OrderedDict()
+    for c in range(0, np.max(category)):
+        f1l, f2l = np.unravel_index(c, (n_f1_levels, n_f2_levels))
+        n = name.format(field_1_level = f1l, field_2_level=f2l)
+
+        loc = category == (c + 1)
+        sq_resids = np.power(difference[loc], 2.0)
         misfit = np.sqrt(np.mean(sq_resids))
-        out[c] = misfit
+        out[n] = misfit
     return out
 
 
@@ -161,6 +185,7 @@ def _get_category_labels(
 
             if len(sel_nodes) > 0:
                 category[sel_nodes] = val
-                val += 1
+
+            val += 1 # increment no matter what for consistency of naming.
 
     return category

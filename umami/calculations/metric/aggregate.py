@@ -73,7 +73,7 @@ def aggregate(grid, field, method, **kwds):
     >>> metric = Metric(grid)
     >>> metric.add_metrics_from_file(file_like)
     >>> metric.names
-    odict_keys(['me', 'ep10'])
+    ['me', 'ep10']
     >>> metric.calculate_metrics()
     >>> metric.values
     [9.0, 5.0]

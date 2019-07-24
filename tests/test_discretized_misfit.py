@@ -30,6 +30,7 @@ def test_no_misfit(category_grid):
     out = discretized_misfit(
         model_grid,
         data_grid,
+        "{field_1_level}_{field_2_level}",
         "misfit_field",
         "f1",
         "f2",
@@ -54,6 +55,7 @@ def test_known_misfit(category_grid):
     out = discretized_misfit(
         model_grid,
         data_grid,
+        "{field_1_level}_{field_2_level}",
         "misfit_field",
         "f1",
         "f2",
@@ -64,5 +66,5 @@ def test_known_misfit(category_grid):
     core_vals = (vals.reshape((6, 6))[1:-1, 1:-1]).flatten()
     assert isinstance(out, OrderedDict) == True
     assert len(out) == 16
-    for key in out:
-        np.testing.assert_array_equal(out[key], core_vals[key - 1])
+    for ix, key in enumerate(out):
+        np.testing.assert_array_equal(out[key], core_vals[ix])

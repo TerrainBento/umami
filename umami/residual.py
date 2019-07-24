@@ -101,7 +101,7 @@ class Residual(object):
         >>> residual = Residual(model, data)
         >>> residual.add_residuals_from_file(file_like)
         >>> residual.names
-        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> residual.calculate_residuals()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
@@ -242,7 +242,7 @@ class Residual(object):
 
         >>> residual = Residual.from_dict(params)
         >>> residual.names
-        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> residual.calculate_residuals()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
@@ -320,7 +320,7 @@ class Residual(object):
 
         >>> residual = Residual.from_file(file_like)
         >>> residual.names
-        odict_keys(['me', 'ep10', 'oid1_mean', 'sn1'])
+        ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> residual.calculate_residuals()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
@@ -332,12 +332,27 @@ class Residual(object):
     @property
     def names(self):
         """"""
-        return self._residuals.keys()
+        self._names = []
+        for key, info in self._residuals.items():
+            if info["_func"] != "discretized_misfit":
+                self._names.append(key)
+            else:
+                n_f1_levels = np.size(info["field_1_percentile_edges"])-1
+                n_f2_levels = np.size(info["field_2_percentile_edges"])-1
+                label = info["name"]
+
+                for f1l in range(n_f1_levels):
+                    for f2l in range(n_f2_levels):
+                        n = label.format(field_1_level = f1l, field_2_level=f2l)
+                        self._names.append(n)
+
+        return self._names
 
     @property
     def values(self):
         """"""
-        return [self._residual_values[key] for key in self._residuals.keys()]
+        #TODO update this for discretized_misfit
+        return [self._residual_values[key] for key in self.names]
 
     def _distinguish_metric_from_resid(self):
         self._metrics = {}
@@ -417,9 +432,14 @@ class Residual(object):
             else:
 
                 function = residual_calcs.__dict__[_func]
+
                 resid = function(self._model_grid, self._data_grid, **info)
 
-            self._residual_values[key] = resid
+            if _func != "discretized_misfit":
+                self._residual_values[key] = resid
+            else:
+                for label, value in resid.items():
+                    self._residual_values[label] = value
 
     def write_residuals_to_file(self, path, style, decimals=3):
         """Write residuals to a file.

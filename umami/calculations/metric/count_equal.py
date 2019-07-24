@@ -55,7 +55,7 @@ def count_equal(grid, field, value):
     >>> metric = Metric(grid)
     >>> metric.add_metrics_from_file(file_like)
     >>> metric.names
-    odict_keys(['elev4', 'num_headwater_nodes'])
+    ['elev4', 'num_headwater_nodes']
     >>> metric.calculate_metrics()
     >>> metric.values
     [3, 8]

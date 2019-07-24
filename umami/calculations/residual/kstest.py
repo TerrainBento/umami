@@ -52,7 +52,7 @@ def kstest(model_grid, data_grid, field):
     >>> residual = Residual(model, data)
     >>> residual.add_residuals_from_file(file_like)
     >>> residual.names
-    odict_keys(['ks'])
+    ['ks']
     >>> residual.calculate_residuals()
     >>> residual.values
     [0.125]
@@ -130,7 +130,7 @@ def kstest_watershed(model_grid, data_grid, field, outlet_id):
     >>> residual = Residual(model, data)
     >>> residual.add_residuals_from_file(file_like)
     >>> residual.names
-    odict_keys(['ksw'])
+    ['ksw']
     >>> residual.calculate_residuals()
     >>> np.round(residual.values, decimals=3)
     array([ 0.5])

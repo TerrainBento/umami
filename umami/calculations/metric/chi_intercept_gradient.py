@@ -56,7 +56,7 @@ def chi_intercept(chi_finder):
     >>> metric = Metric(grid, chi_finder_kwds={"min_drainage_area": 1.0})
     >>> metric.add_metrics_from_file(file_like)
     >>> metric.names
-    odict_keys(['ci'])
+    ['ci']
     >>> metric.calculate_metrics()
     >>> np.round(metric.values, decimals=0)
     array([-4.])
@@ -113,7 +113,7 @@ def chi_gradient(chi_finder):
     >>> metric = Metric(grid, chi_finder_kwds={"min_drainage_area": 1.0})
     >>> metric.add_metrics_from_file(file_like)
     >>> metric.names
-    odict_keys(['cg'])
+    ['cg']
     >>> metric.calculate_metrics()
     >>> np.round(metric.values, decimals=0)
     array([ 23.])

@@ -55,7 +55,7 @@ def hypsometric_integral(grid, outlet_id):
     >>> metric = Metric(grid)
     >>> metric.add_metrics_from_file(file_like)
     >>> metric.names
-    odict_keys(['hi'])
+    ['hi']
     >>> metric.calculate_metrics()
     >>> metric.values
     [0.5]
