@@ -1,5 +1,3 @@
 scipy
 numpy
-xarray
-dask
 landlab
