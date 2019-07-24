@@ -110,7 +110,11 @@ def joint_density_misfit(
     )
 
     data_density = data_count / data_count.sum()
-    model_density = model_count / model_count.sum()
+
+    if model_count.sum() == 0:
+        model_density = model_count
+    else:
+        model_density = model_count / model_count.sum()
 
     sq_resid = np.power(model_density - data_density, 2.0)
     misfit = np.sqrt(np.mean(sq_resid))
