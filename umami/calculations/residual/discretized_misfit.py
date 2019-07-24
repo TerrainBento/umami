@@ -63,7 +63,7 @@ ALSO FIX how these get named.
     ...     "drainage_area",
     ...     [0, 50, 100],
     ...     [0, 60, 100]) # doctest: +NORMALIZE_WHITESPACE
-    OrderedDict([(1, 0.52883662950630161), (2, 0.54198190529674906), (3, 0.51940386248902548)])
+    OrderedDict([(1, 0.62484442945735952), (2, 0.36312657124652792), (3, 0.68799485640003777), (4, 0.34310738236667288)])
 
     Next, the same calculations are shown as part of an umami ``Residual``.
 
@@ -90,12 +90,11 @@ ALSO FIX how these get named.
     odict_keys(['dm'])
     >>> residual.calculate_residuals()
     >>> residual.values
-    [OrderedDict([(1, 0.52883662950630161), (2, 0.54198190529674906), (3, 0.51940386248902548)])]
+    [OrderedDict([(1, 0.62484442945735952), (2, 0.36312657124652792), (3, 0.68799485640003777), (4, 0.34310738236667288)])]
     """
 
     category = _get_category_labels(
         data_grid,
-        misfit_field,
         field_1,
         field_2,
         field_1_percentile_edges,
@@ -107,7 +106,7 @@ ALSO FIX how these get named.
     )
 
     out = OrderedDict()
-    for c in range(1, np.max(category)):
+    for c in range(1, np.max(category) + 1):
 
         sq_resids = np.power(difference[category == c], 2.0)
         misfit = np.sqrt(np.mean(sq_resids))
@@ -116,27 +115,21 @@ ALSO FIX how these get named.
 
 
 def _get_category_labels(
-    grid,
-    misfit_field,
-    field_1,
-    field_2,
-    field_1_percentile_edges,
-    field_2_percentile_edges,
+    grid, field_1, field_2, field_1_percentile_edges, field_2_percentile_edges
 ):
 
-    vals = grid.at_node[misfit_field]
     f1 = grid.at_node[field_1]
     f2 = grid.at_node[field_2]
 
     # first bin by field 1, then within field_1, bin by field_2
-    is_core = np.zeros_like(vals, dtype=bool)
+    is_core = np.zeros_like(f1, dtype=bool)
     is_core[grid.core_nodes] = True
 
     # calc the percentiles of the field 1 distribution
     f1_edges = np.percentile(f1[is_core], field_1_percentile_edges)
 
     # work through each bin and label them.
-    category = np.zeros_like(vals, dtype=np.int)
+    category = np.zeros_like(f1, dtype=np.int)
 
     val = 1
     for i in range(len(f1_edges) - 1):
@@ -151,7 +144,7 @@ def _get_category_labels(
             f1_sel = (f1 >= f1_min) & (is_core)
 
         # get the f2 edges for this particular part of f1-space.
-        vals_sel = vals[f1_sel]
+        vals_sel = f2[f1_sel]
         f2_edges = np.percentile(vals_sel, field_2_percentile_edges)
 
         for j in range(len(f2_edges) - 1):
@@ -160,9 +153,9 @@ def _get_category_labels(
             f2_max = f2_edges[j + 1]
 
             if j != len(f2_edges) - 2:
-                f2_sel = (vals >= f2_min) & (vals < f2_max) & (f1_sel)
+                f2_sel = (f2 >= f2_min) & (f2 < f2_max) & (f1_sel)
             else:
-                f2_sel = (vals >= f2_min) & (f1_sel)
+                f2_sel = (f2 >= f2_min) & (f1_sel)
 
             sel_nodes = np.nonzero(f2_sel)[0]
 
