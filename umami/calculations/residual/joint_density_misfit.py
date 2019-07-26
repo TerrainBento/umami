@@ -15,8 +15,8 @@ def joint_density_misfit(
 
     Parameters
     ----------
-    model_grid
-    data_grid
+    model_grid : Landlab model grid
+    data_grid : Landlab model grid
     field_1
     field_2
     field_1_percentile_edges

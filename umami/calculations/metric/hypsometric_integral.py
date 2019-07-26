@@ -19,7 +19,7 @@ def hypsometric_integral(grid, outlet_id):
 
     Parameters
     ----------
-    grid :
+    grid : Landlab model grid
     outlet_id : int
         Outlet id of the watershed.
 
@@ -40,7 +40,6 @@ def hypsometric_integral(grid, outlet_id):
     >>> z += grid.x_of_node + grid.y_of_node
     >>> fa = FlowAccumulator(grid)
     >>> fa.run_one_step()
-
     >>> hypsometric_integral(grid, 1)
     0.5
 

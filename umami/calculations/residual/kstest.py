@@ -12,8 +12,8 @@ def kstest(model_grid, data_grid, field):
 
     Parameters
     ----------
-    model_grid
-    data_grid
+    model_grid : Landlab model grid
+    data_grid : Landlab model grid
     field : str
         An at-node landlab grid field that is present on the model grid.
 
@@ -78,9 +78,10 @@ def kstest_watershed(model_grid, data_grid, field, outlet_id):
 
     Parameters
     ----------
-    model_grid
-    data_grid
-    field
+    model_grid : Landlab model grid
+    data_grid : Landlab model grid
+    field : str
+        An at-node landlab grid field that is present on the model grid.
     outlet_id : int
 
     Returns

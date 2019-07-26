@@ -23,8 +23,8 @@ def discretized_misfit(
 
     Parameters
     ----------
-    model_grid
-    data_grid
+    model_grid : Landlab model grid
+    data_grid : Landlab model grid
     name
     misfit_field
     field_1

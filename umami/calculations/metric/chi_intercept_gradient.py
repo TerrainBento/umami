@@ -10,14 +10,20 @@ def _validate_chi_finder(chi_finder):
 
 
 def chi_intercept(chi_finder):
-    r"""Return the intercept to a linear fit through a :math:`\Chi`-z plot.
+    r"""Return the intercept to a linear fit through a :math:`\chi`-z plot.
 
     This is a loose wrapper around the function
-    `ChiFinder.best_fit_chi_elevation_gradient_and_intercept`.
+    `ChiFinder.best_fit_chi_elevation_gradient_and_intercept`_.
+
+    .. _ChiFinder.best_fit_chi_elevation_gradient_and_intercept: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html#landlab.components.chi_index.ChiFinder.best_fit_chi_elevation_gradient_and_intercept
 
     Parameters
     ----------
-    chi_finder : an instance of a `ChiFinder`
+    chi_finder : an instance of a `ChiFinder`_
+
+
+    .. _ChiFinder: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html
+
 
     Returns
     -------
@@ -67,14 +73,20 @@ def chi_intercept(chi_finder):
 
 
 def chi_gradient(chi_finder):
-    r"""Return the slope to a linear fit through a :math:`\Chi`-z plot.
+    r"""Return the slope to a linear fit through a :math:`\chi`-z plot.
 
     This is a loose wrapper around the function
-    `ChiFinder.best_fit_chi_elevation_gradient_and_intercept`.
+    `ChiFinder.best_fit_chi_elevation_gradient_and_intercept`_.
+
+    .. _ChiFinder.best_fit_chi_elevation_gradient_and_intercept: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html#landlab.components.chi_index.ChiFinder.best_fit_chi_elevation_gradient_and_intercept
 
     Parameters
     ----------
-    chi_finder : an instance of a `ChiFinder`
+    chi_finder : an instance of a `ChiFinder`_
+
+
+    .. _ChiFinder: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html
+
 
     Returns
     -------

@@ -9,12 +9,14 @@ def watershed_aggregation(grid, field, outlet_id, method, **kwds):
     """Aggregate a field value over a watershed.
 
     ``watershed_aggregation`` calculates aggregate values on the nodes in a
-    watershed that drain to *outlet_id*. It supports all methods in the numpy
-    namespace that reduce an array to a scalar.
+    watershed that drain to *outlet_id*. It supports all methods in the
+    `numpy`_ namespace that reduce an array to a scalar.
+
+    .. _numpy: https://numpy.org
 
     Parameters
     ----------
-    grid
+    grid : Landlab model grid
     field : str
         An at-node landlab grid field that is present on the model grid.
     outlet_id : int
@@ -42,9 +44,14 @@ def watershed_aggregation(grid, field, outlet_id, method, **kwds):
     >>> fa = FlowAccumulator(grid)
     >>> fa.run_one_step()
 
-    ``watershed_aggregation`` supports all functions in the numpy namespace.
-    Here we show ``mean`` and ``percentile``. The latter of which takes an
+    ``watershed_aggregation`` supports all functions in the `numpy`_ namespace.
+    Here we show `mean`_ and `percentile`_. The latter of which takes an
     additional argument, *q*.
+
+    .. _numpy: https://numpy.org
+    .. _mean: https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html
+    .. _percentile: https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html
+
 
     >>> watershed_aggregation(grid, "topographic__elevation", 1,  "mean")
     5.0

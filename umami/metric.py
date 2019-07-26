@@ -15,137 +15,9 @@ _VALID_FUNCS = calcs.__dict__
 
 
 class Metric(object):
-    """Create a ``Metric`` class based on a Landlab grid."""
+    """Create a ``Metric`` class based on a Landlab model grid."""
 
     _required_fields = ["topographic__elevation"]
-
-    @classmethod
-    def from_dict(cls, params):
-        """Create an umami ``Metric`` from a dictionary.
-
-        Parameters
-        ----------
-        params : dict or OrderedDict
-            This dict must contain a key *grid*, the values of which will be
-            passed to the `Landlab` function ``create_grid`` to create the
-            model grid. It will be convereted to an OrderedDict before metrics
-            are added so as to preserve metric order.
-
-        Examples
-        --------
-        >>> from io import StringIO
-        >>> from umami import Metric
-        >>> params = {
-        ...     "grid": {
-        ...         "RasterModelGrid": [
-        ...             [10, 10],
-        ...             {
-        ...                 "fields": {
-        ...                     "node": {
-        ...                         "topographic__elevation": {
-        ...                             "plane": [
-        ...                                 {"point": [0, 0, 0]},
-        ...                                 {"normal": [-1, -1, 1]},
-        ...                             ]
-        ...                         }
-        ...                     }
-        ...                 }
-        ...             },
-        ...         ]
-        ...     },
-        ...     "metrics": {
-        ...         "me": {
-        ...             "_func": "aggregate",
-        ...             "method": "mean",
-        ...             "field": "topographic__elevation",
-        ...         },
-        ...         "ep10": {
-        ...             "_func": "aggregate",
-        ...             "method": "percentile",
-        ...             "field": "topographic__elevation",
-        ...             "q": 10,
-        ...         },
-        ...         "oid1_mean": {
-        ...             "_func": "watershed_aggregation",
-        ...             "field": "topographic__elevation",
-        ...             "method": "mean",
-        ...             "outlet_id": 1,
-        ...         },
-        ...         "sn1": {
-        ...             "_func": "count_equal",
-        ...             "field": "drainage_area",
-        ...             "value": 1,
-        ...         },
-        ...     },
-        ... }
-        >>> metric = Metric.from_dict(params)
-        >>> metric.names
-        ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> metric.calculate_metrics()
-        >>> metric.values
-        [9.0, 5.0, 5.0, 8]
-        """
-        # create grid
-        grid = create_grid(params.pop("grid"))
-        return cls(grid, **params)
-
-    @classmethod
-    def from_file(cls, file_like):
-        """Create an umami ``Metric`` from a file-like object.
-
-        Parameters
-        ----------
-        file_like : file path or StringIO
-            File will be parsed by ``yaml.safe_load`` and converted to an
-            ``OrderedDict``.
-
-        Returns
-        -------
-        umami.Metric
-
-        Examples
-        --------
-        >>> from io import StringIO
-        >>> from umami import Metric
-        >>> file_like=StringIO('''
-        ... grid:
-        ...     RasterModelGrid:
-        ...         - [10, 10]
-        ...         - fields:
-        ...               node:
-        ...                   topographic__elevation:
-        ...                       plane:
-        ...                           - point: [0, 0, 0]
-        ...                           - normal: [-1, -1, 1]
-        ... metrics:
-        ...     me:
-        ...         _func: aggregate
-        ...         method: mean
-        ...         field: topographic__elevation
-        ...     ep10:
-        ...         _func: aggregate
-        ...         method: percentile
-        ...         field: topographic__elevation
-        ...         q: 10
-        ...     oid1_mean:
-        ...         _func: watershed_aggregation
-        ...         field: topographic__elevation
-        ...         method: mean
-        ...         outlet_id: 1
-        ...     sn1:
-        ...         _func: count_equal
-        ...         field: drainage_area
-        ...         value: 1
-        ... ''')
-        >>> metric = Metric.from_file(file_like)
-        >>> metric.names
-        ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> metric.calculate_metrics()
-        >>> metric.values
-        [9.0, 5.0, 5.0, 8]
-        """
-        params = _read_input(file_like)
-        return cls.from_dict(params)
 
     def __init__(
         self,
@@ -248,13 +120,6 @@ class Metric(object):
     def values(self):
         """Metric values in metric order."""
         return [self._metric_values[key] for key in self._metrics.keys()]
-
-    def _validate_metrics(self, metrics):
-        # look at all _funcs, ensure that they are valid
-        for key in metrics:
-            info = metrics[key]
-            _validate_func(info, _VALID_FUNCS)
-            _validate_fields(self._grid, info)
 
     def add_metrics_from_file(self, file):
         """Add metrics to an ``umami.Metric`` from a file.
@@ -389,3 +254,138 @@ class Metric(object):
             )
 
         _write_output(path, stream)
+
+    @classmethod
+    def from_dict(cls, params):
+        """Create an umami ``Metric`` from a dictionary.
+
+        Parameters
+        ----------
+        params : dict or OrderedDict
+            This dict must contain a key *grid*, the values of which will be
+            passed to the `Landlab` function ``create_grid`` to create the
+            model grid. It will be convereted to an OrderedDict before metrics
+            are added so as to preserve metric order.
+
+        Examples
+        --------
+        >>> from io import StringIO
+        >>> from umami import Metric
+        >>> params = {
+        ...     "grid": {
+        ...         "RasterModelGrid": [
+        ...             [10, 10],
+        ...             {
+        ...                 "fields": {
+        ...                     "node": {
+        ...                         "topographic__elevation": {
+        ...                             "plane": [
+        ...                                 {"point": [0, 0, 0]},
+        ...                                 {"normal": [-1, -1, 1]},
+        ...                             ]
+        ...                         }
+        ...                     }
+        ...                 }
+        ...             },
+        ...         ]
+        ...     },
+        ...     "metrics": {
+        ...         "me": {
+        ...             "_func": "aggregate",
+        ...             "method": "mean",
+        ...             "field": "topographic__elevation",
+        ...         },
+        ...         "ep10": {
+        ...             "_func": "aggregate",
+        ...             "method": "percentile",
+        ...             "field": "topographic__elevation",
+        ...             "q": 10,
+        ...         },
+        ...         "oid1_mean": {
+        ...             "_func": "watershed_aggregation",
+        ...             "field": "topographic__elevation",
+        ...             "method": "mean",
+        ...             "outlet_id": 1,
+        ...         },
+        ...         "sn1": {
+        ...             "_func": "count_equal",
+        ...             "field": "drainage_area",
+        ...             "value": 1,
+        ...         },
+        ...     },
+        ... }
+        >>> metric = Metric.from_dict(params)
+        >>> metric.names
+        ['me', 'ep10', 'oid1_mean', 'sn1']
+        >>> metric.calculate_metrics()
+        >>> metric.values
+        [9.0, 5.0, 5.0, 8]
+        """
+        # create grid
+        grid = create_grid(params.pop("grid"))
+        return cls(grid, **params)
+
+    @classmethod
+    def from_file(cls, file_like):
+        """Create an umami ``Metric`` from a file-like object.
+
+        Parameters
+        ----------
+        file_like : file path or StringIO
+            File will be parsed by ``yaml.safe_load`` and converted to an
+            ``OrderedDict``.
+
+        Returns
+        -------
+        umami.Metric
+
+        Examples
+        --------
+        >>> from io import StringIO
+        >>> from umami import Metric
+        >>> file_like=StringIO('''
+        ... grid:
+        ...     RasterModelGrid:
+        ...         - [10, 10]
+        ...         - fields:
+        ...               node:
+        ...                   topographic__elevation:
+        ...                       plane:
+        ...                           - point: [0, 0, 0]
+        ...                           - normal: [-1, -1, 1]
+        ... metrics:
+        ...     me:
+        ...         _func: aggregate
+        ...         method: mean
+        ...         field: topographic__elevation
+        ...     ep10:
+        ...         _func: aggregate
+        ...         method: percentile
+        ...         field: topographic__elevation
+        ...         q: 10
+        ...     oid1_mean:
+        ...         _func: watershed_aggregation
+        ...         field: topographic__elevation
+        ...         method: mean
+        ...         outlet_id: 1
+        ...     sn1:
+        ...         _func: count_equal
+        ...         field: drainage_area
+        ...         value: 1
+        ... ''')
+        >>> metric = Metric.from_file(file_like)
+        >>> metric.names
+        ['me', 'ep10', 'oid1_mean', 'sn1']
+        >>> metric.calculate_metrics()
+        >>> metric.values
+        [9.0, 5.0, 5.0, 8]
+        """
+        params = _read_input(file_like)
+        return cls.from_dict(params)
+
+    def _validate_metrics(self, metrics):
+        # look at all _funcs, ensure that they are valid
+        for key in metrics:
+            info = metrics[key]
+            _validate_func(info, _VALID_FUNCS)
+            _validate_fields(self._grid, info)

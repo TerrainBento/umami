@@ -18,12 +18,14 @@ def aggregate(grid, field, method, **kwds):
     """Calculate an aggreggate value on a landlab grid field.
 
     ``aggregate`` calculates aggregate values on the core nodes of the model
-    grid. It supports all methods in the numpy namespace that reduce an array
-    to a scalar.
+    grid. It supports all methods in the `numpy`_ namespace that reduce an
+    array to a scalar.
+
+    .. _numpy: https://numpy.org
 
     Parameters
     ----------
-    grid
+    grid : Landlab model grid
     field : str
         An at-node landlab grid field that is present on the model grid.
     method : str
@@ -46,9 +48,13 @@ def aggregate(grid, field, method, **kwds):
     >>> z = grid.add_zeros("node", "topographic__elevation")
     >>> z += grid.x_of_node + grid.y_of_node
 
-    ``aggregate`` supports all functions in the ``numpy`` namespace. Here we
-    show ``mean`` and ``percentile``. The latter of which takes an additional
+    ``aggregate`` supports all functions in the `numpy`_ namespace. Here we
+    show `mean`_ and `percentile`_. The latter of which takes an additional
     argument, *q*.
+
+    .. _numpy: https://numpy.org
+    .. _mean: https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html
+    .. _percentile: https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html
 
     >>> aggregate(grid, "topographic__elevation", "mean")
     9.0
