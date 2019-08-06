@@ -116,6 +116,16 @@ class Metric(object):
         self._names = [key for key in self._metrics]
         return self._names
 
+    def value(self, name):
+        """Get a specific metric value.
+
+        Parameters
+        ----------
+        name: str
+            Name of desired metric.
+        """
+        return self._residual_values[name]
+
     @property
     def values(self):
         """Metric values in metric order."""

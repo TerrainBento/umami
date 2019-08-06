@@ -174,6 +174,17 @@ class Residual(object):
 
         return self._names
 
+    def value(self, name):
+        """Get a specific residual value.
+
+        Parameters
+        ----------
+        name: str
+            Name of desired residual.
+        """
+        return self._residual_values[name]
+
+
     @property
     def values(self):
         """Residual values in residual order."""
