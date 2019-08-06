@@ -85,6 +85,8 @@ class Metric(object):
         >>> metric.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> metric.calculate()
+        >>> metric.value('me')
+        9.0
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
         """
@@ -328,6 +330,8 @@ class Metric(object):
         >>> metric.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> metric.calculate()
+        >>> metric.value('me')
+        9.0
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
         """
@@ -387,6 +391,8 @@ class Metric(object):
         >>> metric.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> metric.calculate()
+        >>> metric.value('me')
+        9.0
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
         """

@@ -104,8 +104,13 @@ class Residual(object):
         ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> residual.calculate()
         >>> np.testing.assert_array_almost_equal(
-        ...     np.round(residual.values, decimals=3),
-        ...     np.array([ -0.467,  -0.151,   3.313, -18.   ]))
+        ...     residual.value("me"),
+        ...     -0.467,
+        ...     decimal=3)
+        >>> np.testing.assert_array_almost_equal(
+        ...     residual.values,
+        ...     np.array([ -0.467,  -0.151,   3.313, -18.   ]),
+        ...     decimal=3)
         """
         # assert that the model grids have the same x_of_node and y_of_node.
         assert_array_equal(data.x_of_node, model.x_of_node)
@@ -443,8 +448,13 @@ class Residual(object):
         ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> residual.calculate()
         >>> np.testing.assert_array_almost_equal(
-        ...     np.round(residual.values, decimals=3),
-        ...     np.array([  0.158,   0.67 ,   4.138, -20.   ]))
+        ...     residual.value("me"),
+        ...     0.158,
+        ...     decimal=3)
+        >>> np.testing.assert_array_almost_equal(
+        ...     residual.values,
+        ...     np.array([  0.158,   0.67 ,   4.138, -20.   ]),
+        ...     decimal=3)
         """
         model = create_grid(params.pop("model"))
         data = create_grid(params.pop("data"))
@@ -519,8 +529,13 @@ class Residual(object):
         ['me', 'ep10', 'oid1_mean', 'sn1']
         >>> residual.calculate()
         >>> np.testing.assert_array_almost_equal(
-        ...     np.round(residual.values, decimals=3),
-        ...     np.array([  0.191,   0.426,   3.252, -20.   ]))
+        ...     residual.value("me"),
+        ...     0.191,
+        ...     decimal=3)
+        >>> np.testing.assert_array_almost_equal(
+        ...     residual.values,
+        ...     np.array([  0.191,   0.426,   3.252, -20.   ]),
+        ...     decimal=3)
         """
         params = _read_input(file_like)
         return cls.from_dict(params)
