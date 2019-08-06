@@ -65,18 +65,14 @@ class Residual(object):
         >>> from io import StringIO
         >>> from landlab import RasterModelGrid
         >>> from umami import Residual
-
         >>> np.random.seed(42)
-
         >>> model = RasterModelGrid((10, 10))
         >>> z_model = model.add_zeros("node", "topographic__elevation")
         >>> z_model += model.x_of_node + model.y_of_node
-
         >>> data = RasterModelGrid((10, 10))
         >>> z_data = data.add_zeros("node", "topographic__elevation")
         >>> z_data +=  data.x_of_node + data.y_of_node
         >>> z_data[data.core_nodes] += np.random.random(data.core_nodes.shape)
-
         >>> file_like=StringIO('''
         ... me:
         ...     _func: aggregate
@@ -97,7 +93,6 @@ class Residual(object):
         ...     field: drainage_area
         ...     value: 1
         ... ''')
-
         >>> residual = Residual(model, data)
         >>> residual.add_from_file(file_like)
         >>> residual.names
@@ -375,9 +370,7 @@ class Residual(object):
         >>> import numpy as np
         >>> from io import StringIO
         >>> from umami import Residual
-
         >>> np.random.seed(42)
-
         >>> params = {
         ...     "model": {
         ...         "RasterModelGrid": [
@@ -442,7 +435,6 @@ class Residual(object):
         ...         },
         ...     },
         ... }
-
         >>> residual = Residual.from_dict(params)
         >>> residual.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
@@ -523,7 +515,6 @@ class Residual(object):
         ...         field: drainage_area
         ...         value: 1
         ... ''')
-
         >>> residual = Residual.from_file(file_like)
         >>> residual.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
