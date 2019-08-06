@@ -47,9 +47,9 @@ class Metric(object):
 
         Functions
         ---------
-        add_metrics_from_dict
-        add_metrics_from_file
-        calculate_metrics
+        add_from_dict
+        add_from_file
+        calculate
         write_metrics_to_file
 
         Examples
@@ -81,10 +81,10 @@ class Metric(object):
         ...     value: 1
         ... ''')
         >>> metric = Metric(grid)
-        >>> metric.add_metrics_from_file(file_like)
+        >>> metric.add_from_file(file_like)
         >>> metric.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> metric.calculate_metrics()
+        >>> metric.calculate()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
         """
@@ -121,7 +121,7 @@ class Metric(object):
         """Metric values in metric order."""
         return [self._metric_values[key] for key in self._metrics.keys()]
 
-    def add_metrics_from_file(self, file):
+    def add_from_file(self, file):
         """Add metrics to an ``umami.Metric`` from a file.
 
         Parameters
@@ -131,9 +131,9 @@ class Metric(object):
             ``OrderedDict``.
         """
         params = _read_input(file)
-        self.add_metrics_from_dict(params)
+        self.add_from_dict(params)
 
-    def add_metrics_from_dict(self, params):
+    def add_from_dict(self, params):
         """Add metrics to an ``umami.Metric`` from a dictionary.
 
         Adding metrics through this method does not overwrite already existing
@@ -151,7 +151,7 @@ class Metric(object):
         for key in new_metrics:
             self._metrics[key] = new_metrics[key]
 
-    def calculate_metrics(self):
+    def calculate(self):
         """Calculate metric values.
 
         Calculated metric values are stored in the attribute
@@ -213,8 +213,8 @@ class Metric(object):
         its own line with its name as a comment.
 
         >>> metric = Metric(grid)
-        >>> metric.add_metrics_from_file(file_like)
-        >>> metric.calculate_metrics()
+        >>> metric.add_from_file(file_like)
+        >>> metric.calculate()
         >>> out = StringIO()
         >>> metric.write_metrics_to_file(out, style="dakota")
         >>> file_contents = out.getvalue().splitlines()
@@ -317,7 +317,7 @@ class Metric(object):
         >>> metric = Metric.from_dict(params)
         >>> metric.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> metric.calculate_metrics()
+        >>> metric.calculate()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
         """
@@ -376,7 +376,7 @@ class Metric(object):
         >>> metric = Metric.from_file(file_like)
         >>> metric.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> metric.calculate_metrics()
+        >>> metric.calculate()
         >>> metric.values
         [9.0, 5.0, 5.0, 8]
         """

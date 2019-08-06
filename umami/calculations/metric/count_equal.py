@@ -52,10 +52,10 @@ def count_equal(grid, field, value):
     ...     value: 1
     ... ''')
     >>> metric = Metric(grid)
-    >>> metric.add_metrics_from_file(file_like)
+    >>> metric.add_from_file(file_like)
     >>> metric.names
     ['elev4', 'num_headwater_nodes']
-    >>> metric.calculate_metrics()
+    >>> metric.calculate()
     >>> metric.values
     [3, 8]
     """

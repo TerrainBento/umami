@@ -54,9 +54,9 @@ class Residual(object):
 
         Functions
         ---------
-        add_residuals_from_dict
-        add_residuals_from_file
-        calculate_residuals
+        add_from_dict
+        add_from_file
+        calculate
         write_residuals_to_file
 
         Examples
@@ -99,10 +99,10 @@ class Residual(object):
         ... ''')
 
         >>> residual = Residual(model, data)
-        >>> residual.add_residuals_from_file(file_like)
+        >>> residual.add_from_file(file_like)
         >>> residual.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> residual.calculate_residuals()
+        >>> residual.calculate()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
         ...     np.array([ -0.467,  -0.151,   3.313, -18.   ]))
@@ -179,7 +179,7 @@ class Residual(object):
         """Residual values in residual order."""
         return [self._residual_values[key] for key in self.names]
 
-    def add_residuals_from_file(self, file):
+    def add_from_file(self, file):
         """Add residuals to an ``umami.Residual`` from a file.
 
         Parameters
@@ -189,9 +189,9 @@ class Residual(object):
             ``OrderedDict``.
         """
         params = _read_input(file)
-        self.add_residuals_from_dict(params)
+        self.add_from_dict(params)
 
-    def add_residuals_from_dict(self, params):
+    def add_from_dict(self, params):
         """Add residuals to an ``umami.Residual`` from a dictionary.
 
         Adding residuals through this method does not overwrite already existing
@@ -215,10 +215,10 @@ class Residual(object):
             if name not in self._data_metric._metrics:
                 new_metrics[name] = info
         if len(new_metrics) > 0:
-            self._data_metric.add_metrics_from_dict(new_metrics)
-            self._model_metric.add_metrics_from_dict(new_metrics)
+            self._data_metric.add_from_dict(new_metrics)
+            self._model_metric.add_from_dict(new_metrics)
 
-    def calculate_residuals(self):
+    def calculate(self):
         """Calculate residual values.
 
         Calculated residual values are stored in the attribute
@@ -226,8 +226,8 @@ class Residual(object):
         """
         self._residual_values = OrderedDict()
 
-        self._model_metric.calculate_metrics()
-        self._data_metric.calculate_metrics()
+        self._model_metric.calculate()
+        self._data_metric.calculate()
 
         for key in self._residuals.keys():
             info = deepcopy(self._residuals[key])
@@ -297,8 +297,8 @@ class Residual(object):
         ...     value: 1
         ... ''')
         >>> residual = Residual(model, data)
-        >>> residual.add_residuals_from_file(file_like)
-        >>> residual.calculate_residuals()
+        >>> residual.add_from_file(file_like)
+        >>> residual.calculate()
 
         First we ouput in *dakota* style, in which each metric is listed on
         its own line with its name as a comment.
@@ -431,7 +431,7 @@ class Residual(object):
         >>> residual = Residual.from_dict(params)
         >>> residual.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> residual.calculate_residuals()
+        >>> residual.calculate()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
         ...     np.array([  0.158,   0.67 ,   4.138, -20.   ]))
@@ -507,7 +507,7 @@ class Residual(object):
         >>> residual = Residual.from_file(file_like)
         >>> residual.names
         ['me', 'ep10', 'oid1_mean', 'sn1']
-        >>> residual.calculate_residuals()
+        >>> residual.calculate()
         >>> np.testing.assert_array_almost_equal(
         ...     np.round(residual.values, decimals=3),
         ...     np.array([  0.191,   0.426,   3.252, -20.   ]))

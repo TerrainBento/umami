@@ -82,10 +82,10 @@ def joint_density_misfit(
     ...         - 100
     ... ''')
     >>> residual = Residual(model, data)
-    >>> residual.add_residuals_from_file(file_like)
+    >>> residual.add_from_file(file_like)
     >>> residual.names
     ['jdm']
-    >>> residual.calculate_residuals()
+    >>> residual.calculate()
     >>> np.round(residual.values, decimals=3)
     array([ 0.057])
     """

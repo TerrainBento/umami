@@ -81,10 +81,10 @@ def watershed_aggregation(grid, field, outlet_id, method, **kwds):
     ...     q: 10
     ... ''')
     >>> metric = Metric(grid)
-    >>> metric.add_metrics_from_file(file_like)
+    >>> metric.add_from_file(file_like)
     >>> metric.names
     ['oid1_mean', 'oid1_10thptile']
-    >>> metric.calculate_metrics()
+    >>> metric.calculate()
     >>> metric.values
     [5.0, 1.8]
     """

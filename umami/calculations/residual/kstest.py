@@ -50,10 +50,10 @@ def kstest(model_grid, data_grid, field):
     ...     field: topographic__elevation
     ... ''')
     >>> residual = Residual(model, data)
-    >>> residual.add_residuals_from_file(file_like)
+    >>> residual.add_from_file(file_like)
     >>> residual.names
     ['ks']
-    >>> residual.calculate_residuals()
+    >>> residual.calculate()
     >>> residual.values
     [0.125]
     """
@@ -129,10 +129,10 @@ def kstest_watershed(model_grid, data_grid, field, outlet_id):
     ...     field: topographic__elevation
     ... ''')
     >>> residual = Residual(model, data)
-    >>> residual.add_residuals_from_file(file_like)
+    >>> residual.add_from_file(file_like)
     >>> residual.names
     ['ksw']
-    >>> residual.calculate_residuals()
+    >>> residual.calculate()
     >>> np.round(residual.values, decimals=3)
     array([ 0.5])
     """

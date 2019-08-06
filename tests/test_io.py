@@ -11,8 +11,8 @@ def test_read_file(tmpdir, grid_with_z, input_yaml):
         with open("params.yml", "w") as fp:
             fp.write(input_yaml)
         metric = Metric(grid_with_z)
-        metric.add_metrics_from_file("params.yml")
-        metric.calculate_metrics()
+        metric.add_from_file("params.yml")
+        metric.calculate()
         assert_array_equal(
             list(metric.names), ["me", "ep10", "oid1_mean", "sn1"]
         )

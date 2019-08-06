@@ -97,10 +97,10 @@ def discretized_misfit(
     ...         - 100
     ... ''')
     >>> residual = Residual(model, data)
-    >>> residual.add_residuals_from_file(file_like)
+    >>> residual.add_from_file(file_like)
     >>> residual.names
     ['da_0_z_0', 'da_0_z_1', 'da_0_z_2', 'da_1_z_0', 'da_1_z_1', 'da_1_z_2']
-    >>> residual.calculate_residuals()
+    >>> residual.calculate()
     >>> for key, value in zip(residual.names, residual.values):
     ...     print(key, np.round(value, decimals=3))
     da_0_z_0 0.713

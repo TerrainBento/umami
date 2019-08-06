@@ -77,10 +77,10 @@ def aggregate(grid, field, method, **kwds):
     ...     q: 10
     ... ''')
     >>> metric = Metric(grid)
-    >>> metric.add_metrics_from_file(file_like)
+    >>> metric.add_from_file(file_like)
     >>> metric.names
     ['me', 'ep10']
-    >>> metric.calculate_metrics()
+    >>> metric.calculate()
     >>> metric.values
     [9.0, 5.0]
     """
