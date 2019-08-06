@@ -124,12 +124,12 @@ class Metric(object):
         name: str
             Name of desired metric.
         """
-        return self._residual_values[name]
+        return self._values[name]
 
     @property
     def values(self):
         """Metric values in metric order."""
-        return [self._metric_values[key] for key in self._metrics.keys()]
+        return [self._values[key] for key in self._metrics.keys()]
 
     def add_from_file(self, file):
         """Add metrics to an ``umami.Metric`` from a file.
@@ -167,7 +167,7 @@ class Metric(object):
         Calculated metric values are stored in the attribute
         ``Metric.values``.
         """
-        self._metric_values = OrderedDict()
+        self._values = OrderedDict()
 
         for key in self._metrics.keys():
             info = deepcopy(self._metrics[key])
@@ -175,9 +175,9 @@ class Metric(object):
             function = calcs.__dict__[_func]
 
             if _func in ("chi_gradient", "chi_intercept"):
-                self._metric_values[key] = function(self._cf)
+                self._values[key] = function(self._cf)
             else:
-                self._metric_values[key] = function(self._grid, **info)
+                self._values[key] = function(self._grid, **info)
 
     def write_metrics_to_file(self, path, style, decimals=3):
         """Write metrics to a file.
@@ -252,14 +252,14 @@ class Metric(object):
             stream = "\n".join(
                 [
                     str(np.round(val, decimals=decimals)) + " # " + str(key)
-                    for key, val in self._metric_values.items()
+                    for key, val in self._values.items()
                 ]
             )
         if style == "yaml":
             stream = "\n".join(
                 [
                     str(key) + ": " + str(np.round(val, decimals=decimals))
-                    for key, val in self._metric_values.items()
+                    for key, val in self._values.items()
                 ]
             )
 

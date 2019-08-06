@@ -182,13 +182,12 @@ class Residual(object):
         name: str
             Name of desired residual.
         """
-        return self._residual_values[name]
-
+        return self._values[name]
 
     @property
     def values(self):
         """Residual values in residual order."""
-        return [self._residual_values[key] for key in self.names]
+        return [self._values[key] for key in self.names]
 
     def add_from_file(self, file):
         """Add residuals to an ``umami.Residual`` from a file.
@@ -235,7 +234,7 @@ class Residual(object):
         Calculated residual values are stored in the attribute
         ``Residual.values``.
         """
-        self._residual_values = OrderedDict()
+        self._values = OrderedDict()
 
         self._model_metric.calculate()
         self._data_metric.calculate()
@@ -247,8 +246,8 @@ class Residual(object):
             if key in self._metrics:
 
                 resid = (
-                    self._model_metric._metric_values[key]
-                    - self._data_metric._metric_values[key]
+                    self._model_metric._values[key]
+                    - self._data_metric._values[key]
                 )
             else:
 
@@ -257,10 +256,10 @@ class Residual(object):
                 resid = function(self._model_grid, self._data_grid, **info)
 
             if _func != "discretized_misfit":
-                self._residual_values[key] = resid
+                self._values[key] = resid
             else:
                 for label, value in resid.items():
-                    self._residual_values[label] = value
+                    self._values[label] = value
 
     def write_residuals_to_file(self, path, style, decimals=3):
         """Write residuals to a file.
@@ -341,14 +340,14 @@ class Residual(object):
             stream = "\n".join(
                 [
                     str(np.round(val, decimals=decimals)) + " # " + str(key)
-                    for key, val in self._residual_values.items()
+                    for key, val in self._values.items()
                 ]
             )
         if style == "yaml":
             stream = "\n".join(
                 [
                     str(key) + ": " + str(np.round(val, decimals=decimals))
-                    for key, val in self._residual_values.items()
+                    for key, val in self._values.items()
                 ]
             )
 
