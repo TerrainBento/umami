@@ -174,6 +174,11 @@ class Residual(object):
 
         return self._names
 
+    @property
+    def category(self):
+        """ """
+        return self._category
+
     def value(self, name):
         """Get a specific residual value.
 
@@ -258,7 +263,9 @@ class Residual(object):
             if _func != "discretized_misfit":
                 self._values[key] = resid
             else:
-                for label, value in resid.items():
+                # if
+                self._category = resid[0]
+                for label, value in resid[1].items():
                     self._values[label] = value
 
     def write_residuals_to_file(self, path, style, decimals=3):

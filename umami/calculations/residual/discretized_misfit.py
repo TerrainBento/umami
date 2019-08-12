@@ -57,7 +57,7 @@ def discretized_misfit(
     >>> model_fa = FlowAccumulator(model)
     >>> model_fa.run_one_step()
 
-    >>> out = discretized_misfit(
+    >>> cat, out = discretized_misfit(
     ...     model,
     ...     data,
     ...     "da_{field_1_level}_z_{field_2_level}",
@@ -74,6 +74,8 @@ def discretized_misfit(
     da_1_z_0 0.414
     da_1_z_1 0.441
     da_1_z_2 0.432
+    >>> cat[:5]
+    array([0, 0, 0, 0, 0])
 
     Next, the same calculations are shown as part of an umami ``Residual``.
 
@@ -109,8 +111,9 @@ def discretized_misfit(
     da_1_z_0 0.414
     da_1_z_1 0.441
     da_1_z_2 0.432
+    >>> residual.category[:5]
+    array([0, 0, 0, 0, 0])
     """
-
     category = _get_category_labels(
         data_grid,
         field_1,
@@ -135,7 +138,7 @@ def discretized_misfit(
         sq_resids = np.power(difference[loc], 2.0)
         misfit = np.sqrt(np.mean(sq_resids))
         out[n] = misfit
-    return out
+    return category, out
 
 
 def _get_category_labels(

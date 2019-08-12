@@ -27,7 +27,7 @@ def test_no_misfit(category_grid):
     _ = model_grid.add_field("node", "misfit_field", vals)
     _ = data_grid.add_field("node", "misfit_field", vals)
 
-    out = discretized_misfit(
+    _, out = discretized_misfit(
         model_grid,
         data_grid,
         "{field_1_level}_{field_2_level}",
@@ -53,7 +53,7 @@ def test_known_misfit(category_grid):
     _ = model_grid.add_field("node", "misfit_field", vals)
     _ = data_grid.add_field("node", "misfit_field", 2.0 * vals)
 
-    out = discretized_misfit(
+    _, out = discretized_misfit(
         model_grid,
         data_grid,
         "{field_1_level}_{field_2_level}",
