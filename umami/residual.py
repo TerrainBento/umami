@@ -549,6 +549,6 @@ class Residual(object):
         """"""
         for key in residuals:
             info = residuals[key]
-            _validate_func(info, _VALID_FUNCS)
+            _validate_func(key, info, _VALID_FUNCS)
             _validate_fields(self._data_grid, info)
             _validate_fields(self._model_grid, info)

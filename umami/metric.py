@@ -403,5 +403,5 @@ class Metric(object):
         # look at all _funcs, ensure that they are valid
         for key in metrics:
             info = metrics[key]
-            _validate_func(info, _VALID_FUNCS)
+            _validate_func(key, info, _VALID_FUNCS)
             _validate_fields(self._grid, info)
