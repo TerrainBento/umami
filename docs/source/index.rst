@@ -12,10 +12,11 @@ difference between model and data, and :py:class:`Metric` which is a calculated
 value on either model or data. A set of currently supported calculations are
 found in the :py:mod:`umami.calculations` submodule.
 
-Umami is built on top of the `Landlab Toolkit`_.
+Umami is built on top of the `Landlab Toolkit`_ and designed to work well with
+`terrainbento`_.
 
 .. _Landlab Toolkit: https://landlab.github.io
-
+.. _terrainbento: https://terrainbento.readthedocs.io/en/latest/
 
 Organization of Software
 ------------------------
