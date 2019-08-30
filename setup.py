@@ -23,6 +23,7 @@ setup(
         "holoviews",
         "pandas",
         "landlab>=1.10",
+        "terrainbento>=1.1",
         "plotnine",
     ],
     package_data={"": ["tests/data/*"]},

@@ -18,3 +18,4 @@ name: umami-dev
  - holoviews
  - pandas
  - plotnine
+ - terrainbento>=1.1
