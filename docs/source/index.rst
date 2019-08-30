@@ -5,7 +5,7 @@ Welcome to the Umami documentation!
 Introduction and Purpose
 ------------------------
 Umami is a package for calculating objective functions or objective function
-components for landscape evolution modeling. TODO add more purpose here.
+components for landscape evolution modeling. TODO: add more purpose here.
 
 Umami offers two primary classes a :py:class:`Residual` which represents the
 difference between model and data, and :py:class:`Metric` which is a calculated
