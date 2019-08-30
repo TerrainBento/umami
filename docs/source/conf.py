@@ -63,7 +63,7 @@ version = umami.__version__
 
 from datetime import date
 
-sys.path.insert(0, ".")
+sys.path.insert(0, os.path.abspath('../..'))
 
 # -- General configuration ------------------------------------------------
 
