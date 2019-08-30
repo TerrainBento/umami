@@ -4,8 +4,10 @@ _field_locs = ["field_1", "field_2", "field"]
 def _validate_func(key, info, valid):
     # Is function defined?
     if "_func" not in info:
-        msg = ("umami: The attribute _func, is required for each calculation. "
-               "missing for {key}.").format(key=key)
+        msg = (
+            "umami: The attribute _func, is required for each calculation. "
+            "missing for {key}."
+        ).format(key=key)
         raise ValueError(msg)
 
     # Is function supported?
