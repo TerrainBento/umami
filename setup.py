@@ -22,7 +22,7 @@ setup(
         "jupyter",
         "holoviews",
         "pandas",
-        "landlab>=1.9",
+        "landlab>=1.10",
     ],
     package_data={"": ["tests/data/*"]},
 )

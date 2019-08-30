@@ -12,7 +12,7 @@ name: umami-dev
  # for the package
  - scipy
  - numpy
- - landlab>=1.9
+ - landlab>=1.10
  # for the notebooks
  - jupyter
  - holoviews
