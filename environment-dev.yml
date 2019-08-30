@@ -17,3 +17,4 @@ name: umami-dev
  - jupyter
  - holoviews
  - pandas
+ - plotnine
