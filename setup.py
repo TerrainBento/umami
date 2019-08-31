@@ -24,7 +24,7 @@ setup(
         "pandas",
         "landlab>=1.10",
         "terrainbento>=1.1",
-        "plotnine",
+        "plotnine>=0.6.0",
     ],
     package_data={"": ["tests/data/*"]},
 )

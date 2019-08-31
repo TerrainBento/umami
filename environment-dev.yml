@@ -17,5 +17,5 @@ dependencies:
    - jupyter
    - holoviews
    - pandas
-   - plotnine
+   - plotnine>=0.6.0
    - terrainbento>=1.1
