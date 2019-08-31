@@ -29,6 +29,7 @@ install:
   - cmd: set PYTHONUNBUFFERED=1
   - cmd: conda config --set always_yes yes
   - cmd: pip install twine pytest pytest-cov pytest-datadir
+  - cmd: pip install jupyter pandas plotnine holoviews terrainbento
   - cmd: conda info
   - cmd: conda list
 

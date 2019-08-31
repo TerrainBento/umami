@@ -65,5 +65,6 @@ install:
 - pip install -e .
 script:
 - pip install pytest pytest-cov pytest-datadir coveralls
+- pip install jupyter pandas plotnine holoviews terrainbento
 - pytest --cov-report=xml:$(pwd)/coverage.xml
 after_success: coveralls
