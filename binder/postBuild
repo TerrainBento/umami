@@ -1,3 +1,0 @@
-#!/bin/bash
-
-pip install jupyter pandas plotnine holoviews terrainbento
