@@ -5,6 +5,7 @@ import versioneer
 
 setup(
     name="umami",
+    python_requires=">=3.6",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     description="Umami calculates landscape metrics",

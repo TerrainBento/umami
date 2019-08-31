@@ -2,7 +2,7 @@ name: umami-dev
 channels:
   - conda-forge
 dependencies:
-   - python
+   - python>=3.6
    # for development
    - black
    - flake8
