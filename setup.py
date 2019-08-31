@@ -21,5 +21,14 @@ setup(
         "numpy",
         "landlab>=1.10",
     ],
+    tests_require=[
+        "pytest",
+        "pytest-cov",
+        "jupyter",
+        "holoviews",
+        "pandas",
+        "plotnine>=0.6.0",
+        "terrainbento>=1.1",
+        ],
     package_data={"": ["tests/data/*"]},
 )
