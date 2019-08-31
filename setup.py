@@ -5,6 +5,7 @@ import versioneer
 
 setup(
     name="umami",
+    python_requires=">=3.6",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     description="Umami calculates landscape metrics",
@@ -19,12 +20,6 @@ setup(
     install_requires=[
         "scipy",
         "numpy",
-        "jupyter",
-        "holoviews",
-        "pandas",
         "landlab>=1.10",
-        "terrainbento>=1.1",
-        "plotnine>=0.6.0",
     ],
-    package_data={"": ["tests/data/*"]},
 )
