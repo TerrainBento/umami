@@ -1,21 +1,21 @@
 name: umami-dev
- channels:
-   - conda-forge
- dependencies:
- - python
- # for development
- - black
- - flake8
- - isort
- - pytest
- - pytest-cov
- # for the package
- - scipy
- - numpy
- - landlab>=1.10
- # for the notebooks
- - jupyter
- - holoviews
- - pandas
- - plotnine
- - terrainbento>=1.1
+channels:
+  - conda-forge
+dependencies:
+   - python
+   # for development
+   - black
+   - flake8
+   - isort
+   - pytest
+   - pytest-cov
+   # for the package
+   - scipy
+   - numpy
+   - landlab>=1.10
+   # for the notebooks
+   - jupyter
+   - holoviews
+   - pandas
+   - plotnine
+   - terrainbento>=1.1
