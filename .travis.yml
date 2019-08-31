@@ -64,9 +64,7 @@ install:
 - pip install numpy
 - pip install -e .
 script:
-- pip install pytest pytest-cov
+- pip install pytest pytest-cov coveralls
 - pip install jupyter pandas plotnine holoviews terrainbento
 - pytest --cov-report=xml:$(pwd)/coverage.xml
-after_success:
-- pip install coveralls
-- coveralls
+after_success: coveralls
