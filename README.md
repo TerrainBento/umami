@@ -48,7 +48,7 @@ To install the umami source code version of umami we recommend creating a conda 
 ```
 git clone https://github.com/TerrainBento/umami.git
 cd umami
-cconda env create -f environment-dev.yml
+conda env create -f environment-dev.yml
 conda activate umami-dev
 python setup.py install
 ```
