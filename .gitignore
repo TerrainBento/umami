@@ -14,3 +14,9 @@ __pycache__/
 \.DS_Store
 
 notebooks/\.ipynb_checkpoints/
+
+coverage.xml
+
+.coverage.*
+
+*.nc
