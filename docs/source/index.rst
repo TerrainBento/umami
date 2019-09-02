@@ -5,7 +5,9 @@ Welcome to the Umami documentation!
 Introduction and Purpose
 ------------------------
 Umami is a package for calculating objective functions or objective function
-components for landscape evolution modeling. TODO: add more purpose here.
+components for landscape evolution modeling.
+
+TODO: add more purpose here.
 
 Umami offers two primary classes a :py:class:`Residual` which represents the
 difference between model and data, and :py:class:`Metric` which is a calculated
@@ -37,18 +39,24 @@ To get help or ask questions, please `make an issue on GitHub`_.
 Installation Instructions
 -------------------------
 
-Installation is described on `GitHub`_.
+Installation is described on `this`_ section of the README.
 
-.. _GitHub: https://github.com/TerrainBento/umami#where-to-get-it
+.. _this: https://github.com/TerrainBento/umami#where-to-get-it
 
 Contributing
 ------------
 
-All contributions are welcome. Please read the
-:ref:`development practices <development_practices>` page for more information.
+All contributions are welcome. Please read the following page for more
+information.
+
+.. toctree::
+    :maxdepth: 1
+
+    development_practices
 
 API Documentation
 -----------------
+
 .. toctree::
     :maxdepth: 1
 

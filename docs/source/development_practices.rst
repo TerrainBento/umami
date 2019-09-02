@@ -48,12 +48,17 @@ Unit and Docstring Tests
 ------------------------
 
 Umami uses `pytest`_ to discover and run tests of the codebase. We have two
-types of tests that serve two complimentary purposes.
+types of tests that serve two complimentary purposes. Docstring tests are
+examples within the code that provide context in the API documentation. Unit
+tests live in in the ``test`` folder and provide additional tests that are
+extraneous to the API documentation but important for ensuring that umami is
+fully tested. The tests use small examples so that known answers can be used.
 
 .. _pytest: https://pytest.org/en/latest/
 
-To run the tests, navigate to the top level ``umami`` directory and run
-``pytest``.
+To run the tests, navigate to the top level ``umami`` directory and run::
+
+  pytest
 
 You can also assess how well the tests cover the code base.::
 
@@ -62,7 +67,10 @@ You can also assess how well the tests cover the code base.::
 Convenience Functions
 ---------------------
 
-There are two convienience commands available through the Makefile to assist
+There are a few convienience commands available through the Makefile to assist
 with formatting and checking for lint. From the top level of the umami source
 code directory you can type ``make pretty`` to format all the files. You can
-type ``make lint`` to check for lint.
+type ``make lint`` to check for lint. Finally, the command ``make docs`` will
+make the docs with `sphinx`_ and open the local copy in a web browser.
+
+.. _sphinx: https://www.sphinx-doc.org/en/master/
