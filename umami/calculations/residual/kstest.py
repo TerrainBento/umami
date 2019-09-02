@@ -1,7 +1,6 @@
 import numpy as np
-from scipy.stats import ks_2samp
-
 from landlab.utils import get_watershed_mask
+from scipy.stats import ks_2samp
 
 
 def kstest(model_grid, data_grid, field):

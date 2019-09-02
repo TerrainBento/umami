@@ -4,9 +4,9 @@ from copy import deepcopy
 
 import numpy as np
 import yaml
+from landlab import RasterModelGrid, create_grid
 
 import umami.calculations.metric as calcs
-from landlab import RasterModelGrid, create_grid
 from umami.utils.create_landlab_components import _create_landlab_components
 from umami.utils.io import _read_input, _write_output
 from umami.utils.validate import _validate_fields, _validate_func
