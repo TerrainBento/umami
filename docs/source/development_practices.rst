@@ -1,25 +1,68 @@
+.. _development_practices:
+
 Development Practices
 =====================
 
+All contributions to umami are welcome. If you are considering developing with
+umami, we recommend you read this page. All developers and maintainers are
+expecte to abide by the `Code of Conduct`_.
+
+.. _Code of Conduct: https://github.com/TerrainBento/umami/blob/master/CODE_OF_CONDUCT.md
+
 Contribution Guidelines
+-----------------------
 
-User contributions are welcome pull requests on a development branch. Umami strives for a meaningful 100% code coverage, adherence to [PEP8](), low lint levels using [Flake8](), and [Black style](). Many of these standards are enforced by continuous integration tests and the development team will help you bring contributions into compliance. Please see the [Development Practices]() page for more information.
+To contribute to umami, please fork the repository and make modifications on a
+development branch. If you have any questions about how to get started,
+`make an issue on GitHub`_.
 
+Umami strives for a meaningful 100% code coverage through docstring and unit
+tests, adherence to `PEP8`_, low lint levels using `Flake8`_, and
+`Black style`_. Many of these standards are enforced by continuous integration
+tests and the development team will help you bring contributions into
+compliance.
 
-https://github.com/TerrainBento/umami/blob/master/CODE_OF_CONDUCT.md
+.. _make an issue on GitHub: https://github.com/TerrainBento/umami/issues
+.. _PEP8: https://www.python.org/dev/peps/pep-0008/
+.. _Black style: https://black.readthedocs.io/en/stable/
+.. _Flake8: http://flake8.pycqa.org/en/latest/#
 
 Developer Install instructions
 ------------------------------
 
-Code style: pep8, Black, isort
-make pretty
+After forking the repository, install using a conda environment.::
 
-Delint: Flake8
-make lint
+    git clone https://github.com/<your user name>/umami.git
+    cd umami
+    conda env create -f environment-dev.yml
+    conda activate umami-dev
+    python setup.py develop
 
+You will need to run ``conda activate umami-dev`` each time you start a new
+terminal session.
 
-Testing
-meaningful 100% tests
-pytest
+When using this conda environment, you will have all of the tools you need to
+format files and run the tests.
 
-Test
+Unit and Docstring Tests
+------------------------
+
+Umami uses `pytest`_ to discover and run tests of the codebase. We have two
+types of tests that serve two complimentary purposes.
+
+.. _pytest: https://pytest.org/en/latest/
+
+To run the tests, navigate to the top level ``umami`` directory and run
+``pytest``.
+
+You can also assess how well the tests cover the code base.::
+
+  pytest umami tests/ --doctest-modules --cov=umami --cov-report term-missing -vvv
+
+Convenience Functions
+---------------------
+
+There are two convienience commands available through the Makefile to assist
+with formatting and checking for lint. From the top level of the umami source
+code directory you can type ``make pretty`` to format all the files. You can
+type ``make lint`` to check for lint.

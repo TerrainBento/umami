@@ -22,22 +22,30 @@ Umami is built on top of the `Landlab Toolkit`_ and designed to work well with
 Getting Started
 ---------------
 
-.. toctree::
-    :maxdepth: 1
+Check out the example notebooks `housed on Binder`_ to get a sense of how umami
+can be used.
 
-    umami.getting_started
+.. _housed on Binder: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb
 
 Get Help
 --------
-TODO
+
+To get help or ask questions, please `make an issue on GitHub`_.
+
+.. _make an issue on GitHub: https://github.com/TerrainBento/umami/issues
 
 Installation Instructions
 -------------------------
-TODO
+
+Installation is described on `GitHub`_.
+
+.. _GitHub: https://github.com/TerrainBento/umami#where-to-get-it
 
 Contributing
 ------------
-TODO
+
+All contributions are welcome. Please read the
+:ref:`development practices <development_practices>` page for more information.
 
 API Documentation
 -----------------
