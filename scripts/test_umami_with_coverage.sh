@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-pytest umami --doctest-modules --cov=umami tests/ --cov-report term-missing
+pytest umami tests/ --doctest-modules --cov=umami --cov-report term-missing -vvv
