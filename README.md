@@ -1,27 +1,28 @@
 [![Documentation Status](https://readthedocs.org/projects/umami/badge/?version=latest)](https://umami.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://travis-ci.org/TerrainBento/umami.svg?branch=master)](https://travis-ci.org/TerrainBento/umami)
 [![Build status](https://ci.appveyor.com/api/projects/status/0ehba569dttgsuyv?svg=true)](https://ci.appveyor.com/project/kbarnhart/umami)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
 [![Coverage Status](https://coveralls.io/repos/github/TerrainBento/umami/badge.svg?branch=master)](https://coveralls.io/github/TerrainBento/umami?branch=master)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/umami/badges/installer/conda.svg)](https://conda.anaconda.org/conda-forge)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
 
 # What is it?
 
 Umami is a package for calculating objective functions or objective function
-components for landscape evolution modeling. It was designed to work well with
-models built with the [Landlab Toolkit](https://github.com/landlab/landlab) or
-with [terrainbento](https://github.com/TerrainBento/terrainbento). An example
-of each of these can be found in the notebooks on Binder (or in the `notebooks`
-directory).
+components for Earth surface dynamics modeling. It was designed to work well
+with models built with the
+[Landlab Toolkit](https://github.com/landlab/landlab) or with
+[terrainbento](https://github.com/TerrainBento/terrainbento). Examples can be
+found in the `notebooks` directory (or on Binder
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+).
 
-Umami offers two primary classes a
-[`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual)
-which represents the difference between model and data, and a
-[`Metric`](https://umami.readthedocs.io/en/latest/umami.metric.html)
-which is a calculated value on either model or data. The set of currently
-supported calculations are found in the
-[`umami.calculations`](https://umami.readthedocs.io/en/latest/umami.calculations.html)
-submodule.
+Umami offers two primary classes:
+* a[`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual)
+which represents the difference between model and data, and
+* a [`Metric`](https://umami.readthedocs.io/en/latest/umami.metric.html)
+which is a calculated value on either model or data.
+
+The set of currently supported calculations are found in the [`umami.calculations`](https://umami.readthedocs.io/en/latest/umami.calculations.html) submodule.
 
 # What does it do well?
 

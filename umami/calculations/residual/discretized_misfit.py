@@ -19,14 +19,17 @@ def discretized_misfit(
     calculation.
 
     .. image:: https://mybinder.org/badge_logo.svg
-        :target: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FDiscretizedResidual.ipynb
+        :target: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FDiscretizedMisfit.ipynb
 
     The ``discretized_misfit`` calculation first classifies each grid cell in
     the landscape into categories based on ``field_1``, ``field_2`` and the
-    percentile edges for each (using the data grid). If this calculation is
-    used as part of a ``Residual`` this category field is stored as a property
-    called ``category``. This method then calculates the sum of squared
-    residuals for each set of model grid cells based on the ``misfit_field``.
+    percentile edges for each (using the data grid). This results in a set of
+    categories, which may or may not be congiguous in space. This category
+    field is then stored as a property of the ``Residual`` called
+    ``Residual.category``.
+
+    For each category, the sum of squared residuals is calculated based on the
+    ``misfit_field``.
 
     Since this calculation returns one value for each category, rather than
     one value in total, a ``name`` must be provided. This is a string which
