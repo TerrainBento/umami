@@ -15,16 +15,48 @@ def discretized_misfit(
 ):
     """Calculate a discretized misfit on a landlab grid field.
 
+    The following Binder notebook shows example usage of this umami
+    calculation.
 
     .. image:: https://mybinder.org/badge_logo.svg
         :target: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FDiscretizedResidual.ipynb
 
+    The ``discretized_misfit`` calculation first classifies each grid cell in
+    the landscape into categories based on ``field_1``, ``field_2`` and the
+    percentile edges for each (using the data grid). If this calculation is
+    used as part of a ``Residual`` this category field is stored as a property
+    called ``category``. This method then calculates the sum of squared
+    residuals for each set of model grid cells based on the ``misfit_field``.
 
-    density bounds calculated with the data grid.
+    Since this calculation returns one value for each category, rather than
+    one value in total, a ``name`` must be provided. This is a string which
+    will be formatted with the values for ``{field_1_level}`` and
+    ``{field_2_level}``. The output is an ordered dictionary with ``name`` as
+    the keys, and the sum of squares misfit as the values.
 
-    # TODO:
+    For example, if ``field_1`` was the ``drainage_area`` and ``field_2`` was
+    ``topographic__elevation``, and the parameter ``name`` was
+    ``da_{field_1_level}_z_{field_2_level}``, then the following four
+    categories would be identified:
 
-    Describe naming. 
+    +--------------+-------------------------------------------------------+
+    | Name         | Contents                                              |
+    +==============+=======================================================+
+    | ``da_0_z_0`` | Cells with the lower half of drainage area, and then  |
+    |              | within those cells, the lowest half of elevation      |
+    +--------------+-------------------------------------------------------+
+    | ``da_0_z_1`` | Cells with the lower half of drainage area, and then  |
+    |              | within those cells, the higher half of elevation      |
+    +--------------+-------------------------------------------------------+
+    | ``da_1_z_0`` | Cells with the higher half of drainage area, and then |
+    |              | within those cells, the lowest half of elevation      |
+    +--------------+-------------------------------------------------------+
+    | ``da_1_z_1`` | Cells with the higher half of drainage area, and then |
+    |              | within those cells, the higher half of elevation      |
+    +--------------+-------------------------------------------------------+
+
+    Within each of these four categories, the sum of squared residuals on the
+    ``misfit_field`` is calculated and returned.
 
     Parameters
     ----------
@@ -61,7 +93,6 @@ def discretized_misfit(
     >>> data_fa.run_one_step()
     >>> model_fa = FlowAccumulator(model)
     >>> model_fa.run_one_step()
-
     >>> cat, out = discretized_misfit(
     ...     model,
     ...     data,
