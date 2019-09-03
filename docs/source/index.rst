@@ -7,10 +7,9 @@ Introduction and Purpose
 
 Umami is a package for calculating objective functions or objective function
 components for landscape evolution modeling. It was designed to work well with
-models built with the [Landlab Toolkit](https://github.com/landlab/landlab) or
-with [terrainbento](https://github.com/TerrainBento/terrainbento). An example
-of each of these can be found in the notebooks on Binder (or in the `notebooks`
-directory).
+models built with the `Landlab Toolkit`_ or `terrainbento`_. An example
+of each of these can be found in the notebooks on Binder (or in the
+``notebooks`` directory).
 
 Umami offers two primary classes a :py:class:`Residual`
 which represents the difference between model and data, and a
