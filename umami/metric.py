@@ -40,18 +40,6 @@ class Metric(object):
             A dictionary of desired metrics to calculate. See examples for
             required format.
 
-        Attributes
-        ----------
-        names
-        values
-
-        Functions
-        ---------
-        add_from_dict
-        add_from_file
-        calculate
-        write_metrics_to_file
-
         Examples
         --------
         >>> from io import StringIO

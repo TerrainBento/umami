@@ -47,18 +47,6 @@ class Residual(object):
             A dictionary of desired residuals to calculate. See examples for
             required format.
 
-        Attributes
-        ----------
-        names
-        values
-
-        Functions
-        ---------
-        add_from_dict
-        add_from_file
-        calculate
-        write_residuals_to_file
-
         Examples
         --------
         >>> import numpy as np
@@ -141,7 +129,9 @@ class Residual(object):
         self._validate_residuals(self._residuals)
         self._distinguish_metric_from_resid()
 
-        # calculate
+        self._category = None
+
+        # set up metric and residual objects
         self._data_metric = Metric(
             data,
             flow_accumulator_kwds=flow_accumulator_kwds,
@@ -176,7 +166,14 @@ class Residual(object):
 
     @property
     def category(self):
-        """ """
+        """Category labels from discretized_misfit.
+
+        Returns
+        -------
+        category: ndarray of size (number of nodes,)
+            The category labels used with ``discretized_misfit`` or ``None`` if
+            this calculation is not used.
+        """
         return self._category
 
     def value(self, name):
