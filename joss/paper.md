@@ -30,7 +30,7 @@ tags:
       index: 3
     - name: University of Colorado at Boulder, Institute for Arctic and Alpine Research
       index: 4
-  date: 19 August 2019
+  date: 2 September 2019
   bibliography: papers.bib
   ---
 
@@ -39,5 +39,6 @@ tags:
 
 # Acknowledgements
 
+Landlab funding, CSDMS Funding, Barnhart NSF postdoc
 
 # References

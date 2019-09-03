@@ -15,22 +15,27 @@ def discretized_misfit(
 ):
     """Calculate a discretized misfit on a landlab grid field.
 
+
+    .. image:: https://mybinder.org/badge_logo.svg
+        :target: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FDiscretizedResidual.ipynb
+
+
     density bounds calculated with the data grid.
 
     # TODO:
-    ALSO FIX how these get named.
 
+    Describe naming. 
 
     Parameters
     ----------
     model_grid : Landlab model grid
     data_grid : Landlab model grid
-    name
-    misfit_field
-    field_1
-    field_2
-    field_1_percentile_edges
-    field_2_percentile_edges
+    name : str
+    misfit_field : str
+    field_1 : str
+    field_2 : str
+    field_1_percentile_edges : list
+    field_2_percentile_edges : list
 
     Returns
     -------

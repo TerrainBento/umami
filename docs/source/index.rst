@@ -4,22 +4,37 @@ Welcome to the Umami documentation!
 
 Introduction and Purpose
 ------------------------
+
 Umami is a package for calculating objective functions or objective function
-components for landscape evolution modeling.
+components for landscape evolution modeling. It was designed to work well with
+models built with the [Landlab Toolkit](https://github.com/landlab/landlab) or
+with [terrainbento](https://github.com/TerrainBento/terrainbento). An example
+of each of these can be found in the notebooks on Binder (or in the `notebooks`
+directory).
 
-TODO: add more purpose here.
+Umami offers two primary classes a :py:class:`Residual`
+which represents the difference between model and data, and a
+:py:class:`Metric`
+which is a calculated value on either model or data. The set of currently
+supported calculations are found in the
+:py:mod:`umami.calculations`
+submodule.
 
-Umami offers two primary classes a :py:class:`Residual` which represents the
-difference between model and data, and :py:class:`Metric` which is a calculated
-value on either model or data. A set of currently supported calculations are
-found in the :py:mod:`umami.calculations` submodule.
+Umami was designed to provide an input-file based interface for calculating
+single value landscape metrics for use in model analysis. This supports
+reproducible analysis and systematic variation in metric construction. When
+used with ``terrainbento`` one input file can describe the model run, and one
+input file can describe the model assessment or model-data comparison. This
+streamlines model analysis applications. Umami also provides multiple output
+formats (YAML and Dakota), the latter of which is designed to interface with
+Sandia National Laboratory's `Dakota package`_.
 
-Umami is built on top of the `Landlab Toolkit`_ and designed to work well with
-`terrainbento`_. The source code is housed on `GitHub`_.
+The source code is housed on `GitHub`_.
 
 .. _Landlab Toolkit: https://landlab.github.io
 .. _terrainbento: https://terrainbento.readthedocs.io/en/latest/
 .. _GitHub: https://github.com/TerrainBento/umami
+.. _Dakota package: https://dakota.sandia.gov
 
 Getting Started
 ---------------
