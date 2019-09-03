@@ -46,9 +46,9 @@ can be used.
 Get Help
 --------
 
-To get help or ask questions, please `make an issue on GitHub`_.
+To get help or ask questions, please make an `issue on GitHub`_.
 
-.. _make an issue on GitHub: https://github.com/TerrainBento/umami/issues
+.. _issue on GitHub: https://github.com/TerrainBento/umami/issues
 
 Installation Instructions
 -------------------------
@@ -60,8 +60,10 @@ Installation is described on `this`_ section of the README.
 Contributing
 ------------
 
-All contributions are welcome. Please read the following page for more
-information.
+All contributions are welcome. Make an `issue on GitHub`_ to file a bug report.
+
+If you are planning to contribute to the source code, please read the following
+page for more information.
 
 .. toctree::
     :maxdepth: 1
