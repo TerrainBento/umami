@@ -17,7 +17,7 @@ found in the `notebooks` directory (or on Binder
 ).
 
 Umami offers two primary classes:
-* a[`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual)
+* a [`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual)
 which represents the difference between model and data, and
 * a [`Metric`](https://umami.readthedocs.io/en/latest/umami.metric.html)
 which is a calculated value on either model or data.
