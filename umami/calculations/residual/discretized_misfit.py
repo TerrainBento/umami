@@ -13,7 +13,7 @@ def discretized_misfit(
     field_1_percentile_edges,
     field_2_percentile_edges,
 ):
-    """Calculate a discretized misfit on a landlab grid field.
+    """Calculate a discretized misfit on a Landlab grid field.
 
     The following Binder notebook shows example usage of this umami
     calculation.
@@ -67,10 +67,19 @@ def discretized_misfit(
     data_grid : Landlab model grid
     name : str
     misfit_field : str
+        An at-node Landlab grid field that is present on the model grid.
     field_1 : str
+        An at-node Landlab grid field that is present on the model grid.
     field_2 : str
+        An at-node Landlab grid field that is present on the model grid.
     field_1_percentile_edges : list
+        A list of percentile edges applied to ``field_1`. For example,
+        ``[0, 60, 100]`` specifies splitting ``field_1` into two parts,
+        separated at the 60th percentile.
     field_2_percentile_edges : list
+        A list of percentile edges applied to ``field_2`. For example,
+        ``[0, 60, 100]`` specifies splitting ``field_2` into two parts,
+        separated at the 60th percentile.
 
     Returns
     -------

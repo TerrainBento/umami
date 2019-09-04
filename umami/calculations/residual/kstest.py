@@ -4,7 +4,7 @@ from scipy.stats import ks_2samp
 
 
 def kstest(model_grid, data_grid, field):
-    """Calculate an Kolmogorov-Smirnov test for a landlab grid field.
+    """Calculate an Kolmogorov-Smirnov test for a Landlab grid field.
 
     ``kstest`` calculates the Kolmogorov-Smirnov test for goodness of fit
     using the function ``ks_2samp`` from ``scipy.stats``.
@@ -14,7 +14,7 @@ def kstest(model_grid, data_grid, field):
     model_grid : Landlab model grid
     data_grid : Landlab model grid
     field : str
-        An at-node landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on the model grid.
 
     Returns
     -------
@@ -80,7 +80,7 @@ def kstest_watershed(model_grid, data_grid, field, outlet_id):
     model_grid : Landlab model grid
     data_grid : Landlab model grid
     field : str
-        An at-node landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on the model grid.
     outlet_id : int
 
     Returns

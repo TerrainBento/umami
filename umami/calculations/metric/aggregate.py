@@ -15,7 +15,7 @@ def _aggregate(vals, method, **kwds):
 
 
 def aggregate(grid, field, method, **kwds):
-    """Calculate an aggreggate value on a landlab grid field.
+    """Calculate an aggreggate value on a Landlab grid field.
 
     ``aggregate`` calculates aggregate values on the core nodes of the model
     grid. It supports all methods in the `numpy`_ namespace that reduce an
@@ -27,7 +27,7 @@ def aggregate(grid, field, method, **kwds):
     ----------
     grid : Landlab model grid
     field : str
-        An at-node landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on the model grid.
     method : str
         The name of a numpy namespace method.
     **kwds
