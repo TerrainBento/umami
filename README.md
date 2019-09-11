@@ -17,9 +17,9 @@ found in the `notebooks` directory (or on Binder
 ).
 
 Umami offers two primary classes:
-* a [`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual)
+* a [`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual),
 which represents the difference between model and data, and
-* a [`Metric`](https://umami.readthedocs.io/en/latest/umami.metric.html)
+* a [`Metric`](https://umami.readthedocs.io/en/latest/umami.metric.html),
 which is a calculated value on either model or data.
 
 The set of currently supported calculations are found in the [`umami.calculations`](https://umami.readthedocs.io/en/latest/umami.calculations.html) submodule.
@@ -51,8 +51,8 @@ support [conda](https://anaconda.org/conda-forge/umami) and
 Open a terminal and execute the following:
 
 ```
-conda config --add channels conda-forge
-conda install umami
+$ conda config --add channels conda-forge
+$ conda install umami
 ```
 
 ## Using pip
@@ -60,7 +60,7 @@ conda install umami
 Open a terminal and execute the following:
 
 ```
-pip install umami
+$ pip install umami
 ```
 
 ## From source code
@@ -69,11 +69,11 @@ The source code is housed on [GitHub](https://github.com/TerrainBento/umami).
 To install the umami from source code we recommend creating a conda environment.
 
 ```
-git clone https://github.com/TerrainBento/umami.git
-cd umami
-conda env create -f environment-dev.yml
-conda activate umami-dev
-python setup.py install
+$ git clone https://github.com/TerrainBento/umami.git
+$ cd umami
+$ conda env create -f environment-dev.yml
+$ conda activate umami-dev
+$ python setup.py install
 ```
 
 If you are interested in developing umami, please check out the
