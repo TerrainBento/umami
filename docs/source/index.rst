@@ -7,26 +7,25 @@ Introduction and Purpose
 
 Umami is a package for calculating objective functions or objective function
 components for landscape evolution modeling. It was designed to work well with
-models built with the `Landlab Toolkit`_ or `terrainbento`_. An example
-of each of these can be found in the notebooks on Binder (or in the
-``notebooks`` directory).
+`terrainbento`_ and other models built with the `Landlab Toolkit`_. Examples
+can be found in the notebooks on Binder (or in the ``notebooks`` directory).
 
-Umami offers two primary classes a :py:class:`Residual`
+Umami offers two primary classes: a :py:class:`Residual`,
 which represents the difference between model and data, and a
-:py:class:`Metric`
+:py:class:`Metric`,
 which is a calculated value on either model or data. The set of currently
-supported calculations are found in the
+supported calculations can be found in the
 :py:mod:`umami.calculations`
 submodule.
 
 Umami was designed to provide an input-file based interface for calculating
-single value landscape metrics for use in model analysis. This supports
+single-value landscape metrics for use in model analysis. This supports
 reproducible analysis and systematic variation in metric construction. When
-used with ``terrainbento`` one input file can describe the model run, and one
-input file can describe the model assessment or model-data comparison. This
-streamlines model analysis applications. Umami also provides multiple output
-formats (YAML and Dakota), the latter of which is designed to interface with
-Sandia National Laboratory's `Dakota package`_.
+used with ``terrainbento``, one input file can describe the model run, and
+another input file can describe the model assessment or model-data comparison.
+This streamlines model analysis applications. Umami also provides multiple
+output formats (YAML and Dakota), the latter of which is designed to interface
+with Sandia National Laboratory's `Dakota package`_.
 
 The source code is housed on `GitHub`_.
 

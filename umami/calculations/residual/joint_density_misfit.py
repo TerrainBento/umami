@@ -11,7 +11,7 @@ def joint_density_misfit(
 ):
     """Calculate the joint-density misfit on a Landlab grid field.
 
-    density bounds calculated with the data grid.
+    Density bounds are calculated with the data grid.
 
     Parameters
     ----------

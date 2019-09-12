@@ -9,9 +9,9 @@
 
 Umami is a package for calculating objective functions or objective function
 components for Earth surface dynamics modeling. It was designed to work well
-with models built with the
-[Landlab Toolkit](https://github.com/landlab/landlab) or with
-[terrainbento](https://github.com/TerrainBento/terrainbento). Examples can be
+with
+[terrainbento](https://github.com/TerrainBento/terrainbento) and other models built with the
+[Landlab Toolkit](https://github.com/landlab/landlab). Examples can be
 found in the `notebooks` directory (or on Binder
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
 ).
@@ -27,7 +27,7 @@ The set of currently supported calculations are found in the [`umami.calculation
 # What does it do well?
 
 Umami was designed to provide an input-file based interface for calculating
-single value landscape metrics for use in model analysis. This supports
+single-value landscape metrics for use in model analysis. This supports
 reproducible analysis and systematic variation in metric construction. When
 used with `terrainbento` one input file can describe the model run, and one
 input file can describe the model assessment or model-data comparison. This
@@ -37,8 +37,7 @@ Sandia National Laboratory's [Dakota package](https://dakota.sandia.gov).
 
 To get a sense of how it is meant to be used, check out the
 [notebooks on Binder](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
-and the
-API documentation(file:///Users/barnhark/projects/TerrainBento/umami/docs/build/html/index.html#api-documentation).
+and the [API documentation](https://umami.readthedocs.io/en/latest/).
 
 # Where to get it
 

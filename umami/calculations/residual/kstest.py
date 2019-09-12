@@ -14,7 +14,7 @@ def kstest(model_grid, data_grid, field):
     model_grid : Landlab model grid
     data_grid : Landlab model grid
     field : str
-        An at-node Landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on both grids.
 
     Returns
     -------
@@ -80,7 +80,7 @@ def kstest_watershed(model_grid, data_grid, field, outlet_id):
     model_grid : Landlab model grid
     data_grid : Landlab model grid
     field : str
-        An at-node Landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on both grids.
     outlet_id : int
 
     Returns
