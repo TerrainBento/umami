@@ -32,7 +32,7 @@ def discretized_misfit(
     ``misfit_field``.
 
     Since this calculation returns one value for each category, rather than
-    one value in total, a ``name`` must be provided. This is a string that 
+    one value in total, a ``name`` must be provided. This is a string that
     will be formatted with the values for ``{field_1_level}`` and
     ``{field_2_level}``. The output is an ordered dictionary with ``name`` as
     the keys, and the sum of squares misfit as the values.
