@@ -1,65 +1,108 @@
 [![Documentation Status](https://readthedocs.org/projects/umami/badge/?version=latest)](https://umami.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://travis-ci.org/TerrainBento/umami.svg?branch=master)](https://travis-ci.org/TerrainBento/umami)
 [![Build status](https://ci.appveyor.com/api/projects/status/0ehba569dttgsuyv?svg=true)](https://ci.appveyor.com/project/kbarnhart/umami)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master)
 [![Coverage Status](https://coveralls.io/repos/github/TerrainBento/umami/badge.svg?branch=master)](https://coveralls.io/github/TerrainBento/umami?branch=master)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/umami/badges/installer/conda.svg)](https://conda.anaconda.org/conda-forge)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
 
-# Umami
+# What is it?
 
-Umami calculates topographic metrics for use in assessing model-data fit.
+Umami is a package for calculating objective functions or objective function
+components for Earth surface dynamics modeling. It was designed to work well
+with
+[terrainbento](https://github.com/TerrainBento/terrainbento) and other models built with the
+[Landlab Toolkit](https://github.com/landlab/landlab). Examples can be
+found in the `notebooks` directory (or on Binder
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+).
 
-It is presently under construction.
+Umami offers two primary classes:
+* a [`Residual`](https://umami.readthedocs.io/en/latest/umami.residual.html#Residual),
+which represents the difference between model and data, and
+* a [`Metric`](https://umami.readthedocs.io/en/latest/umami.metric.html),
+which is a calculated value on either model or data.
 
-There will eventually be a binder link here to some notebooks that provide introductory examples.
+The set of currently supported calculations are found in the [`umami.calculations`](https://umami.readthedocs.io/en/latest/umami.calculations.html) submodule.
 
-# Getting Help
+# What does it do well?
 
-Use the [Issues Page]() to ask questions and get help. Please search open and closed issues to identify if a question has already been asked. We welcome all questions.
+Umami was designed to provide an input-file based interface for calculating
+single-value landscape metrics for use in model analysis. This supports
+reproducible analysis and systematic variation in metric construction. When
+used with `terrainbento` one input file can describe the model run, and one
+input file can describe the model assessment or model-data comparison. This
+streamlines model analysis applications. Umami also provides multiple output
+formats (YAML and Dakota), the latter of which is designed to interface with
+Sandia National Laboratory's [Dakota package](https://dakota.sandia.gov).
 
-# Contributing
+To get a sense of how it is meant to be used, check out the
+[notebooks on Binder](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+and the [API documentation](https://umami.readthedocs.io/en/latest/).
 
-User contributions are welcome pull requests on a development branch. Umami strives for a meaningful 100% code coverage, adherence to [PEP8](), low lint levels using [Flake8](), and [Black style](). Many of these standards are enforced by continuous integration tests and the development team will help you bring contributions into compliance. Please see the [Development Practices]() page for more information.
+# Where to get it
 
-# Installation instructions
-
-**WARNING: conda and pip distributions are not presently active**
-Before installing umami you will need a python distribution. We recommend that you use the [Anaconda python distribution](https://www.anaconda.com/download/). Unless you have a specific reason to want Python 2.7 we strongly suggest that you install Python 3.7 (or the current 3.* version provided by Anaconda).
-
-To install the release version of umami (this is probably what you want) we support conda and pip package management.
+To install the release version of umami (this is probably what you want) we
+support [conda](https://anaconda.org/conda-forge/umami) and
+[pip](https://pypi.org/project/umami/) package management.
 
 ## Using conda
+
 Open a terminal and execute the following:
 
 ```
-conda config --add channels conda-forge
-conda install umami
+$ conda config --add channels conda-forge
+$ conda install umami
 ```
 
 ## Using pip
+
 Open a terminal and execute the following:
 
 ```
-pip install umami
+$ pip install umami
 ```
 
 ## From source code
 
-To install the umami source code version of umami we recommend creating a conda environment for umami.
+The source code is housed on [GitHub](https://github.com/TerrainBento/umami).
+To install the umami from source code we recommend creating a conda environment.
 
 ```
-git clone https://github.com/TerrainBento/umami.git
-cd umami
-conda env create -f environment-dev.yml
-conda activate umami-dev
-python setup.py install
+$ git clone https://github.com/TerrainBento/umami.git
+$ cd umami
+$ conda env create -f environment-dev.yml
+$ conda activate umami-dev
+$ python setup.py install
 ```
 
-#### A note to developers
+If you are interested in developing umami, please check out the
+[development practices](https://umami.readthedocs.io/en/latest/development_practices.html)
+page.
 
-If you plan to develop with umami, please fork umami, clone the forked repository, and replace `python setup.py install` with `python setup.py develop`. We recommend developing new features on a development branch.
+# Read the documentation
 
+Documentation is housed on [ReadTheDocs](https://umami.readthedocs.io).
 
-# How to cite
+# License
 
-This repository will be submitted to JOSS.
+[MIT](https://github.com/TerrainBento/umami/blob/master/LICENSE)
+
+# Report issues and get help
+
+Umami uses Github Issue as a single point of contact for users and developers.
+To ask a question, report a bug, make a feature request, or to get in touch for
+any reason, please make
+[an Issue](https://github.com/TerrainBento/umami/issues).
+
+# Contribute to umami
+
+All contributions are welcome.
+
+Contributors and maintainers to this project are are expected to abide the [Contributor Code of Conduct](https://github.com/TerrainBento/umami/blob/master/CODE_OF_CONDUCT.md).
+
+# Cite umami
+
+If you use umami in your research, please cite it.
+
+A Journal of Open Source Software submission is planned. When it is finalized,
+a link and citation will be found here.

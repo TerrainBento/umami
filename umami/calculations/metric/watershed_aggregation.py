@@ -1,5 +1,4 @@
 import numpy as np
-
 from landlab.utils import get_watershed_mask
 
 from .aggregate import _aggregate
@@ -18,7 +17,7 @@ def watershed_aggregation(grid, field, outlet_id, method, **kwds):
     ----------
     grid : Landlab model grid
     field : str
-        An at-node landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on the model grid.
     outlet_id : int
         Outlet id of the watershed.
     method : str

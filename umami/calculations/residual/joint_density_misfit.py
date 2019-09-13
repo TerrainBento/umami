@@ -9,18 +9,26 @@ def joint_density_misfit(
     field_1_percentile_edges,
     field_2_percentile_edges,
 ):
-    """Calculate the joint-density misfit on a landlab grid field.
+    """Calculate the joint-density misfit on a Landlab grid field.
 
-    density bounds calculated with the data grid.
+    Density bounds are calculated with the data grid.
 
     Parameters
     ----------
     model_grid : Landlab model grid
     data_grid : Landlab model grid
-    field_1
-    field_2
-    field_1_percentile_edges
-    field_2_percentile_edges
+    field_1 : str
+        An at-node Landlab grid field that is present on the model grid.
+    field_2 : str
+        An at-node Landlab grid field that is present on the model grid.
+    field_1_percentile_edges : list
+        A list of percentile edges applied to ``field_1``. For example,
+        ``[0, 60, 100]`` specifies splitting ``field_1`` into two parts,
+        separated at the 60th percentile.
+    field_2_percentile_edges : list
+        A list of percentile edges applied to ``field_2``. For example,
+        ``[0, 60, 100]`` specifies splitting ``field_2`` into two parts,
+        separated at the 60th percentile.
 
     Returns
     -------

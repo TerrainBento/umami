@@ -11,7 +11,7 @@ def count_equal(grid, field, value):
     ----------
     grid : Landlab model grid
     field : str
-        An at-node landlab grid field that is present on the model grid.
+        An at-node Landlab grid field that is present on the model grid.
     value : float
         The value to identify within the field.
 

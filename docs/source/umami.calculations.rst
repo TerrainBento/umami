@@ -3,8 +3,6 @@
 Calculations
 ============
 
-TODO
-
 Calculations for Metrics or Residuals
 -------------------------------------
 
@@ -15,7 +13,6 @@ Calculations for Metrics or Residuals
    umami.calculations.metric.count_equal
    umami.calculations.metric.hypsometric_integral
    umami.calculations.metric.watershed_aggregation
-
 
 Calculations for Residuals only
 -------------------------------

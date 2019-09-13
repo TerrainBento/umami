@@ -13,24 +13,73 @@ def discretized_misfit(
     field_1_percentile_edges,
     field_2_percentile_edges,
 ):
-    """Calculate a discretized misfit on a landlab grid field.
+    """Calculate a discretized misfit on a Landlab grid field.
 
-    density bounds calculated with the data grid.
+    The following Binder notebook shows example usage of this umami
+    calculation.
 
-    # TODO:
-    ALSO FIX how these get named.
+    .. image:: https://mybinder.org/badge_logo.svg
+        :target: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FDiscretizedMisfit.ipynb
 
+    The ``discretized_misfit`` calculation first classifies each grid cell in
+    the landscape into categories based on ``field_1``, ``field_2`` and the
+    percentile edges for each (using the data grid). This results in a set of
+    categories, which may or may not be congiguous in space. This category
+    field is then stored as a property of the ``Residual`` called
+    ``Residual.category``.
+
+    For each category, the sum of squared residuals is calculated based on the
+    ``misfit_field``.
+
+    Since this calculation returns one value for each category, rather than
+    one value in total, a ``name`` must be provided. This is a string that
+    will be formatted with the values for ``{field_1_level}`` and
+    ``{field_2_level}``. The output is an ordered dictionary with ``name`` as
+    the keys, and the sum of squares misfit as the values.
+
+    For example, if ``field_1`` was the ``drainage_area`` and ``field_2`` was
+    ``topographic__elevation``, and the parameter ``name`` was
+    ``da_{field_1_level}_z_{field_2_level}``, then the following four
+    categories would be identified:
+
+    +--------------+-------------------------------------------------------+
+    | Name         | Contents                                              |
+    +==============+=======================================================+
+    | ``da_0_z_0`` | Cells with the lower half of drainage area, and then  |
+    |              | within those cells, the lowest half of elevation      |
+    +--------------+-------------------------------------------------------+
+    | ``da_0_z_1`` | Cells with the lower half of drainage area, and then  |
+    |              | within those cells, the higher half of elevation      |
+    +--------------+-------------------------------------------------------+
+    | ``da_1_z_0`` | Cells with the higher half of drainage area, and then |
+    |              | within those cells, the lowest half of elevation      |
+    +--------------+-------------------------------------------------------+
+    | ``da_1_z_1`` | Cells with the higher half of drainage area, and then |
+    |              | within those cells, the higher half of elevation      |
+    +--------------+-------------------------------------------------------+
+
+    Within each of these four categories, the sum of squared residuals on the
+    ``misfit_field`` is calculated and returned.
 
     Parameters
     ----------
     model_grid : Landlab model grid
     data_grid : Landlab model grid
-    name
-    misfit_field
-    field_1
-    field_2
-    field_1_percentile_edges
-    field_2_percentile_edges
+    name : str
+    misfit_field : str
+        An at-node Landlab grid field that is present on the model grid.
+    field_1 : str
+        An at-node Landlab grid field that is present on the model grid.
+    field_2 : str
+        An at-node Landlab grid field that is present on the model grid.
+    field_1_percentile_edges : list
+        A list of percentile edges applied to ``field_1``. For example,
+        ``[0, 60, 100]`` specifies splitting ``field_1`` into two parts,
+        separated at the 60th percentile.
+    field_2_percentile_edges : list
+        A list of percentile edges applied to ``field_2``. For example,
+        ``[0, 60, 100]`` specifies splitting ``field_2`` into two parts,
+        separated at the 60th percentile.
 
     Returns
     -------
@@ -56,7 +105,6 @@ def discretized_misfit(
     >>> data_fa.run_one_step()
     >>> model_fa = FlowAccumulator(model)
     >>> model_fa.run_one_step()
-
     >>> cat, out = discretized_misfit(
     ...     model,
     ...     data,

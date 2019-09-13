@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
-
 from landlab import RasterModelGrid
+
 from umami.calculations import joint_density_misfit
 
 

@@ -4,11 +4,11 @@ from copy import deepcopy
 
 import numpy as np
 import yaml
+from landlab import RasterModelGrid, create_grid
 from numpy.testing import assert_array_equal
 
 import umami.calculations.metric as metric_calcs
 import umami.calculations.residual as residual_calcs
-from landlab import RasterModelGrid, create_grid
 from umami.metric import Metric
 from umami.utils.create_landlab_components import _create_landlab_components
 from umami.utils.io import _read_input, _write_output
@@ -46,18 +46,6 @@ class Residual(object):
         residuals : dict
             A dictionary of desired residuals to calculate. See examples for
             required format.
-
-        Attributes
-        ----------
-        names
-        values
-
-        Functions
-        ---------
-        add_from_dict
-        add_from_file
-        calculate
-        write_residuals_to_file
 
         Examples
         --------
@@ -141,7 +129,9 @@ class Residual(object):
         self._validate_residuals(self._residuals)
         self._distinguish_metric_from_resid()
 
-        # calculate
+        self._category = None
+
+        # set up metric and residual objects
         self._data_metric = Metric(
             data,
             flow_accumulator_kwds=flow_accumulator_kwds,
@@ -176,7 +166,14 @@ class Residual(object):
 
     @property
     def category(self):
-        """ """
+        """Category labels from discretized_misfit.
+
+        Returns
+        -------
+        category: ndarray of size (number of nodes,)
+            The category labels used with ``discretized_misfit`` or ``None`` if
+            this calculation is not used.
+        """
         return self._category
 
     def value(self, name):

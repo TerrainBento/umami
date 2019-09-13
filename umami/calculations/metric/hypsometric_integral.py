@@ -1,5 +1,4 @@
 import numpy as np
-
 from landlab.utils import get_watershed_mask
 
 
