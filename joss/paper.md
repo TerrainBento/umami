@@ -31,7 +31,7 @@ affiliations:
   - name: University of Colorado at Boulder, Institute for Arctic and Alpine Research
     index: 4
 date: 4 September 2019
-bibliography: papers.bib
+bibliography: paper.bib
 ---
 
 # Summary
