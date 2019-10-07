@@ -5,7 +5,7 @@ import versioneer
 
 setup(
     name="umami",
-    python_requires=">=3.6",
+    python_requires=">=3",
     version=versioneer.get_version(),
     classifiers=[
         "Intended Audience :: Science/Research",
