@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/TerrainBento/umami/badge.svg?branch=master)](https://coveralls.io/github/TerrainBento/umami?branch=master)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/umami/badges/installer/conda.svg)](https://conda.anaconda.org/conda-forge)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+[![status](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4/status.svg)](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4)
 
 # What is it?
 
@@ -104,5 +105,4 @@ Contributors and maintainers to this project are are expected to abide the [Cont
 
 If you use umami in your research, please cite it.
 
-A Journal of Open Source Software submission is planned. When it is finalized,
-a link and citation will be found here.
+We have submitted umami to the Journal of Open Source Software ([review page here](https://github.com/openjournals/joss-reviews/issues/1776)).
