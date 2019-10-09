@@ -61,6 +61,6 @@ install:
 - pip install -e .
 script:
 - pip install pytest pytest-cov coveralls
-- pip install jupyter pandas plotnine holoviews terrainbento tqdm gdal rasterio
+- pip install jupyter pandas plotnine holoviews terrainbento tqdm rasterio
 - pytest umami tests/ --doctest-modules --cov=umami --cov-report=xml:$(pwd)/coverage.xml -vvv
 after_success: coveralls
