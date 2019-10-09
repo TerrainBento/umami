@@ -28,7 +28,10 @@ install:
   - cmd: set PYTHONUNBUFFERED=1
   - cmd: conda config --set always_yes yes
   - cmd: pip install pytest
-  - cmd: pip install jupyter pandas plotnine holoviews terrainbento tqdm gdal rasterio
+  - cmd: conda config --add channels conda-forge
+  - cmd: conda config --set channel_priority strict
+  - cmd: conda install gdal
+  - cmd: pip install jupyter pandas plotnine holoviews terrainbento tqdm rasterio
   - cmd: conda info
   - cmd: conda list
 
