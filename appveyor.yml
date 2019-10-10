@@ -30,6 +30,7 @@ install:
   - cmd: pip install pytest
   - cmd: pip install jupyter pandas plotnine holoviews terrainbento tqdm
   - cmd: conda install rasterio -c conda-forge
+  - cmd: conda install landlab -c conda-forge
   - cmd: conda info
   - cmd: conda list
 
