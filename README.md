@@ -92,12 +92,11 @@ Documentation is housed on [ReadTheDocs](https://umami.readthedocs.io).
 
 Umami uses Github Issue as a single point of contact for users and developers.
 To ask a question, report a bug, make a feature request, or to get in touch for
-any reason, please make
-[an Issue](https://github.com/TerrainBento/umami/issues).
+any reason, please make [an Issue](https://github.com/TerrainBento/umami/issues).
 
 # Contribute to umami
 
-All contributions are welcom and appreciated. Feel free to:
+All contributions are welcome and appreciated. Feel free to:
 
 - Make [an issue](https://github.com/TerrainBento/umami/issues) to ask a
   question. Your question will help others in the future.
