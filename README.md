@@ -112,7 +112,6 @@ All contributions are welcome and appreciated. Feel free to:
 Contributors and maintainers to this project are are expected to abide the [Contributor Code of Conduct](https://github.com/TerrainBento/umami/blob/master/CODE_OF_CONDUCT.md).
 
 # Cite umami
+[![status](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4/status.svg)](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4)
 
-If you use umami in your research, please cite it.
-
-We have submitted umami to the Journal of Open Source Software ([review page here](https://github.com/openjournals/joss-reviews/issues/1776)).
+Umami is described by a Journal of Open Source Software paper. If you use umami in your research, please cite it. 
