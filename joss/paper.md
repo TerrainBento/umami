@@ -58,6 +58,6 @@ Second, the `discretized_misfit` calculation seeks to reduce the dimension of a 
 
 # Acknowledgements
 
-Support for this work was provided by an NSF EAR  Postdoctoral Fellowship to Barnhart (NSF Award Number 1725774). Funding for Landlab was provided by NSF (NSF Award Numbers 1147454 and 1450409). Landlab is additionally supported by the Community Surface Dynamics Modeling System (NSF Award Number 1226297 and 1831623).
+Support for this work was provided by an NSF EAR  Postdoctoral Fellowship to Barnhart (NSF Award Number 1725774). Funding for Landlab was provided by NSF (NSF Award Numbers 1147454 and 1450409). Landlab is additionally supported by the Community Surface Dynamics Modeling System (NSF Award Numbers 1226297 and 1831623).
 
 # References
