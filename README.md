@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/TerrainBento/umami/badge.svg?branch=master)](https://coveralls.io/github/TerrainBento/umami?branch=master)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/umami/badges/installer/conda.svg)](https://conda.anaconda.org/conda-forge)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+[![status](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4/status.svg)](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4)
 
 # What is it?
 
@@ -91,18 +92,26 @@ Documentation is housed on [ReadTheDocs](https://umami.readthedocs.io).
 
 Umami uses Github Issue as a single point of contact for users and developers.
 To ask a question, report a bug, make a feature request, or to get in touch for
-any reason, please make
-[an Issue](https://github.com/TerrainBento/umami/issues).
+any reason, please make [an Issue](https://github.com/TerrainBento/umami/issues).
 
 # Contribute to umami
 
-All contributions are welcome.
+All contributions are welcome and appreciated. Feel free to:
+
+- Make [an issue](https://github.com/TerrainBento/umami/issues) to ask a
+  question. Your question will help others in the future.
+- Make [an issue](https://github.com/TerrainBento/umami/issues) to report a
+  bug or a potential improvement. We will work to fix it. If you have an idea
+  about how to fix it, please feel free to propose it, or make a Pull Request.  
+- [Fork the repository](https://help.github.com/en/articles/fork-a-repo), make
+  changes to the source code on a
+  [development branch](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow),
+  and submit a Pull Request to have your changes brought into the umami
+  repository. **No contribution to the code base or documentation is too small.**
 
 Contributors and maintainers to this project are are expected to abide the [Contributor Code of Conduct](https://github.com/TerrainBento/umami/blob/master/CODE_OF_CONDUCT.md).
 
 # Cite umami
+[![status](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4/status.svg)](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4)
 
-If you use umami in your research, please cite it.
-
-A Journal of Open Source Software submission is planned. When it is finalized,
-a link and citation will be found here.
+Umami is described by a Journal of Open Source Software paper. If you use umami in your research, please cite it. 

@@ -9,5 +9,6 @@ conda install pandas
 conda install plotnine>=0.6.0
 conda install terrainbento>=1.10.1
 conda install tqdm
+conda install rasterio
 
 python setup.py install
