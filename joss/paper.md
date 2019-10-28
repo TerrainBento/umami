@@ -36,11 +36,11 @@ bibliography: paper.bib
 
 # Summary
 
-Models of Earth's surface dynamics are typically designed to simulate timescales that range from years to geologic epochs ($10^6$+ years). They represent and evolve a primary state variable, Earth's surface. Some applications may use other state variables (e.g., soil thickness). A diverse array of physical and chemical processes may be present. For example, the making and moving of water; the creation of soil and sediment from bedrock; the transport of mobile material due to hillslope processes, river erosion, and landslides; and the deposition of that material into the geologic archive. These models are used for applications as diverse as understanding the limit to the hight of mountain ranges and predicting the erosion, transport, and fate of contaminated material on human timescales.
+Models of Earth's surface dynamics are typically designed to simulate timescales that range from years to geologic epochs ($10^6$+ years). They represent and evolve a primary state variable, Earth's surface. Some applications may use other state variables (e.g., soil thickness). A diverse array of physical and chemical processes may be present. For example, the making and moving of water; the creation of soil and sediment from bedrock; the transport of mobile material due to hillslope processes, river erosion, and landslides; and the deposition of that material into the geologic archive. These models are used for applications as diverse as understanding limits on the height of mountain ranges and predicting the erosion, transport, and fate of contaminated material on human timescales.
 
 A diversity of data is used to compare models with observations. These data serve as "simulated equivalents", quantities with which to assess model performance. A common observable compared with model output is topography. High resolution topography, occasionally at two points in time, provides a dataset rich in the spatial dimension and sparse in the temporal. However, because model initial condition topography is not often known, we do not often expect modeled and observed topography to line up exactly. Thus, statistical derivatives of topography are often used. Other data sources (e.g., cosmogenic radionuclide derived erosion rates) provide time and space integrated measures.
 
-There is, however, no clear consensus regarding which set of simulated equivalents is most appropriate or most sucessful for assessing the performance of Earth surface dynamics models. This presents a challenge when this type of model is used in formal model analysis efforts. For example, calibration requires a formal objective function. Under these circumstances, there is a need for generic tools that facilitate exploration and usage of many plausibly successful simulated equivalents. This is the need that the umami package was designed to address.
+There is, however, no clear consensus regarding which set of simulated equivalents is most appropriate or most successful for assessing the performance of Earth surface dynamics models. This presents a challenge when this type of model is used in formal model analysis efforts. For example, calibration requires a formal objective function. Under these circumstances, there is a need for generic tools that facilitate exploration and usage of many plausibly successful simulated equivalents. This is the need that the umami package was designed to address.
 
 # Description of umami
 
@@ -58,6 +58,6 @@ Second, the `discretized_misfit` calculation seeks to reduce the dimension of a 
 
 # Acknowledgements
 
-Support for this work was provided by an NSF EAR  Postdoctoral Fellowship to Barnhart (NSF Award Number 1725774). Funding for Landlab was provided by NSF (NSF Award Numbers 1147454 and 1450409). Landlab is additionally supported by the Community Surface Dynamics Modeling System (NSF Award Numbers 1226297 and 1831623).
+Support for this work was provided by an NSF EAR Postdoctoral Fellowship to Barnhart (NSF Award Number 1725774). Funding for Landlab was provided by NSF (NSF Award Numbers 1147454 and 1450409). Landlab is additionally supported by the Community Surface Dynamics Modeling System (NSF Award Numbers 1226297 and 1831623).
 
 # References
