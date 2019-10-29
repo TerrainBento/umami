@@ -4,7 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/TerrainBento/umami/badge.svg?branch=master)](https://coveralls.io/github/TerrainBento/umami?branch=master)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/umami/badges/installer/conda.svg)](https://conda.anaconda.org/conda-forge)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
-[![status](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4/status.svg)](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01776/status.svg)](https://doi.org/10.21105/joss.01776)
+
 
 # What is it?
 
@@ -112,6 +113,6 @@ All contributions are welcome and appreciated. Feel free to:
 Contributors and maintainers to this project are are expected to abide the [Contributor Code of Conduct](https://github.com/TerrainBento/umami/blob/master/CODE_OF_CONDUCT.md).
 
 # Cite umami
-[![status](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4/status.svg)](https://joss.theoj.org/papers/1dea51d02def0ff3ef5108eb2a7af3a4)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01776/status.svg)](https://doi.org/10.21105/joss.01776)
 
 Umami is described by a Journal of Open Source Software paper. If you use umami in your research, please cite it. 
