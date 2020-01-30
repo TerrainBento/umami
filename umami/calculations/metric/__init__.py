@@ -3,6 +3,7 @@ from .chi_intercept_gradient import chi_gradient, chi_intercept
 from .count_equal import count_equal
 from .hypsometric_integral import hypsometric_integral
 from .watershed_aggregation import watershed_aggregation
+from .mask_aggregation import mask_aggregation
 
 __all__ = [
     "aggregate",
@@ -11,4 +12,5 @@ __all__ = [
     "count_equal",
     "hypsometric_integral",
     "watershed_aggregation",
+    "mask_aggregation",
 ]
