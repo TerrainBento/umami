@@ -1,0 +1,72 @@
+"""
+"""
+from landlab.components import DrainageDensity
+
+
+def _validate_drainage_density(drainage_density):
+    if not isinstance(drainage_density, DrainageDensity):
+        msg = "umami: A valid instance of a DrainageDensity is required."
+        raise ValueError(msg)
+
+
+def chi_intercept(drainage_density):
+    r"""Return the intercept to a linear fit through a :math:`\chi`-z plot.
+
+    This is a loose wrapper around the Landlab function
+    `DrainageDensity.calculate_drainage_density`_.
+
+    .. _DrainageDensity.calculate_drainage_density:
+
+    Parameters
+    ----------
+    drainage_density : an instance of a `DrainageDensity`_
+
+
+    .. _DrainageDensity:
+
+
+    Returns
+    -------
+    out : float
+        The intercept value.
+
+    Examples
+    --------
+    First an example that only uses the ``calculate_drainage_density`` function.
+
+    >>> import numpy as np
+    >>> from landlab import RasterModelGrid
+    >>> from landlab.components import FlowAccumulator, DrainageDensity
+    >>> from umami.calculations import drainage_density
+    >>> grid = RasterModelGrid((10, 10))
+    >>> z = grid.add_zeros("node", "topographic__elevation")
+    >>> z += grid.x_of_node**2 + grid.y_of_node**2
+    >>> fa = FlowAccumulator(grid)
+    >>> fa.run_one_step()
+    >>> dd = DrainageDensity(grid, )
+    >>> drainage_density = dd.calculate_drainage_density()
+    >>> np.round(drainage_density(cf), decimals=0)
+    -4.0
+
+    Next, the same calculations are shown as part of an umami ``Metric``.
+
+    >>> from io import StringIO
+    >>> from umami import Metric
+    >>> grid = RasterModelGrid((10, 10))
+    >>> z = grid.add_zeros("node", "topographic__elevation")
+    >>> z += grid.x_of_node**2 + grid.y_of_node**2
+    >>> file_like=StringIO('''
+    ... ci:
+    ...     _func: drainage_density
+    ... ''')
+    >>> metric = Metric(grid, drainage_density_kwds={"min_drainage_area": 1.0})
+    >>> metric.add_from_file(file_like)
+    >>> metric.names
+    ['ci']
+    >>> metric.calculate()
+    >>> np.round(metric.values, decimals=0)
+    array([-4.])
+    """
+    _validate_drainage_density(drainage_density)
+    slp, incp = drainage_density.best_fit_chi_elevation_gradient_and_intercept()
+    return incp
