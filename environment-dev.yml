@@ -19,6 +19,6 @@ dependencies:
    - pandas
    - tqdm
    - plotnine>=0.6.0
-   - terrainbento>=2b
+   - terrainbento>=2.0.0b1
    - gdal
    - rasterio
