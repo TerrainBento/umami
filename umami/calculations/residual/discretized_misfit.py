@@ -18,7 +18,7 @@ def discretized_misfit(
     The following Binder notebook shows example usage of this umami
     calculation.
 
-    .. image:: https://mybinder.org/badge_logo.svg
+    .. image:: https://static.mybinder.org/badge_logo.svg
         :target: https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FDiscretizedMisfit.ipynb
 
     The ``discretized_misfit`` calculation first classifies each grid cell in

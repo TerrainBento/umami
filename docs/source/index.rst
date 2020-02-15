@@ -52,9 +52,9 @@ To get help or ask questions, please make an `issue on GitHub`_.
 Installation Instructions
 -------------------------
 
-Installation is described on `this`_ section of the README.
+Installation is described in `the README`_ .
 
-.. _this: https://github.com/TerrainBento/umami#where-to-get-it
+.. _the README: https://github.com/TerrainBento/umami
 
 Contributing
 ------------
