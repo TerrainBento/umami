@@ -12,13 +12,13 @@ dependencies:
    # for the package
    - scipy
    - numpy
-   - landlab>=1.10.1, <2.0
+   - landlab>=2.0.0b4
    # for the notebooks
    - jupyter
    - holoviews
    - pandas
    - tqdm
    - plotnine>=0.6.0
-   - terrainbento>=1.1
+   - terrainbento>=2.0.0b1
    - gdal
    - rasterio
