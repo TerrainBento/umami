@@ -15,14 +15,14 @@ def chi_intercept(chi_finder):
     This is a loose wrapper around the Landlab function
     `ChiFinder.best_fit_chi_elevation_gradient_and_intercept`_.
 
-    .. _ChiFinder.best_fit_chi_elevation_gradient_and_intercept: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html#landlab.components.chi_index.ChiFinder.best_fit_chi_elevation_gradient_and_intercept
+    .. _ChiFinder.best_fit_chi_elevation_gradient_and_intercept: https://landlab.readthedocs.io/en/master/reference/components/index.html#landlab.components.ChiFinder.best_fit_chi_elevation_gradient_and_intercept
 
     Parameters
     ----------
     chi_finder : an instance of a `ChiFinder`_
 
 
-    .. _ChiFinder: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html
+    .. _ChiFinder: https://landlab.readthedocs.io/en/master/reference/components/chi_index.html
 
 
     Returns
@@ -78,14 +78,14 @@ def chi_gradient(chi_finder):
     This is a loose wrapper around the Landlab function
     `ChiFinder.best_fit_chi_elevation_gradient_and_intercept`_.
 
-    .. _ChiFinder.best_fit_chi_elevation_gradient_and_intercept: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html#landlab.components.chi_index.ChiFinder.best_fit_chi_elevation_gradient_and_intercept
+    .. _ChiFinder.best_fit_chi_elevation_gradient_and_intercept: https://landlab.readthedocs.io/en/master/reference/components/index.html#landlab.components.ChiFinder.best_fit_chi_elevation_gradient_and_intercept
 
     Parameters
     ----------
     chi_finder : an instance of a `ChiFinder`_
 
 
-    .. _ChiFinder: https://landlab.readthedocs.io/en/release/landlab.components.chi_index.html
+    .. _ChiFinder: https://landlab.readthedocs.io/en/master/reference/components/chi_index.html
 
 
     Returns
