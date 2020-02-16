@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/0ehba569dttgsuyv?svg=true)](https://ci.appveyor.com/project/kbarnhart/umami)
 [![Coverage Status](https://coveralls.io/repos/github/TerrainBento/umami/badge.svg?branch=master)](https://coveralls.io/github/TerrainBento/umami?branch=master)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/umami/badges/installer/conda.svg)](https://conda.anaconda.org/conda-forge)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+[![Binder](https://static.mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01776/status.svg)](https://doi.org/10.21105/joss.01776)
 
 
@@ -15,7 +15,7 @@ with
 [terrainbento](https://github.com/TerrainBento/terrainbento) and other models built with the
 [Landlab Toolkit](https://github.com/landlab/landlab). Examples can be
 found in the `notebooks` directory (or on Binder
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
+[![Binder](https://static.mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/TerrainBento/umami/master?filepath=notebooks%2FWelcome.ipynb)
 ).
 
 Umami offers two primary classes:
