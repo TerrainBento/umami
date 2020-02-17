@@ -9,8 +9,8 @@ def _validate_drainage_density(drainage_density):
         raise ValueError(msg)
 
 
-def chi_intercept(drainage_density):
-    r"""Return the intercept to a linear fit through a :math:`\chi`-z plot.
+def drainage_density(drainage_density):
+    r"""Return the drainage density.
 
     This is a loose wrapper around the Landlab function
     `DrainageDensity.calculate_drainage_density`_.
@@ -28,7 +28,7 @@ def chi_intercept(drainage_density):
     Returns
     -------
     out : float
-        The intercept value.
+        The drainage density.
 
     Examples
     --------
@@ -43,9 +43,14 @@ def chi_intercept(drainage_density):
     >>> z += grid.x_of_node**2 + grid.y_of_node**2
     >>> fa = FlowAccumulator(grid)
     >>> fa.run_one_step()
+
+    The Landlab ``DrainageDensity`` component can be initialized with either
+    an area exponent and coefficient, a slope exponent and coefficient, and a
+    threshold, OR a mask. Umami can support either of these options.
+
     >>> dd = DrainageDensity(grid, )
     >>> drainage_density = dd.calculate_drainage_density()
-    >>> np.round(drainage_density(cf), decimals=0)
+    >>> np.round(drainage_density(dd), decimals=1)
     -4.0
 
     Next, the same calculations are shown as part of an umami ``Metric``.
@@ -56,17 +61,19 @@ def chi_intercept(drainage_density):
     >>> z = grid.add_zeros("node", "topographic__elevation")
     >>> z += grid.x_of_node**2 + grid.y_of_node**2
     >>> file_like=StringIO('''
-    ... ci:
+    ... dd:
     ...     _func: drainage_density
     ... ''')
-    >>> metric = Metric(grid, drainage_density_kwds={"min_drainage_area": 1.0})
+    >>> metric = Metric(
+    ...     grid,
+    ...     drainage_density_kwds={"min_drainage_area": 1.0})
     >>> metric.add_from_file(file_like)
     >>> metric.names
-    ['ci']
+    ['dd']
     >>> metric.calculate()
     >>> np.round(metric.values, decimals=0)
     array([-4.])
     """
     _validate_drainage_density(drainage_density)
-    slp, incp = drainage_density.best_fit_chi_elevation_gradient_and_intercept()
-    return incp
+    dd = drainage_density.calculate_drainage_density()
+    return dd
