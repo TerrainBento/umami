@@ -12,6 +12,7 @@ Calculations for Metrics or Residuals
    umami.calculations.metric.chi_intercept_gradient
    umami.calculations.metric.count_equal
    umami.calculations.metric.hypsometric_integral
+   umami.calculations.metric.mask_aggregation
    umami.calculations.metric.watershed_aggregation
 
 Calculations for Residuals only
