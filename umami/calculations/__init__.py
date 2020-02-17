@@ -11,6 +11,7 @@ from .metric import (
     count_equal,
     hypsometric_integral,
     watershed_aggregation,
+    mask_aggregation,
 )
 from .residual import (
     discretized_misfit,
@@ -26,6 +27,7 @@ __all__ = [
     "count_equal",
     "hypsometric_integral",
     "watershed_aggregation",
+    "mask_aggregation",
     "discretized_misfit",
     "joint_density_misfit",
     "kstest",
