@@ -13,6 +13,7 @@ Calculations for Metrics or Residuals
    umami.calculations.metric.count_equal
    umami.calculations.metric.drainage_density
    umami.calculations.metric.hypsometric_integral
+   umami.calculations.metric.mask_aggregation
    umami.calculations.metric.watershed_aggregation
 
 

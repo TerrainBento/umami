@@ -4,8 +4,9 @@ os:
 - osx
 env:
   matrix:
-  - CONDA_ENV=3.7
   - CONDA_ENV=3.6
+  - CONDA_ENV=3.7
+  - CONDA_ENV=3.8
   global:
   - MPLBACKEND=Agg
   - secure: myTUfRQ7EgOxtCSSRxeTAOg4Q+0W9sEngk35jkW6iSwKtuN94t7Tn/XiTy7U2AM38XVGxyfy0R1EwsPiz01xYkRWYDpzLZWP/AuLs1FaUMGC9XwLEspSORZx7QKJ+MUwRHaoBvWXk+1EvT4jbbFoLoK8Ih5Jhdg8kvHIbXd85B5XmzvNyOBxpvPWXq81KwF/Ipc/IRKpJAaHJZ5OIBEAdxYNuVoQpe/yX57eW8IbeDYVG4HchcsXvGksP7LpR7ajrjCAxDzJA9U2XfufnFuyvFDw+LA1vZxbrzn1gjBH3O1Eb5iTrEuxIIx+EW6MdxjbR1Rh3te4a2I9uBoO8J/vMOEpDl62ywHN6H/YwXTFb+ihyOSOU3D4uV3Ob2SuQVsKgKV1tKoiVX6MgDM/p7C9gKcGxR/vpobHf8abBlRgE6QDxJNb2a70cHGO58kB3UROgOpmrNjdK3vDF5ZWg1HS+GV0Kns2m6aVk3mQI8il9HR465ckMJxrIvUJkqe5qMK9iD1l9WzFjQ/pOtQ63f32cDijNpZ6aACNZqdrqlEAVpQVYNZlSUideUE2TYmwyjZmrArWCFPvqqewW7CDtZAZl/IXg7W9x+M0eEDBHi2y64ERO1FpR3VyxcaYAfN3PhD+CzpIWd2aQwSARzjFiZiF364w8gey17+H2TcnhncbZhE=
@@ -24,11 +25,11 @@ jobs:
     - conda activate umami_docs
     - pip install -e .
     script:
-    - make -C docs clean html
+    - make -C docs clean html linkcheck
   - stage: deploy
     if: tag =~ v.*$
     os: osx
-    env: CONDA_ENV=3.7
+    env: CONDA_ENV=3.8
     script:
     - pip install twine wheel
     - python setup.py bdist_wheel
@@ -61,6 +62,7 @@ install:
 - pip install -e .
 script:
 - pip install pytest pytest-cov coveralls
-- pip install jupyter pandas plotnine holoviews terrainbento tqdm rasterio
+- pip install jupyter pandas plotnine holoviews tqdm rasterio
+- pip install terrainbento --pre
 - pytest umami tests/ --doctest-modules --cov=umami --cov-report=xml:$(pwd)/coverage.xml -vvv
 after_success: coveralls

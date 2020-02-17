@@ -12,10 +12,10 @@ def _create_landlab_components(
 
     # Run ChiFinder
     kwds = chi_finder_kwds or {}
-    cf = ChiFinder(grid, noclobber=False, **kwds)
+    cf = ChiFinder(grid, clobber=True, **kwds)
     cf.calculate_chi()
 
     # run distance upstream.
-    _ = calculate_flow__distance(grid, add_to_grid=True, noclobber=False)
+    _ = calculate_flow__distance(grid, add_to_grid=True, clobber=True)
 
     return fa, cf

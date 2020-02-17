@@ -28,5 +28,5 @@ setup(
     long_description_content_type="text/markdown",
     zip_safe=False,
     packages=find_packages(),
-    install_requires=["scipy", "numpy", "landlab>=1.10.1, <2.0"],
+    install_requires=["scipy", "numpy", "landlab>=2.0.0b4"],
 )
