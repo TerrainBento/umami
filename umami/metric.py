@@ -220,10 +220,10 @@ class Metric(object):
         >>> file_contents = out.getvalue().splitlines()
         >>> for line in file_contents:
         ...     print(line.strip())
-        9.0 # me
-        5.0 # ep10
-        5.0 # oid1_mean
-        8 # sn1
+        9.0 me
+        5.0 ep10
+        5.0 oid1_mean
+        8 sn1
 
         Next we output in *yaml* style, in which each metric is serialized in
         YAML format.
@@ -241,7 +241,7 @@ class Metric(object):
         if style == "dakota":
             stream = "\n".join(
                 [
-                    str(np.round(val, decimals=decimals)) + " # " + str(key)
+                    str(np.round(val, decimals=decimals)) + " " + str(key)
                     for key, val in self._values.items()
                 ]
             )

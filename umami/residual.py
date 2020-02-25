@@ -322,10 +322,10 @@ class Residual(object):
         >>> file_contents = out.getvalue().splitlines()
         >>> for line in file_contents:
         ...     print(line.strip())
-        17.533 # me
-        9.909 # ep10
-        9.813 # oid1_mean
-        -41 # sn1
+        17.533 me
+        9.909 ep10
+        9.813 oid1_mean
+        -41 sn1
 
         Next we output in *yaml* style, in which each metric is serialized in
         YAML format.
@@ -343,7 +343,7 @@ class Residual(object):
         if style == "dakota":
             stream = "\n".join(
                 [
-                    str(np.round(val, decimals=decimals)) + " # " + str(key)
+                    str(np.round(val, decimals=decimals)) + " " + str(key)
                     for key, val in self._values.items()
                 ]
             )
