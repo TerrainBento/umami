@@ -25,8 +25,7 @@ install:
   - cmd: python -m pip install --upgrade pip
   - cmd: pip install pytest
   - cmd: pip install numpy
-  - cmd: pip install GDAL
-  - cmd: pip install rasterio
+  - cmd: conda install rasterio -c conda-forge
   - cmd: pip install jupyter pandas plotnine holoviews tqdm
   - cmd: pip install landlab --pre
   - cmd: pip install terrainbento --pre
