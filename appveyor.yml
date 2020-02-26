@@ -33,8 +33,8 @@ install:
   - cmd: pip install numpy
   - cmd: conda install rasterio -c conda-forge
   - cmd: pip install jupyter pandas plotnine holoviews tqdm
-  - cmd: pip install landlab --pre
-  - cmd: pip install terrainbento --pre
+  - cmd: pip install --pre landlab
+  - cmd: pip install --pre terrainbento 
 
 build: false
 
