@@ -21,9 +21,10 @@ init:
 
 install:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - cmd: conda install rasterio -c conda-forge
   - cmd: pip install pytest
   - cmd: pip install numpy
-  - cmd: pip install jupyter pandas plotnine holoviews tqdm rasterio
+  - cmd: pip install jupyter pandas plotnine holoviews tqdm
   - cmd: pip install terrainbento --pre
   - cmd: pip install landlab --pre
 
