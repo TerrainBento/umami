@@ -23,7 +23,7 @@ init:
   - "ECHO %APPVEYOR_REPO_BRANCH%"
 
 install:
-  - "SET PATH=%PYTHON%;%PYTHON%\\PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - "python -VV"
   - cmd: python -m pip install --upgrade pip
   - cmd: pip install pytest
