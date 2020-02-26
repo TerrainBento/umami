@@ -21,13 +21,15 @@ init:
 
 install:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - "python -VV"
+  - cmd: python -m pip install --upgrade pip
   - cmd: pip install pytest
   - cmd: pip install numpy
   - cmd: pip install GDAL
   - cmd: pip install rasterio
   - cmd: pip install jupyter pandas plotnine holoviews tqdm
-  - cmd: pip install terrainbento --pre
   - cmd: pip install landlab --pre
+  - cmd: pip install terrainbento --pre
 
 build: false
 
