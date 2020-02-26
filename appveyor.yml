@@ -5,15 +5,15 @@ environment:
 
     - TARGET_ARCH: x64
       PYTHON: "C:\\Python38-x64"
-      MINICONDA: "C:\\Miniconda38-x64"
+      MINICONDA: "C:\\Miniconda3"
 
     - TARGET_ARCH: x64
       PYTHON: "C:\\Python37-x64"
-      MINICONDA: "C:\\Miniconda37-x64"
+      MINICONDA: "C:\\Miniconda3"
 
     - TARGET_ARCH: x64
       PYTHON: "C:\\Python36-x64"
-      MINICONDA: "C:\\Miniconda36-x64"
+      MINICONDA: "C:\\Miniconda3"
 
 platform:
   - x64
