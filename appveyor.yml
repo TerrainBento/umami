@@ -29,14 +29,15 @@ install:
   - cmd: pip install numpy
   - cmd: pip install statsmodels
   - cmd: pip install --pre landlab
+  - cmd: pip install --pre terrainbento
   - cmd: pip install twine pytest pytest-cov pytest-datadir
   - cmd: pip install jupyter pandas plotnine holoviews tqdm
-  - cmd: pip install --pre landlab
-  - cmd: pip install --pre terrainbento
   - cmd: call %MINICONDA%\Scripts\activate.bat
   - cmd: conda update --yes --quiet conda
   - cmd: conda config --set always_yes yes
   - cmd: conda install rasterio -c conda-forge
+  - cmd: conda info
+  - cmd: conda list
 
 build: false
 
