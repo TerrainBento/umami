@@ -28,8 +28,9 @@ install:
   - "python -VV"
   - cmd: conda update --yes --quiet conda
   - cmd: conda config --set always_yes yes
-  - cmd: conda install numpy statsmodels landlab terrainbento twine pytest pytest-cov pytest-datadir rasterio -c conda-forge
-  - cmd: conda install jupyter pandas plotnine holoviews tqdm -c conda-forge
+  - cmd: conda config --add channels conda-forge
+  - cmd: conda env create -f environment-dev.yml
+  - cmd: conda activate umami-dev
   - cmd: conda info
   - cmd: conda list
 
