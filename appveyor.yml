@@ -26,16 +26,10 @@ install:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - cmd: call %MINICONDA%\Scripts\activate.bat
   - "python -VV"
-  - cmd: python -m pip install --upgrade pip
   - cmd: conda update --yes --quiet conda
   - cmd: conda config --set always_yes yes
-  - cmd: pip install numpy
-  - cmd: pip install statsmodels
-  - cmd: pip install --pre landlab
-  - cmd: pip install --pre terrainbento
-  - cmd: pip install twine pytest pytest-cov pytest-datadir
-  - cmd: pip install jupyter pandas plotnine holoviews tqdm
-  - cmd: conda install rasterio -c conda-forge
+  - cmd: conda install numpy statsmodels landlab terrainbento twine pytest pytest-cov pytest-datadir rasterio -c conda-forge
+  - cmd: conda install jupyter pandas plotnine holoviews tqdm -c conda-forge
   - cmd: conda info
   - cmd: conda list
 
