@@ -23,7 +23,6 @@ init:
   - "ECHO %APPVEYOR_REPO_BRANCH%"
 
 install:
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - cmd: call %MINICONDA%\Scripts\activate.bat
   - "python -VV"
   - cmd: conda update --yes --quiet conda
