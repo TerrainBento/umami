@@ -4,46 +4,41 @@ environment:
   matrix:
 
     - TARGET_ARCH: x64
-      CONDA_NPY: 111
-      CONDA_INSTALL_LOCN: C:\\Miniconda37-x64
-      CONDA_PY: 3.6
+      PYTHON: "C:\\Python38-x64"
+      MINICONDA: "C:\\Miniconda3-x64"
 
     - TARGET_ARCH: x64
-      CONDA_NPY: 111
-      CONDA_INSTALL_LOCN: C:\\Miniconda36-x64
-      CONDA_PY: 3.7
+      PYTHON: "C:\\Python37-x64"
+      MINICONDA: "C:\\Miniconda3-x64"
 
     - TARGET_ARCH: x64
-      CONDA_NPY: 111
-      CONDA_INSTALL_LOCN: C:\\Miniconda37-x64
-      CONDA_PY: 3.8
+      PYTHON: "C:\\Python36-x64"
+      MINICONDA: "C:\\Miniconda3-x64"
 
 platform:
   - x64
 
-os: Previous Visual Studio 2015
-
 init:
-  - "ECHO %CONDA_INSTALL_LOCN% %CONDA_PY% %HOME% %PLATFORM%"
+  - "ECHO %PYTHON% %MINICONDA% %HOME% %PLATFORM%"
   - "ECHO %APPVEYOR_REPO_BRANCH%"
 
 install:
-  - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
+  - cmd: call %MINICONDA%\Scripts\activate.bat
+  - "python -VV"
   - cmd: conda update --yes --quiet conda
-  - cmd: set PYTHONUNBUFFERED=1
   - cmd: conda config --set always_yes yes
-  - cmd: pip install pytest
-  - cmd: pip install jupyter pandas plotnine holoviews tqdm
-  - cmd: pip install terrainbento --pre
-  - cmd: conda install rasterio -c conda-forge
-  - cmd: conda install landlab -c conda-forge
+  - cmd: conda config --add channels conda-forge
+  - cmd: conda info
+  - cmd: conda list
+  - cmd: conda search landlab
+  - cmd: conda env create -f environment-dev.yml
+  - cmd: conda activate umami-dev
   - cmd: conda info
   - cmd: conda list
 
 build: false
 
 test_script:
-  - pip install numpy
   - pip install -e .
   - pytest -vvv
 
