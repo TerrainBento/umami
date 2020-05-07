@@ -4,11 +4,11 @@ from copy import deepcopy
 
 import numpy as np
 import yaml
-from landlab import RasterModelGrid, create_grid
 from numpy.testing import assert_array_equal
 
 import umami.calculations.metric as metric_calcs
 import umami.calculations.residual as residual_calcs
+from landlab import RasterModelGrid, create_grid
 from umami.metric import Metric
 from umami.utils.create_landlab_components import _create_landlab_components
 from umami.utils.io import _read_input, _write_output
