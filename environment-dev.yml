@@ -12,7 +12,7 @@ dependencies:
    # for the package
    - scipy
    - numpy
-   - landlab>=2.0.0b4
+   - landlab>=2.0.1
    # for the notebooks
    - jupyter
    - holoviews
