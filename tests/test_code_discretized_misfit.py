@@ -2,8 +2,8 @@ from collections import OrderedDict
 
 import numpy as np
 import pytest
-from landlab import RasterModelGrid
 
+from landlab import RasterModelGrid
 from umami.calculations import discretized_misfit
 from umami.calculations.residual.discretized_misfit import _get_category_labels
 

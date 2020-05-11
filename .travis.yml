@@ -46,9 +46,9 @@ before_install:
   echo "backend: Agg" > $HOME/.matplotlib/matplotlibrc
 - |
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    curl https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh > $HOME/miniconda.sh
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh > $HOME/miniconda.sh
   else
-    curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > $HOME/miniconda.sh
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh > $HOME/miniconda.sh
   fi
 - bash $HOME/miniconda.sh -b -p $(pwd)/anaconda
 - export PATH="$(pwd)/anaconda/bin:$PATH"
@@ -63,6 +63,6 @@ install:
 script:
 - pip install pytest pytest-cov coveralls
 - pip install jupyter pandas plotnine holoviews tqdm rasterio
-- pip install --pre terrainbento 
+- pip install --pre terrainbento
 - pytest umami tests/ --doctest-modules --cov=umami --cov-report=xml:$(pwd)/coverage.xml -vvv
 after_success: coveralls
