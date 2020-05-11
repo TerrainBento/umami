@@ -10,8 +10,8 @@ from .metric import (
     chi_intercept,
     count_equal,
     hypsometric_integral,
-    watershed_aggregation,
     mask_aggregation,
+    watershed_aggregation,
 )
 from .residual import (
     discretized_misfit,
