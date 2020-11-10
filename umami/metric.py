@@ -24,6 +24,7 @@ class Metric(object):
         grid,
         flow_accumulator_kwds=None,
         chi_finder_kwds=None,
+        drainage_density_kwds=None, 
         metrics=None,
     ):
         """

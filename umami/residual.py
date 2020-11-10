@@ -30,6 +30,7 @@ class Residual(object):
         data,
         flow_accumulator_kwds=None,
         chi_finder_kwds=None,
+        drainage_density_kwds=None,
         residuals=None,
     ):
         """
